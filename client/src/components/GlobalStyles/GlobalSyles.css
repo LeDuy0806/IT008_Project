@@ -1,0 +1,31 @@
+@import 'normalize.css';
+@import url('http://fonts.cdnfonts.com/css/proxima-nova-2');
+@import url('http://fonts.cdnfonts.com/css/sofia-pro');
+:root {
+  --primary: #fe2c55;
+  --black: #000;
+  --text-color: #161823;
+  --white: #fff;
+
+  --font-family: 'Proxima Nova', sans-serif;
+  --default-layout-header-height: 60px;
+  --default-layout-width: 1150px;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: 1.6rem;
+  line-height: 1.5;
+  text-rendering: optimizespeed;
+  color: var(--text-color);
+  overflow-y: overlay;
+}
