@@ -9,7 +9,7 @@
 } */
 
 body {
-  font-family: Montserrat, sans-serif;
+  /* font-family: Montserrat, sans-serif; */
   padding-top: 6vh;
   min-height: 100vh;
   display: flex;
@@ -45,6 +45,8 @@ body {
 
 .logo-img{
   width: 50px;
+  border-radius: 50%;
+  padding: 2px;
 }
 
 .nav__list-item {
