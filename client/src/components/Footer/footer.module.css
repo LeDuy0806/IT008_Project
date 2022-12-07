@@ -20,7 +20,7 @@
   padding: 0 15px;
 }
 
-.footer-column h4 {
+.footer-column span {
   font-size: 18px;
   color: white;
   text-transform: capitalize;
@@ -29,7 +29,7 @@
   position: relative;
 }
 
-.footer-column h4::before {
+/* .footer-column h4::before {
   content: "";
   position: absolute;
   left: 0;
@@ -37,6 +37,20 @@
   height: 2px;
   width: 50px;
   background-color: #e91e63;
+} */
+
+.footer-column h4 span::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  height: 2px;
+  width: 100%;
+  background-color: #e91e63;
+}
+
+.footer-column ul{
+  margin-top:10px;
 }
 
 .footer-column ul li {
@@ -61,6 +75,10 @@
 .footer-column ul li a:hover {
   color: #ffffff;
   padding-left: 10px;
+}
+
+.footer-social-links{
+  margin-top: 15px;
 }
 
 .footer-social-links a {

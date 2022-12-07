@@ -5,6 +5,8 @@ import img2 from "../../assets/img2.jpeg"
 import img3 from "../../assets/img3.svg"
 import img4 from "../../assets/img4.svg"
 import img5 from "../../assets/img5.svg"
+import pic1 from "../../assets/pic1.jpeg"
+import pic2 from "../../assets/pic2.jpeg"
 import { useSelector } from "react-redux"
 
 function Home() {
@@ -23,8 +25,8 @@ function Home() {
               </h2>
               <p className={styles["banner-description"]}>
                 {isLanguageEnglish
-                  ? "Quizzly delivers engaging learning to billions"
-                  : "Quizzly cung cấp hàng triệu người dùng có liên quan"}
+                  ? "Telexercisely delivers engaging learning to billions"
+                  : "Telexercise cung cấp việc học hấp dẫn cho hàng triệu người có liên quan"}
               </p>
               <button className={styles["banner-button"]}>
                 <a href="/">
@@ -34,27 +36,27 @@ function Home() {
                 </a>
               </button>
             </div>
-            <img src={img1} alt="" className={styles["banner-image"]} />
+            <img src={pic1} alt="" className={styles["banner-image"]} />
           </div>
           <div className={styles.banner}>
             <div className={styles["banner-body"]}>
               <h2 className={styles["banner-title"]}>
-                {isLanguageEnglish ? "Explore content" : "Duyệt nội dung"}
+                {isLanguageEnglish ? "Explore content" : "Khám phá nội dung"}
               </h2>
               <p className={styles["banner-description"]}>
                 {isLanguageEnglish
                   ? "Explore content and join one of the world’s largest educator communities."
-                  : "Duyệt nội dung và tham gia một trong những cộng đồng lớn nhất thế giới trên thế giới"}
+                  : "Khám phá nội dung và tham gia một trong những cộng đồng giáo dục lớn nhất thế giới"}
               </p>
               <button className={styles["banner-button"]}>
                 <a href="/">
                   {isLanguageEnglish
-                    ? "Check public quizes"
-                    : "Kiểm tra các câu đố công khai"}
+                    ? "Check public Telexercise"
+                    : "Kiểm tra Telexercise công khai"}
                 </a>
               </button>
             </div>
-            <img src={img2} alt="" className={styles["banner-image"]} />
+            <img src={pic2} alt="" className={styles["banner-image"]} />
           </div>
         </section>
         <section className={styles["second-section"]}>
@@ -62,12 +64,12 @@ function Home() {
           <div className={styles.info}>
             <div className={styles["info-body"]}>
               <h2 className={styles["info-title"]}>
-                {isLanguageEnglish ? "Quizzly at school" : "Câu hỏi ở trường"}
+                {isLanguageEnglish ? "Telexercise at school" : "Telexercise tại trường"}
               </h2>
               <p className={styles["info-description"]}>
                 {isLanguageEnglish
                   ? "Engaging group and distance learning for teachers and students."
-                  : "Thu hút nhóm và khoảng cách cho giáo viên và học sinh."}
+                  : "Thu hút học nhóm và học từ xa cho giáo viên và học sinh."}
               </p>
               <a href="/" className={styles["info-link"]}>
                 {isLanguageEnglish ? "Learn more" : "Tìm hiểu thêm"} &gt;
@@ -77,7 +79,7 @@ function Home() {
           <div className={styles.info}>
             <div className={styles["info-body"]}>
               <h2 className={styles["info-title"]}>
-                {isLanguageEnglish ? "Quizzly at work" : "Câu hỏi tại nơi làm việc"}
+                {isLanguageEnglish ? "Telexercise at work" : "Telexercise cho công việc"}
               </h2>
               <p className={styles["info-description"]}>
                 {isLanguageEnglish
@@ -92,12 +94,12 @@ function Home() {
           <div className={styles.info}>
             <div className={styles["info-body"]}>
               <h2 className={styles["info-title"]}>
-                {isLanguageEnglish ? "Quizzly at home" : "Câu hỏi ở nhà"}
+                {isLanguageEnglish ? "Telexercise at home" : "Telexercise tại nhà"}
               </h2>
               <p className={styles["info-description"]}>
                 {isLanguageEnglish
                   ? "Learning Apps and games for family fun or home study."
-                  : "Trò chơi giáo dục cho gia đình vui vẻ hoặc học tập tại nhà."}
+                  : "Các ứng dụng và trò chơi học tập giúp gia đình giải trí hoặc học tập tại nhà."}
               </p>
               <a href="/" className={styles["info-link"]}>
                 {isLanguageEnglish ? "Learn more" : "Tìm hiểu thêm"} &gt;
@@ -108,8 +110,8 @@ function Home() {
         <section className={styles["third-section"]}>
           <h1>
             {isLanguageEnglish
-              ? "How does Quizzly work?"
-              : "Ứng dụng hoạt động như thế nào?"}
+              ? "How does Telexercise work?"
+              : "Telexercise hoạt động như thế nào?"}
           </h1>
           <div className={styles["card-container"]}>
             <div className={styles.card}>
@@ -152,12 +154,12 @@ function Home() {
           </div>
           <div className={styles["card-button"]}>
             {isLanguageEnglish
-              ? "Play Quizzly to see how it works."
+              ? "Play Telexercise  to see how it works."
               : "Chơi câu hỏi để xem nó hoạt động như thế nào."}{" "}
             &nbsp;
             <a href="/">
               {isLanguageEnglish
-                ? "Explore our public quizes"
+                ? "Explore our public Telexercise"
                 : "Duyệt các câu đố công khai"}
             </a>
           </div>

@@ -39,6 +39,8 @@ function Auth() {
     if (isSignup) {
       dispatch(register(formData, history))
     } else {
+      const login_data = login(formData, history)
+      console.log(login_data)
       dispatch(login(formData, history))
     }
   };

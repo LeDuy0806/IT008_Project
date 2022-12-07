@@ -22,11 +22,12 @@ body {
   width: 100vw;
   z-index: 2;
   background: #fff;
-  height: 6vh;
+  height: 7vh;
   box-shadow: 0 0 10px #80838b;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
 }
 
 .nav__list {

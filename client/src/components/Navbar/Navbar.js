@@ -5,7 +5,13 @@ import { useDispatch, useSelector } from "react-redux"
 import decode from "jwt-decode"
 import * as actionType from "../../constants/actionTypes"
 import globe from "../../assets/globe.svg"
-import logo from "../../assets/logo.png"
+import contact from "../../assets/contact.svg"
+import  login  from "../../assets/login.svg"
+import home from "../../assets/home.svg"
+import education from "../../assets/education.svg"
+// import logo from "../../assets/logo.png"
+import telehome from "../../assets/telehome.png"
+import telelogo from "../../assets/telelogo.png"
 import { changeLanguage } from "../../actions/language"
 
 function Navbar() {
@@ -41,11 +47,16 @@ function Navbar() {
         <div className={styles["menu-right"]}>
           <ul className={styles.nav__list}>
             <li className={styles["nav__list-logo"]}>
+              <Link to="/" className={styles["tele-link"]}>
+                <img style={{height:"40px",borderRadius:"50%"}}src={telehome} alt="logoname" className={styles["tele-img"]}></img>
+              </Link>
               <Link to="/" className={styles["logo-link"]}>
-                <img src={logo} alt="logo" className={styles["logo-img"]} />
+                <img style={{height:"50px",width:"140px"}}src={telelogo} alt="logo" className={styles["logo-img"]} />
               </Link>
             </li>
+
             <li className={styles["nav__list-item"]}>
+              <img style={{height:"30px",paddingRight:"15px"}}src={home} alt="" />
               {isLanguageEnglish ? "About" : "About"}
               <ul className={styles["nav__list-item-drop"]}>
                 <li>{isLanguageEnglish ? "How it works" : "Nó hoạt động như thế nào"} </li>
@@ -53,6 +64,7 @@ function Navbar() {
               </ul>
             </li>
             <li className={styles["nav__list-item"]}>
+              <img style={{height:"30px",paddingRight:"15px"}}src={education} alt="" />
               {isLanguageEnglish ? "Study" : "Học"}
               <ul className={styles["nav__list-item-drop"]}>
                 <li>
@@ -68,12 +80,13 @@ function Navbar() {
         <div className={styles["menu-left"]}>
           <ul className={styles.nav__list}>
             <li className={styles["nav__list-item"]}>
+              <img style={{height:"30px"}}src={contact} alt="" />
               {isLanguageEnglish ? "Contact" : "Liên Hệ"}
             </li>
 
             {user ? (
               <>
-                  <li className={styles["nav__list-item"]}>
+                <li className={styles["nav__list-item"]}>
                   <Link to="/games/joingame">
                     {isLanguageEnglish ? "Play" : "Chơi"}
                   </Link>
@@ -94,6 +107,7 @@ function Navbar() {
               </>
             ) : (
               <Link to="/auth" className={styles["nav__list-item"]}>
+                <img style={{height:"30px"}}src={login} alt="" />
                 {isLanguageEnglish ? "Log in" : "Đăng nhập"}
               </Link>
             )}

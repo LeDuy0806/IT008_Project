@@ -159,7 +159,7 @@ main .page {
 }
 
 .info-link:hover::after {
-  width: 50%;
+  width: 40%;
 }
 
 /* THIRD SECTION */

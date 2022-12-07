@@ -4,8 +4,15 @@ import { AUTH } from "../constants/actionTypes";
 export const login = (formData, history) => async (dispatch) => {
   try {
     const { data } = await api.login(formData);
-    dispatch({ type: AUTH, data });
-    history.push("/");
+    if(data === "Not allowed")
+    {
+      alert("sai mat khau r te")
+    }
+    else
+    {
+      dispatch({ type: AUTH, data });
+      history.push("/");
+    }
   } catch (error) {
     console.log(error);
   }
