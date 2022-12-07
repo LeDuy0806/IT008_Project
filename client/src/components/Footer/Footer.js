@@ -12,10 +12,10 @@ function Footer() {
       <div className={styles["footer-container"]}>
         <div className={styles["footer-row"]}>
           <div className={styles["footer-column"]}>
-            <h4>About</h4>
+            <h4><span >About</span></h4>
             <ul>
               <li>
-                <a href="/">"Company"</a>
+                <a href="/">Company"</a>
               </li>
               <li>
                 <a href="/">Service</a>
@@ -29,7 +29,7 @@ function Footer() {
             </ul>
           </div>
           <div className={styles["footer-column"]}>
-            <h4>Application</h4>
+            <h4><span>Application</span></h4>
             <ul>
               <li>
                 <a href="/">At home</a>
@@ -43,7 +43,7 @@ function Footer() {
             </ul>
           </div>
           <div className={styles["footer-column"]}>
-            <h4>Terms and conditions</h4>
+            <h4><span>Terms and conditions</span></h4>
             <ul>
               <li>
                 <a href="/">
@@ -56,7 +56,7 @@ function Footer() {
             </ul>
           </div>
           <div className={styles["footer-column"]}>
-            <h4>Follow us</h4>
+            <h4><span>Follow us</span></h4>
             <div className={styles["footer-social-links"]}>
               <a href="/">
                 <FacebookIcon />
