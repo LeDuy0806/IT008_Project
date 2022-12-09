@@ -1,5 +1,5 @@
 .quizes-list {
-  margin: 1.5rem;
+  margin: 2.4rem 1.5rem 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -9,58 +9,131 @@
 
 .quiz-settings {
   width: 75%;
-  padding: 5px;
+  padding: 24px;
   box-shadow: 0px 0px 5px #80838b;
 }
 
-.quiz-settings h2{
-  margin: 5px;
+.quiz-settings h2 {
+  line-height: 100%;
+  font-size: 42px;
+  font-weight: 700;
+  background-image: linear-gradient(to right, #e37a47, #f4b183);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
 .quiz-form {
-  padding: 5px;
   color: rgb(110, 110, 110);
-  font-size: 1.1rem;
-}
-
-.quiz-form input {
-  width: 90%;
-  margin-left: 5px;
+  font-size: 1.2rem;
 }
 
 .option-label {
   display: flex;
   align-items: center;
-  padding: 5px;
+  margin-top: 8px;
 }
 
-.option-buttons{
+.quiz-input {
+  margin-top: 8px;
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.quiz-input-desc {
+  resize: none;
+  font-size: 1rem;
+  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+}
+
+.option-buttons {
   display: flex;
+  margin-top: 8px;
   align-items: center;
+  justify-content: center;
 }
 
 .option-button,
 .submit-button {
-  margin: 5px;
   background-color: inherit;
   outline: none;
   color: rgb(110, 110, 110);
-  font-size: 0.8rem;
+  font-size: 1rem;
   border: 1px solid black;
   border-radius: 2%;
 }
 
-.option-button{
-  width: 100px;
-  height: 30px;
+.option-button {
+  width: 120px;
+  height: 40px;
+  /* margin-right: 8px;
+  border-radius: 4px; */
+  cursor: pointer;
+}
+
+.option-button-public {
+  border-right: none;
+}
+
+.option-button-private {
+  border-left: none;
+}
+
+@keyframes changeColorActive {
+  from {
+    background-color: white;
+  }
+
+  to {
+    background-color: rgb(19, 104, 206);
+  }
+}
+
+@keyframes changeColorDisabled {
+  from {
+    background-color: rgb(19, 104, 206);
+  }
+
+  to {
+    background-color: white;
+  }
+}
+
+.active {
+  background-color: rgb(19, 104, 206);
+  color: #fff;
+  animation-name: changeColorActive;
+  animation-duration: .5s;
+}
+
+.disabled {
+  background-color: white;
+  animation-name: changeColorDisabled;
+  animation-duration: .5s;
+}
+
+.disabled:hover {
+  background-color: rgb(185, 217, 255);
+  color: #000;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
 }
 
 .submit-button {
-  width: 120px;
+  cursor: pointer;
+  margin-top: 12px;
+  min-width: 200px;
   height: 50px;
+  background-color: green;
+  color: white;
+  border-radius: 999px;
 }
 
 .submit-button:hover {
-  background-color: green;
-  color: white;
+  opacity: .7;
 }
