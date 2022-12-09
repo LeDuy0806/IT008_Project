@@ -8,7 +8,7 @@ import globe from "../../assets/globe.svg"
 import contact from "../../assets/contact.svg"
 import  login  from "../../assets/login.svg"
 import lgout from "../../assets/lgout.svg"
-import home from "../../assets/home.svg"
+// import home from "../../assets/home.svg"
 import education from "../../assets/education.svg"
 // import logo from "../../assets/logo.png"
 import telehome from "../../assets/telehome.png"
@@ -116,7 +116,7 @@ function Navbar() {
                   
                   <div className={styles["nav__list-item_user"]}>
                     <div style={{width:"90px",height:"50px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-                      <img style={{width:"40px",height:"40px",borderRadius:"50%",objectFit:"cover"}} src={noava}></img>
+                      <img style={{width:"40px",height:"40px",borderRadius:"50%",objectFit:"cover"}} src={noava} alt=""/>
                       {user.result.firstName}
                     </div>
                   </div>
