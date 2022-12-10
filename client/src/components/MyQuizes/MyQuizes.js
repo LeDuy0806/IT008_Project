@@ -50,12 +50,13 @@ function MyQuizes() {
                     <div className={styles["option-label"]}>
                         <label>{isLanguageEnglish ? "Title" : "Tiêu đề"}</label>
                     </div>
-                    <input
+                    <textarea
                         value={quizData.name}
                         type="text"
                         name="name"
                         onChange={handleQuizChange}
                         className={`${styles["quiz-input"]}`}
+                        rows="1"
                     />
                     <div className={styles["option-label"]}>
                         <label>
