@@ -49,17 +49,22 @@ function Navbar() {
     <header>
       <nav className={styles.nav}>
         <div className={styles["menu-right"]}>
-          <ul className={styles.nav__list}>
-            <li className={styles["nav__list-logo"]}>
-              <Link to="/" className={styles["tele-link"]}>
+          <div className={styles.nav__list}>
+            
+            <Link to="/" className={styles["tele-link"]}>
+              <div className={styles["nav__list-logo"]}>
                 <span className={styles["lghome"]}>
-                  <img style={{height:"40px",borderRadius:"50%",marginBottom:"3px"}}src={telehome} alt="logoname" className={styles["tele-img"]}></img>
+                  <img style={{height:"40px",borderRadius:"50%"}}src={telehome} alt="logoname" className={styles["tele-img"]}></img>
                 </span>
-              </Link>
-              <Link to="/" className={styles["logo-link"]}>
+                <span className={styles["text-logo"]}>
+                  <h2 className={styles["text-muted"]}>TEL<span className={styles["danger"]}>EXERCISE</span></h2>
+                </span>
+              </div>
+            </Link>
+              {/* <Link to="/" className={styles["logo-link"]}>
                 <img style={{height:"50px",width:"140px"}}src={telelogo} alt="logo" className={styles["logo-img"]} />
-              </Link>
-            </li>
+              </Link> */}
+
 
             <li className={styles["nav__list-item"]}>
               <HomeOutlinedIcon fontSize='large' style={{marginRight:"15px"}}/>
@@ -71,8 +76,8 @@ function Navbar() {
               </ul>
             </li>
             <li className={styles["nav__list-item"]}>
-              <img style={{height:"30px",paddingRight:"15px"}}src={education} alt="" />
-              {isLanguageEnglish ? "Study" : "Học"}
+              <img style={{height:"30px",width:"30px",marginRight:"10px"}}src={education} alt="" />
+              {isLanguageEnglish ? "Study" : "Học tập"}
               <ul className={styles["nav__list-item-drop"]}>
                 <li>
                   <Link to="/quizes">
@@ -82,73 +87,75 @@ function Navbar() {
                 <li>{isLanguageEnglish ? "Test game" : "Kiểm tra trò chơi"}</li>
               </ul>
             </li>
-          </ul>
+          </div>
         </div>
+
         <div className={styles["menu-left"]}>
-          <div className={styles.nav__list}>
+          <div sytles ={{display:"flex"}} className={styles.nav__list}>
             <div className={styles["nav__list-item"]}>
-              <img style={{height:"30px",marginRight:"8px"}}src={contact} alt="" />
+              <img style={{height:"30px",width:"30px",marginRight:"10px"}}src={contact} alt="" />
               {isLanguageEnglish ? "Contact" : "Liên Hệ"}
             </div>
           
 
             {user ? (
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginRight:"10px"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginLeft:"10px"}}>                
                 <div style={{width:"200px",display:"flex",justifyContent:"space-around"}}>
-                  <div className={styles["nav__list-item_hight"]}>
-                    <div className={styles["divplay"]}>
-                      <Link to="/games/joingame" style={{color:"white"}}>
-                        {isLanguageEnglish ? "Play" : "Chơi"}
-                      </Link>
+                  <Link to="/games/joingame" style={{color:"white"}}>
+                    <div className={styles["nav__list-item_hight"]}>
+                      <div className={styles["divplay"]}>              
+                          {isLanguageEnglish ? "Play" : "Chơi"}              
+                      </div>
                     </div>
-                  </div>
+                  </Link>
 
                   {user.result.userType === "Teacher" && (
                     <div className={styles["nav__list-item_hight"]}>
-                      <div className={styles["divmyquiz"]}>
-                        <Link to="/myquizes" style={{color:"white"}}>
-                            {isLanguageEnglish ? "My Quizes" : "Tạo Quizes"}
-                        </Link> 
-                      </div>
+                      <Link to="/myquizes" style={{color:"white"}}>
+                        <div className={styles["divmyquiz"]}>    
+                              {isLanguageEnglish ? "My Quizes" : "Tạo Quizes"}
+                        </div>
+                      </Link>
                     </div>
                   )}
-                </div>
-                  
+                </div>     
                   <div className={styles["nav__list-item_user"]}>
-                    <div style={{width:"90px",height:"50px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div style={{width:"80px",height:"50px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                       <img style={{width:"40px",height:"40px",borderRadius:"50%",objectFit:"cover"}} src={noava} alt=""/>
                       {user.result.firstName}
                     </div>
                   </div>
-                  <div style={{backroundcolor:"red",width:"120px",marginRight:"-30px"}}>
-                    <div onClick={logout} className={styles["nav__login"]}>
-                      <img style={{height:"30px",marginRight:"8px"}}src={lgout} alt="" />
-                      {isLanguageEnglish ? "Log out" : "Đăng xuất"}
+                  <div style={{backroundcolor:"white",width:"135px"}}>
+                    <div onClick={logout} className={styles["nav__logout"]}>
+                    <img style={{height:"30px",width:"30px"}} src={lgout} alt="" />
+                      {isLanguageEnglish ? <span style={{width:"60px"}}>Log out</span> : <span style={{width:"75px"}}>Đăng xuất</span>}
                     </div>
                   </div>
               </div>
             ) : (
-                <div style={{display:"flex",height:"40px",width:"100px",alignItems:"center",justifyContent:"center"}}>
+                <div style={{display:"flex",height:"40px",width:"150px",alignItems:"center",justifyContent:"center"}}>
                   <Link to="/auth">
                       <div className={styles["nav__login"]}>
-                        <img style={{height:"30px"}} src={login} alt="" />
-                        {isLanguageEnglish ? "Log in" : "Đăng nhập"}
+                        <img style={{height:"30px",width:"30px"}} src={login} alt="" />
+                        {isLanguageEnglish ? <span style={{width:"50px"}}>Log in</span> : <span style={{width:"95px"}}>Đăng nhập</span>}
                       </div>
                   </Link>
                 </div>
             )}
-            <div className={styles["nav__list-item"]}>
-              <img src={globe} alt="" />
-              {isLanguageEnglish ? "EN" : "VI"}
-              <ul className={styles["nav__list-item-drop"]}>
-                <li
-                  onClick={() => {
-                    dispatch(changeLanguage(!isLanguageEnglish))
-                  }}
-                >
-                  {isLanguageEnglish ? "Tiếng Việt" : "English"}
-                </li>
-              </ul>
+            <div  className={styles["nav__list-item"]}>
+              <div className={styles["nav__list-item_border"]}>
+                <img style={{height:"30px",width:"40px"}} src={globe} alt="" />
+                {isLanguageEnglish ? "EN" : "VI"}
+                <ul className={styles["nav__list-item-drop"]}>
+                  <li
+                    onClick={() => {
+                      dispatch(changeLanguage(!isLanguageEnglish))
+                    }}
+                  >
+                    {isLanguageEnglish ? <span>Tiếng Việt</span> : <span>Tiếng Anh</span>}
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
