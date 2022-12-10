@@ -88,7 +88,7 @@ const register = async (req, res) => {
 
 const generateAccessToken = (userData) => {
   return jwt.sign(userData, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "25m",
+    expiresIn: "2h",
   });
 };
 
