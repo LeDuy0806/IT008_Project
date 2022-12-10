@@ -6,7 +6,7 @@
   display: flex;
   height: 12rem;
   width: 75%;
-  margin: 20px;
+  margin-top: 30px;
   transition: transform 200ms ease-in;
 }
 
@@ -51,28 +51,46 @@
   bottom: 2%;
   right: 2%;
   background-color: gray;
-  border-radius: 10%;
-  opacity: 0.7;
+  border-radius: 99px;
+  opacity: 0.8;
+  padding: 3px 8px;
+}
+
+.quiz-tags {
+  color: black;
+  font-size: 20px;
+  font-weight: 700;
 }
 
 .quiz-title {
   color: black;
-  font-weight: 900;
+  font-weight: 700;
   font-size: 30px;
 }
 
 .quiz-description {
   color: black;
-  font-size: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.like-button{
+.like-button {
   color: blue;
+  padding: 4px 6px;
   font-size: 16px;
   display: flex;
   align-items: center;
-  border: none;
+  border: 1px solid blue;
+  border-radius: 99px;
   background-color: inherit;
+}
+
+.like-button:hover {
+  background-color: rgb(229, 229, 242);
 }
 
 .quiz-card:hover {
