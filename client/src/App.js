@@ -3,7 +3,6 @@ import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
-import Dashboard from "./components/Dashboard/Dashboard";
 // import Footer from "./components/Footer/Footer";
 import QuizCreator from "./components/QuizCreator/QuizCreator";
 import Quizes from "./components/Quizes/Quizes";
@@ -53,7 +52,6 @@ function App() {
                     component={PlayerScreen}
                 />
                 <Route path="/myquizes" exact component={MyQuizes} />
-                <Route path="/dashboard" exact component={Dashboard} />
             </Switch>
             {/* <Footer /> */}
             {/* Chỉ màn hình Home hiện Footer */}
