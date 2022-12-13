@@ -13,6 +13,8 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "./Input";
 import { login, register } from "../../actions/auth";
+import Notify from "../Notify/notify";
+import { invalid } from "moment";
 
 const initialState = {
   userType: "",
@@ -24,6 +26,8 @@ const initialState = {
   confirmPassword: "",
 };
 
+
+
 function Auth() {
   const classes = useStyles();
   const [isSignup, setIsSignup] = useState(false);
@@ -31,22 +35,48 @@ function Auth() {
   const [formData, setFormData] = useState(initialState);
   const history = useHistory();
   const dispatch = useDispatch();
+  const [notify,setNotify]=useState(false);
+  const [userError,setUserError]=useState(false);
 
-  const isLanguageEnglish = useSelector((state) => state.language.isEnglish)
+
+  const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+
+  // const Eng="The username/password provided is incorrect";
+  // const Vie="Tên đăng nhập hoặc mật khẩu sai";
+
+  const TextSignIn={'Eng':"The username/password provided is incorrect!", 'Vie':"Tên đăng nhập hoặc mật khẩu sai!"}
+  const TextSignUp={'Eng':"Sign up successfully!", 'Vie':"Đăng kí thành công!"}
+
+
+  const handleNotify=(notify)=>{
+    setNotify(!notify)
+  }
+
+  const handleuserError=(a)=>{
+    console.log(a);
+    setUserError(a)
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (isSignup) {
-      dispatch(register(formData, history))
+      dispatch(register(formData, history,handleNotify,handleuserError))
     } else {
-      const login_data = login(formData, history)
-      console.log(login_data)
-      dispatch(login(formData, history))
+      dispatch(login(formData, history,handleNotify,handleuserError))
     }
   };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    if(notify===true)
+    {
+      setNotify(!notify);
+    }
   };
+
+  
+
+  
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -54,9 +84,15 @@ function Auth() {
     setIsSignup((prevIsSignup) => !prevIsSignup);
     setShowPassword(false);
   };
+
+  
+
   return (
+    <div style={{width:"100vw",background:"linear-gradient(120deg, #3ca7ee, #9b408f)",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
+
     <Container component="main" maxWidth="xs" >
-      <Paper className={classes.paper} elevation={3} style={{background:"linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%)"}}>
+      {(notify)?<Notify isLan={isLanguageEnglish} text={isSignup?TextSignUp:TextSignIn} isClose={handleNotify}/>:<></>}
+      <Paper className={classes.paper} elevation={3} style={{background:"linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%) "}}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -101,17 +137,20 @@ function Auth() {
             )}
 
             <Input
+              invalid={userError&&notify&&!isSignup}
               name="userName"
               label="User Name"
               handleChange={handleChange}
             />
             <Input
+              invalid={notify&&!isSignup}
               name="password"
               label="Password"
               handleChange={handleChange}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
+            {(notify&&! isSignup)?<span style={{color:"red",marginLeft:"8px"}}>Mật khẩu hoặc tài khoảng của bạn bị sai!</span>:<span>{""}</span>}
             {isSignup && (
               <Input
                 name="confirmPassword"
@@ -136,7 +175,7 @@ function Auth() {
               ? "Sign in"
               : "Đăng nhập"}
           </Button>
-          <Grid container justify="flex-end">
+          <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
                 {isSignup
@@ -151,7 +190,10 @@ function Auth() {
           </Grid>
         </form>
       </Paper>
+      
     </Container>
+    </div>
+    
   )
 }
 
