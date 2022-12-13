@@ -150,7 +150,10 @@ function Auth() {
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            {(notify&&! isSignup)?<span style={{color:"red",marginLeft:"8px"}}>Mật khẩu hoặc tài khoảng của bạn bị sai!</span>:<span>{""}</span>}
+            {(notify&&! isSignup)?<span style={{color:"red",marginLeft:"8px"}}>{
+            (userError?(isLanguageEnglish?"Account does not exist!":"Tài khoảng không tồn tại!"):
+            (isLanguageEnglish?"Wrong password!":"Mật khẩu bạn nhập bị sai"))}
+            </span>:<span>{""}</span>}
             {isSignup && (
               <Input
                 name="confirmPassword"
