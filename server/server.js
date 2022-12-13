@@ -23,7 +23,23 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
-app.use(express.json({limit: '5mb'}));
+// const connectDB = async () => {
+//   try {
+//     await mongoose.connect('mongodb+srv://levanduy0806:duylangtu931@leduy.lrzfwvv.mongodb.net/?retryWrites=true&w=majority', {
+//       // useCreateIndex: true,
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//       // useFindAndModify: false
+//     })
+//     console.log("Connected to database")
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }
+
+// connectDB()
+
+app.use(express.json({ limit: '5mb' }));
 app.use(cors());
 // app.use(authenticateToken);
 //app.use(regenerateAccessToken);
@@ -41,7 +57,7 @@ app.use("/api/games", gameRouter);
 app.use("/api/playerResults", playerResultRouter);
 app.use("/api/leaderboard", leaderboardRouter)
 
-app.listen(process.env.PORT, () =>
+app.listen(process.env.PORT || 5000, () =>
   console.log(`Server started on port ${process.env.PORT}`)
 );
 
@@ -55,7 +71,7 @@ const io = require("socket.io")(3001, {
 })
 
 let game
-let leaderboard 
+let leaderboard
 let players = []
 
 const addPlayer = (userName, socketId) => {
@@ -75,7 +91,7 @@ io.on("connection", (socket) => {
   socket.on("init-game", (newGame, newLeaderboard) => {
     game = JSON.parse(JSON.stringify(newGame))
     leaderboard = JSON.parse(JSON.stringify(newLeaderboard))
-    socket.join(game.pin) 
+    socket.join(game.pin)
     hostId = socket.id
     console.log(
       "Host with id " + socket.id + " started game and joined room: " + game.pin
@@ -90,11 +106,11 @@ io.on("connection", (socket) => {
       socket.join(game.pin)
       console.log(
         "Student " +
-          user.userName +
-          " with id " +
-          socket.id +
-          " joined room " +
-          game.pin
+        user.userName +
+        " with id " +
+        socket.id +
+        " joined room " +
+        game.pin
       )
       let player = getPlayer(socketId)
       io.emit("player-added", player)
@@ -105,10 +121,10 @@ io.on("connection", (socket) => {
 
   socket.on("start-game", (newQuiz) => {
     quiz = JSON.parse(JSON.stringify(newQuiz))
-    console.log("Move players to game") 
+    console.log("Move players to game")
     console.log(game.pin)
     socket.to(game.pin).emit("move-to-game-page", game._id)
-  }) 
+  })
 
   socket.on("question-preview", (cb) => {
     cb()
@@ -120,7 +136,7 @@ io.on("connection", (socket) => {
     console.log("Send question " + question.questionIndex + " data to players")
     socket.to(game.pin).emit("host-start-question-timer", time, question)
     cb()
-  }) 
+  })
 
   socket.on("send-answer-to-host", (data, score) => {
     let player = getPlayer(socket.id)

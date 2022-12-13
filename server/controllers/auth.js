@@ -8,7 +8,7 @@ const jwt = require("jsonwebtoken");
 const login = async (req, res) => {
   const user = await User.findOne({ userName: req.body.userName });
   if (user == null) {
-    return res.status(400).send("Cannot find user");
+    return res.send("Cannot find user");
   }
   try {
     if (await bcrypt.compare(req.body.password, user.password)) {
