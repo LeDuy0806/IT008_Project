@@ -1,0 +1,37 @@
+.notify {
+    position:absolute;
+    /* display:flex,
+    marginTop:"30px",
+    right:"20px",
+    backgroundColor:"gray",
+    justifyContent:"space-between",
+    alignItems:"center",
+    width:"300px",
+    borderLeft:"solid 8px red" */
+    display:flex;
+    right:20px;
+    background-color: rgb(234, 231, 231);
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    border-left: solid 8px red;
+    top: 70px;
+    animation: noti 0.2s ease;
+} 
+
+
+.notify_close {
+    background-color: rgb(234, 231, 231);
+    border-style: none;
+}
+
+.notify_close:hover{
+    background-color: rgb(134, 130, 130);
+}
+
+
+@keyframes noti {
+    0%{
+        transform: translate(100%);
+    }
+}

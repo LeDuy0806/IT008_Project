@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
@@ -14,11 +14,15 @@ import JoinGame from "./components/Game/JoinGame/JoinGame";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
 import { createSocket } from "./actions/socket";
+// import Notify from "./components/Notify/notify";
+// import Dashboard from "./components/Dashboard/dashboard";
+// import Notify from "./components/Notify/notify";
+// import dashboard from "./components/Dashboard/dashboard";
+
 
 function App() {
     const user = JSON.parse(localStorage.getItem("profile"));
     const dispatch = useDispatch();
-
     useEffect(() => {
         const socket = io("http://localhost:3001", {
             transports: ["websocket"],
@@ -28,9 +32,19 @@ function App() {
         return () => socket.disconnect();
     }, [dispatch]);
 
+
+    // const [isNav,setIsNav]=useState(false)
+
+    // const handleNav=()=>{
+    //     setIsNav(!isNav);
+    // }
+
+
+
     return (
         <BrowserRouter>
-            <Navbar />
+            {/* {(isNav===true)&&(<Navbar/>)} */}
+            <Navbar/>
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route
@@ -52,6 +66,8 @@ function App() {
                     component={PlayerScreen}
                 />
                 <Route path="/myquizes" exact component={MyQuizes} />
+                {/* {(isNav===false) && <Dashboard handleNav={handleNav}/>} */}
+
             </Switch>
             {/* <Footer /> */}
             {/* Chỉ màn hình Home hiện Footer */}
