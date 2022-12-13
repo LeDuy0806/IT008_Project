@@ -6,6 +6,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 function Input({
   name,
+  invalid,
   handleChange,
   label,
   half,
@@ -16,6 +17,7 @@ function Input({
   return (
     <Grid item xs={12} sm={half ? 6 : 12}>
       <TextField
+        error={invalid}
         name={name}
         onChange={handleChange}
         variant="outlined"

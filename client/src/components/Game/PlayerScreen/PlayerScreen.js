@@ -156,13 +156,13 @@ function PlayerScreen() {
           <div className={styles["answers-container"]}>
             <Answer
               icon={triangle}
-              showText={true}
+              showText={false}
               isAnswerClicked={answer.answers.includes("a")}
               onClick={() => checkAnswer("a")}
             />
             <Answer
               icon={diamond}
-              showText={true}
+              showText={false}
               isAnswerClicked={answer.answers.includes("b")}
               onClick={() => checkAnswer("b")}
             />
@@ -170,13 +170,13 @@ function PlayerScreen() {
               <>
                 <Answer
                   icon={circle}
-                  showText={true}
+                  showText={false}
                   isAnswerClicked={answer.answers.includes("c")}
                   onClick={() => checkAnswer("c")}
                 />
                 <Answer
                   icon={square}
-                  showText={true}
+                  showText={false}
                   isAnswerClicked={answer.answers.includes("d")}
                   onClick={() => checkAnswer("d")}
                 />
