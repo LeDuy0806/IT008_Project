@@ -30,7 +30,8 @@ function Navbar() {
     dispatch({ type: actionType.LOGOUT })
     history.push("/auth")
     setUser(null)
-    socket.disconnect()
+    if(user===null)
+      socket.disconnect()
   }
 
   useEffect(() => {
@@ -50,7 +51,6 @@ function Navbar() {
       <nav className={styles.nav}>
         <div className={styles["menu-right"]}>
           <div className={styles.nav__list}>
-            
             <Link to="/" className={styles["tele-link"]}>
               <div className={styles["nav__list-logo"]}>
                 <span className={styles["lghome"]} style={{marginTop:"3px"}}>
@@ -61,9 +61,7 @@ function Navbar() {
                 </span>
               </div>
             </Link>
-              {/* <Link to="/" className={styles["logo-link"]}>
-                <img style={{height:"50px",width:"140px"}}src={telelogo} alt="logo" className={styles["logo-img"]} />
-              </Link> */}
+                
 
 
             <li className={styles["nav__list-item"]}>
