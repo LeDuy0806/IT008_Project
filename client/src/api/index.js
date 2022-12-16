@@ -1,6 +1,10 @@
 import axios from "axios"
 
-const API = axios.create({ baseURL: "http://localhost:3000/api" })
+const BASE_URL ="http://localhost:3000"
+// "https://it008-project.onrender.com"
+// 
+
+const API = axios.create({ baseURL: `${BASE_URL}/api` })
 
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
@@ -63,7 +67,7 @@ export const updateQuestionLeaderboard = (questionResult, id) =>
 export const updateCurrentLeaderboard = (result, id) =>
   API.patch(`/leaderboard/${id}/currentleaderboard`, result)
 
-const AUTH_API = axios.create({ baseURL: "http://localhost:3000/api/auth" })
+const AUTH_API = axios.create({ baseURL: `${BASE_URL}/api/auth` })
 
 export const login = (formData) => AUTH_API.post("/login", formData)
 export const register = (formData) => AUTH_API.post("/register", formData)

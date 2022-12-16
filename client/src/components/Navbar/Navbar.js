@@ -97,14 +97,12 @@ function Navbar() {
           
 
             {user ? (
-              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginLeft:"10px"}}>                
-                <div style={{width:"200px",display:"flex",justifyContent:"space-around"}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>                
+                <div style={{display:"flex",justifyContent:"space-around"}}>
                   <Link to="/games/joingame" style={{color:"white"}}>
-                    <div className={styles["nav__list-item_hight"]}>
-                      <div className={styles["divplay"]}>              
+                      <div className={`${styles["divplay"]} ${styles["nav__list-item_hight"]}`}>              
                           {isLanguageEnglish ? "Play" : "Chơi"}              
                       </div>
-                    </div>
                   </Link>
 
                   {user.result.userType === "Teacher" && (
@@ -118,17 +116,15 @@ function Navbar() {
                   )}
                 </div>     
                   <div className={styles["nav__list-item_user"]}>
-                    <div style={{width:"80px",height:"50px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <div style={{width:"fit-content",height:"50px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
                       <img style={{width:"40px",height:"40px",borderRadius:"50%",objectFit:"cover"}} src={noava} alt=""/>
-                      {user.result.firstName}
+                      <span style={{whiteSpace :"nowrap",marginLeft:"4px"}}>{user.result.firstName + " " + user.result.lastName}</span>
                     </div>
                   </div>
-                  <div style={{backroundcolor:"white",width:"155px"}}>
                     <div onClick={logout} className={styles["nav__logout"]}>
-                    <img style={{height:"30px",width:"30px"}} src={lgout} alt="" />
-                      {isLanguageEnglish ? <span style={{width:"60px"}}>Log out</span> : <span style={{width:"95px"}}>Đăng xuất</span>}
+                      <img style={{height:"30px",width:"30px"}} src={lgout} alt="" />
+                      <span>{isLanguageEnglish ? "Log out" : "Đăng Xuất"}</span>
                     </div>
-                  </div>
               </div>
             ) : (
                 <div style={{display:"flex",height:"40px",width:"150px",alignItems:"center",justifyContent:"center"}}>
