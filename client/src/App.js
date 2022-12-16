@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import Navbar from "./components/Navbar/Navbar";
 import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import Home from "./components/Home/Home";
@@ -15,6 +15,8 @@ import JoinGame from "./components/Game/JoinGame/JoinGame";
 import { io } from "socket.io-client";
 import { useDispatch } from "react-redux";
 import { createSocket } from "./actions/socket";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 // import Notify from "./components/Notify/notify";
 // import Dashboard from "./components/Dashboard/dashboard";
 // import Notify from "./components/Notify/notify";
@@ -44,6 +46,7 @@ function App() {
 
     return (
         <BrowserRouter>
+            <ToastContainer/>
             {/* {(isNav===true)&&(<Navbar/>)} */}
             <Navbar/>
             <Switch>
