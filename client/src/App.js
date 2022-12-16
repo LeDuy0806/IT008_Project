@@ -47,28 +47,28 @@ function App() {
             {/* {(isNav===true)&&(<Navbar/>)} */}
             <Navbar/>
             <Switch>
-                <Route path="/" exact component={Home} />
-                <Route
-                    path="/auth"
-                    exact
-                    component={() =>
-                        user === null ? <Auth /> : <Redirect to="/" />
-                    }
-                />
-                <Route path="/quizes" exact component={Quizes} />
-                <Route path="/quizes/search" exact component={Quizes} />
-                <Route path="/quizes/:id" exact component={QuizDetails} />
-                <Route path="/myquizes/:id" exact component={QuizCreator} />
-                <Route path="/games/joingame" exact component={JoinGame} />
-                <Route path="/games/host/:id" exact component={HostScreen} />
-                <Route
-                    path="/games/player/:id"
-                    exact
-                    component={PlayerScreen}
-                />
-                <Route path="/myquizes" exact component={MyQuizes} />
-                {/* <Route path="/dashboard" exact component={Dashboard}  */}
-                {/* {(isNav===false) && <Dashboard handleNav={handleNav}/>} */}
+                    <Route path="/" exact component={Home} />
+                    <Route
+                        path="/auth"
+                        exact
+                        component={() =>
+                            user === null ? <Auth /> : <Redirect to="/" />
+                        }
+                    />
+                    <Route path="/quizes" exact component={Quizes} />
+                    <Route path="/quizes/search" exact component={Quizes} />
+                    <Route path="/quizes/:id" exact component={QuizDetails} />
+                    <Route path="/myquizes/:id" exact component={QuizCreator} />
+                    <Route path="/games/joingame" exact component={JoinGame} />
+                    <Route path="/games/host/:id" exact component={HostScreen} />
+                    <Route
+                        path="/games/player/:id"
+                        exact
+                        component={PlayerScreen} 
+                    />
+                    <Route path="/myquizes" exact component={MyQuizes} />
+                    {/* <Route path="/dashboard" exact component={Dashboard}  */}                
+                    {/* {(isNav===false) && <Dashboard handleNav={handleNav}/>} */}
             </Switch>
             {/* <Footer /> */}
             {/* Chỉ màn hình Home hiện Footer */}

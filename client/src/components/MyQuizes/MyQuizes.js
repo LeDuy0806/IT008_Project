@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTeacherQuizes, createQuiz } from "../../actions/quiz";
 import styles from "./myQuizes.module.css";
 import { useHistory } from "react-router-dom";
+import Notify from "../Notify/notify";
 
 function MyQuizes() {
     const user = JSON.parse(localStorage.getItem("profile"));
@@ -22,6 +23,11 @@ function MyQuizes() {
     });
 
     const [isQuizPublic, setIsQuizPublic] = useState(true);
+    const [notify,setNotify]=useState(false);
+
+    const handleNotify=(notify)=>{
+        setNotify(!notify)
+      }
 
     useEffect(() => {
         dispatch(getTeacherQuizes(user.result._id));
@@ -31,15 +37,25 @@ function MyQuizes() {
     const { quizes } = useSelector((state) => state.quiz);
 
     const handleQuizSubmit = () => {
-        dispatch(createQuiz(quizData, history));
+        dispatch(createQuiz(quizData, history,handleNotify));
     };
 
     const handleQuizChange = (e) => {
         setQuizData({ ...quizData, [e.target.name]: e.target.value });
+        if(notify===true)
+        {
+            setNotify(!notify)
+        }
     };
+    
 
-    return (
+    const NotifyTitleExist={'Eng':'Title already exists !','Vie':'Chủ đề đã tồn tại !'}
+    const NotifyTitleEmtpty={'Eng':'Please enter the title !','Vie':'Vui lòng nhập chủ đề !'}
+
+    
+    return (   
         <div className={styles["quizes-list"]}>
+            {(notify)? <Notify isLan={isLanguageEnglish} text={(quizData.name==="")?NotifyTitleEmtpty:(NotifyTitleExist)} isClose={handleNotify} color="red" />:<></>}
             <div className={styles["quiz-settings"]}>
                 <h2>
                     {isLanguageEnglish

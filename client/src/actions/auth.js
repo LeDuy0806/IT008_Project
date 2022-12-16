@@ -13,14 +13,12 @@ export const login = (formData, history,handleNotify,handleuserError) => async (
       // handleNotify();    
       if(data==="Cannot find user")
       {
-        console.log(data);
         handleNotify();  
         handleuserError(true);
       }
 
       if(data==="Not allowed")
       {     
-        console.log(data);
         handleNotify(); 
         handleuserError(false);
       }
@@ -28,7 +26,6 @@ export const login = (formData, history,handleNotify,handleuserError) => async (
     else
     {
       dispatch({ type: AUTH, data });
-      console.log(data);
       history.push("/");
     }
   } catch (error) {
@@ -39,7 +36,6 @@ export const login = (formData, history,handleNotify,handleuserError) => async (
 export const register = (formData, history,handleNotify) => async (dispatch) => {
   try {
     const { data } = await api.register(formData);
-    console.log(data);
     dispatch({ type: AUTH, data });
     handleNotify();
     history.push("/Auth");

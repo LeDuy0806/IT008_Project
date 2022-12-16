@@ -45,6 +45,8 @@ export const getQuizesBySearch = (searchQuery) => async (dispatch) => {
     const { data } = await api.fetchQuizesBySearch(searchQuery)
     dispatch({ type: FETCH_QUIZES_BY_SEARCH, payload: data })
     dispatch({ type: END_LOADING })
+    // console.log(data)
+    
   } catch (error) {
     console.log(error)
   }
@@ -70,13 +72,13 @@ export const getQuestions = () => async (dispatch) => {
   }
 }
 
-export const createQuiz = (quiz, history) => async (dispatch) => {
+export const createQuiz = (quiz, history,handleNotify) => async (dispatch) => {
   try {
     const { data } = await api.createQuiz(quiz)
     dispatch({ type: CREATE_QUIZ, payload: data })
     history.push(`/myquizes/${data._id}`)
   } catch (error) {
-    console.log(error)
+    handleNotify();  
   }
 }
 
