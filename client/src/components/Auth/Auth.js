@@ -88,10 +88,10 @@ function Auth() {
   
 
   return (
-    <div style={{width:"100vw",background:"linear-gradient(120deg, #3ca7ee, #9b408f)",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
+<div style={{width:"100vw",background:"linear-gradient(120deg, #3ca7ee, #9b408f)",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
 
-    <Container component="main" maxWidth="xs" >
-      {(notify)?<Notify isLan={isLanguageEnglish} text={isSignup?TextSignUp:TextSignIn} isClose={handleNotify}/>:<></>}
+<Container component="main" maxWidth="xs" >
+  {(notify)?<Notify isLan={isLanguageEnglish} text={isSignup?TextSignUp:TextSignIn} isClose={handleNotify}/>:<></>}
       <Paper className={classes.paper} elevation={3} style={{background:"linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%) "}}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />

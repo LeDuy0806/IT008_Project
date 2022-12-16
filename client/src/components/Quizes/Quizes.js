@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Quiz from "./Quiz/Quiz";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -14,12 +14,14 @@ import {
 import useStyles from "./styles";
 import { getQuizesBySearch } from "../../actions/quiz";
 import Pagination from "../Pagination/Pagination";
+import Noresult from "../Noresults/noresults";
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 function Quizes() {
+
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -32,6 +34,7 @@ function Quizes() {
 
     const [search, setSearch] = useState("");
     const [tags, setTags] = useState([]);
+    const [noresults,setNoresult]=useState(false)
 
     const searchPost = () => {
         if (search.trim() !== "" || tags.length !== 0) {
@@ -46,6 +49,22 @@ function Quizes() {
             history.push("/quizes");
         }
     };
+
+    useLayoutEffect(()=>{
+        console.log(quizes.length)
+        if(quizes.length===0)
+        {
+            setNoresult(true)
+            console.log("Khong co")
+        }
+        else
+        {
+            setNoresult(false)
+            console.log("Co")
+        }
+    },[quizes.length])
+
+    
 
     const handleKeyPress = (e) => {
         if (e.keyCode === 13) {
@@ -99,6 +118,7 @@ function Quizes() {
                     {isLanguageEnglish ? "Search" : "Tìm kiếm"}
                 </Button>
             </AppBar>
+            {noresults&&<Noresult/>}
             {isLoading ? (
                 <CircularProgress />
             ) : (
