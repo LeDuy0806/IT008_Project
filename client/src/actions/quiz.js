@@ -13,6 +13,8 @@ import {
   END_LOADING,
   COMMENT_QUIZ
 } from "../constants/actionTypes"
+import { toast } from "react-toastify"
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 export const getQuizes = () => async (dispatch) => {
   try {
@@ -74,10 +76,32 @@ export const getQuestions = () => async (dispatch) => {
 
 export const createQuiz = (quiz, history,handleNotify) => async (dispatch) => {
   try {
-    const { data } = await api.createQuiz(quiz)
+    // const { data } = await api.createQuiz(quiz)
+    const {data} = await toast.promise(
+      api.createQuiz(quiz),{
+        pending: {
+            render(){
+              return 'Promise is pending'
+            },
+            position:"top-center",
+            onClose: ()=>{}
+        },
+        success:{
+            render(){
+              return 'Create new Quiz successfully!'
+            },
+            icon: <CheckCircleIcon style={{color: "green"}}/>,
+            style:{ color: "#333"},
+            position: "top-center",
+            autoClose: 2000,
+            delay: 200,
+        }
+      }
+    )
     dispatch({ type: CREATE_QUIZ, payload: data })
     history.push(`/myquizes/${data._id}`)
   } catch (error) {
+    console.log(error)
     handleNotify();  
   }
 }

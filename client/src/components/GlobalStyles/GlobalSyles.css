@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,800&display=swap');
 
+:root{
+  --text-color : "#333",
+  /* 094074-3c6997-5adbff-ffdd4a-fe9000 */
+  /* 44af69-f8333c-fcab10-2b9eb3-dbd5b5 */
+}
 * {
   margin: 0;
   padding: 0;

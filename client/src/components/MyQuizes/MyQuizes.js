@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getTeacherQuizes, createQuiz } from "../../actions/quiz";
 import styles from "./myQuizes.module.css";
 import { useHistory } from "react-router-dom";
-import Notify from "../Notify/notify";
+import { toast } from "react-toastify";
 
 function MyQuizes() {
     const user = JSON.parse(localStorage.getItem("profile"));
@@ -23,39 +23,52 @@ function MyQuizes() {
     });
 
     const [isQuizPublic, setIsQuizPublic] = useState(true);
-    const [notify,setNotify]=useState(false);
 
-    const handleNotify=(notify)=>{
-        setNotify(!notify)
-      }
+    const NotifyTitleExist={'Eng':'Title already exists !','Vie':'Chủ đề đã tồn tại !'}
+    const NotifyTitleEmtpty={'Eng':'Please enter the title !','Vie':'Vui lòng nhập chủ đề !'}
+    const handleNotify=()=>{
+        let text='';
+        if(quizData.name === ""){
+            text = isLanguageEnglish ? NotifyTitleEmtpty.Eng : NotifyTitleEmtpty.Vie
+        }else{
+            text = isLanguageEnglish ? NotifyTitleExist.Eng : NotifyTitleExist.Vie
+        }
+
+        toast.warning(text,{
+            style:{ color: "#fff"},
+            position: "top-center",
+            autoClose: 3000,
+            theme: "dark",
+        })
+    }
 
     useEffect(() => {
         dispatch(getTeacherQuizes(user.result._id));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
-    const { quizes } = useSelector((state) => state.quiz);
+    const {isLoading, quizes } = useSelector((state) => state.quiz);
 
     const handleQuizSubmit = () => {
-        dispatch(createQuiz(quizData, history,handleNotify));
+        if(quizData.name===''){
+            handleNotify()
+        }
+        else
+        {
+            dispatch(createQuiz(quizData, history,handleNotify));
+        }
     };
 
     const handleQuizChange = (e) => {
         setQuizData({ ...quizData, [e.target.name]: e.target.value });
-        if(notify===true)
-        {
-            setNotify(!notify)
-        }
     };
     
 
-    const NotifyTitleExist={'Eng':'Title already exists !','Vie':'Chủ đề đã tồn tại !'}
-    const NotifyTitleEmtpty={'Eng':'Please enter the title !','Vie':'Vui lòng nhập chủ đề !'}
+
 
     
     return (   
         <div className={styles["quizes-list"]}>
-            {(notify)? <Notify isLan={isLanguageEnglish} text={(quizData.name==="")?NotifyTitleEmtpty:(NotifyTitleExist)} isClose={handleNotify} color="red" />:<></>}
             <div className={styles["quiz-settings"]}>
                 <h2>
                     {isLanguageEnglish
@@ -64,7 +77,7 @@ function MyQuizes() {
                 </h2>
                 <div className={styles["quiz-form"]}>
                     <div className={styles["option-label"]}>
-                        <label>{isLanguageEnglish ? "Title" : "Tiêu đề"}</label>
+                        <label>{isLanguageEnglish ? "Title" : "Chủ đề"}</label>
                     </div>
                     <textarea
                         value={quizData.name}
@@ -133,9 +146,9 @@ function MyQuizes() {
                     </div>
                 </div>
             </div>
-            {quizes.map((quiz) => (
+            {!isLoading ? quizes.map((quiz) => (
                 <MyQuiz key={quiz._id} quiz={quiz} />
-            ))}
+            )) : <MyQuiz quiz={null} />}
         </div>
     );
 }

@@ -78,13 +78,8 @@ function Auth() {
         icon: <CheckCircleIcon style={{color: "green"}}/>,
         style:{ color: "#333"},
         position: "top-center",
-        autoClose: 3000,
+        autoClose: 2000,
         delay: 300,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
         theme: "light",
       })
     }
@@ -100,12 +95,7 @@ function Auth() {
         position: "top-center",
         style:{ color: "#333"},
         autoClose: 3000,
-        delay: 400,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
+        delay: 300,
         theme: "light",
       })
     }
