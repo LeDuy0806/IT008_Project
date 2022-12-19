@@ -21,6 +21,7 @@
 .image-container {
   position: relative;
   color: white;
+  cursor: pointer;
 }
 
 .quiz-image {
@@ -79,9 +80,10 @@
 }
 
 .like-button {
-  color: blue;
+  color: #125DA2;
   padding: 4px 6px;
   font-size: 16px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   border: 1px solid blue;
@@ -91,8 +93,9 @@
 
 .like-button:hover {
   background-color: rgb(229, 229, 242);
+  cursor: pointer;
 }
 
 .quiz-card:hover {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }

@@ -23,7 +23,7 @@ const Post = () => {
 
   useEffect(() => {
     dispatch(getQuiz(id))
-  }, [id])
+  }, [dispatch, id])
 
   useEffect(() => {
     if (quiz) {
@@ -31,11 +31,11 @@ const Post = () => {
         getQuizesBySearch({ search: "none", tags: quiz?.tags.join(",") })
       )
     }
-  }, [quiz])
+  }, [dispatch])
 
   if (!quiz) return null
 
-  if (isLoading) {
+  if (isLoading || quiz === null) {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
         <CircularProgress size="7em" />

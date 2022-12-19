@@ -46,7 +46,14 @@ function App() {
 
     return (
         <BrowserRouter>
-            <ToastContainer/>
+            <ToastContainer 
+                hideProgressBar={false}
+                closeOnClick={true}
+                pauseOnHover={true}
+                pauseOnFocusLoss={true}
+                draggable={true}
+                theme="light"
+            />
             {/* {(isNav===true)&&(<Navbar/>)} */}
             <Navbar/>
             <Switch>
