@@ -7,14 +7,15 @@ import {
   Typography,
   Container,
 } from "@material-ui/core";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import useStyles from "./styles";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Input from "./Input";
 import { login, register } from "../../actions/auth";
-import Notify from "../Notify/notify";
-import { invalid } from "moment";
+import { toast } from "react-toastify";
+
 
 const initialState = {
   userType: "",
@@ -25,7 +26,13 @@ const initialState = {
   password: "",
   confirmPassword: "",
 };
-
+const initialAuthError={
+  userNameE: false,
+  passwordE: false,
+  userNameRegisterE : false,
+  emailRegisterE: false,
+  confirmPasswordE: false,
+}
 
 
 function Auth() {
@@ -35,48 +42,121 @@ function Auth() {
   const [formData, setFormData] = useState(initialState);
   const history = useHistory();
   const dispatch = useDispatch();
-  const [notify,setNotify]=useState(false);
-  const [userError,setUserError]=useState(false);
+  // const [notify,setNotify]=useState({isNotify:false, isSuccess: false});
+  const [authError,setAuthError]=useState(initialAuthError);
 
+  const {userNameE,passwordE,userNameRegisterE, emailRegisterE,confirmPasswordE} = authError
 
   const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
 
-  // const Eng="The username/password provided is incorrect";
-  // const Vie="Tên đăng nhập hoặc mật khẩu sai";
-
-  const TextSignIn={'Eng':"The username/password provided is incorrect!", 'Vie':"Tên đăng nhập hoặc mật khẩu sai!"}
-  const TextSignUp={'Eng':"Sign up successfully!", 'Vie':"Đăng kí thành công!"}
-
-
-  const handleNotify=(notify)=>{
-    setNotify(!notify)
+  const TextSignUp={
+    isSuccess:{
+      'Eng':"Sign up successfully", 'Vie':"Sign up successfully"
+    },
+    isFalse:{
+      'Eng':"Registration failed!", 'Vie':"Đăng kí không thành công!"
+    }
   }
-
-  const handleuserError=(a)=>{
-    console.log(a);
-    setUserError(a)
+  const TextSignIn={
+    isSuccess:{
+      'Eng':"Logged in successfully!", 'Vie':"Đăng nhập thành công"
+    },
+    isFalse:{
+      'Eng':"The username/password provided is incorrect!", 'Vie':"Tên đăng nhập hoặc mật khẩu sai!"
+    }
+  }
+  const handleNotify = (isSuccess)=>{
+    var text;
+    if(isSuccess){
+      if(isLanguageEnglish){
+        text = isSignup ? TextSignUp.isSuccess.Eng : TextSignIn.isSuccess.Eng
+      }
+      else{
+        text = isSignup ? TextSignUp.isSuccess.Vie : TextSignIn.isSuccess.Vie
+      }
+      toast(text,{
+        icon: <CheckCircleIcon style={{color: "green"}}/>,
+        style:{ color: "#333"},
+        position: "top-center",
+        autoClose: 2000,
+        delay: 300,
+        theme: "light",
+      })
+    }
+    else{
+      
+      if(isLanguageEnglish){
+        text = isSignup ? TextSignUp.isFalse.Eng : TextSignIn.isFalse.Eng
+      }
+      else{
+        text = isSignup ? TextSignUp.isFalse.Vie : TextSignIn.isFalse.Vie
+      }
+      toast.error(text,{
+        position: "top-center",
+        style:{ color: "#333"},
+        autoClose: 3000,
+        delay: 300,
+        theme: "light",
+      })
+    }
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     if (isSignup) {
-      dispatch(register(formData, history,handleNotify,handleuserError))
+      !confirmPasswordE && dispatch(register(formData, history,handleNotify,setAuthError))
     } else {
-      dispatch(login(formData, history,handleNotify,handleuserError))
+      dispatch(login(formData, history,handleNotify,setAuthError))
     }
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    if(notify===true)
-    {
-      setNotify(!notify);
+    var name = e.target.name;
+    switch(name){
+      case 'confirmPassword':
+        if(e.target.value !== formData.password)
+        {
+          !confirmPasswordE &&
+          setAuthError((preState) =>{ 
+            var newState = {...preState, confirmPasswordE : true}
+            return newState}
+          )
+        }
+        else{
+          setAuthError((preState) =>{ 
+            var newState = {...preState, confirmPasswordE : false}
+            return newState}
+          )
+        }
+        break;
+      case 'password':
+        if(passwordE)
+          setAuthError((preState) =>{ 
+            var newState = {...preState, passwordE : false}
+            return newState}
+          )
+        break;
+      case "userName":
+        if(userNameE || userNameRegisterE)
+          setAuthError((preState) =>{
+            var newState = {...preState, userNameE : false, userNameRegisterE: false}
+            return newState
+          })
+        break;
+      case 'mail':
+        if(emailRegisterE)
+          setAuthError((preState) =>{ 
+            var newState = {...preState, emailRegisterE : false}
+            return newState}
+          )
+        break;
+      default:
+        break;
     }
+
   };
 
-  
-
-  
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
@@ -88,10 +168,8 @@ function Auth() {
   
 
   return (
-    <div style={{width:"100vw",background:"linear-gradient(120deg, #3ca7ee, #9b408f)",height:"100vh",display:"flex",justifyContent:"center",alignItems:"center"}}>
-
+    <div style={{width:"100vw",background:"linear-gradient(120deg, #3ca7ee, #9b408f)",height:"calc(100vh - 48px)",display:"flex",justifyContent:"center",alignItems:"center"}}>
     <Container component="main" maxWidth="xs" >
-      {(notify)?<Notify isLan={isLanguageEnglish} text={isSignup?TextSignUp:TextSignIn} isClose={handleNotify}/>:<></>}
       <Paper className={classes.paper} elevation={3} style={{background:"linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%) "}}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
@@ -128,36 +206,55 @@ function Auth() {
                   handleChange={handleChange}
                 />
                 <Input
+                  invalid={emailRegisterE}
                   name="mail"
                   label="Email address"
                   handleChange={handleChange}
                   type="email"
                 />
+                <span style={{color:"red",marginLeft:"8px",fontSize:"14px"}}>
+                  {emailRegisterE && (isLanguageEnglish?"That email is already in use":"Email đó đã được sử dụng")}
+                </span>
               </>
             )}
 
             <Input
-              invalid={userError&&notify&&!isSignup}
+              invalid={isSignup ? userNameRegisterE : userNameE}
               name="userName"
               label="User Name"
               handleChange={handleChange}
             />
+              <span style={{color:"red",marginLeft:"8px",fontSize:"14px"}}>
+                {userNameRegisterE && (isLanguageEnglish?"That username is already in use":"Tên tài khoản đã có người dùng")}
+              </span>
             <Input
-              invalid={notify&&!isSignup}
+              invalid={(passwordE || userNameE) &&!isSignup}
               name="password"
               label="Password"
               handleChange={handleChange}
               type={showPassword ? "text" : "password"}
               handleShowPassword={handleShowPassword}
             />
-            {(notify&&! isSignup)?<span style={{color:"red",marginLeft:"8px"}}>Mật khẩu hoặc tài khoảng của bạn bị sai!</span>:<span>{""}</span>}
+            {
+              !isSignup &&
+              <span style={{color:"red",marginLeft:"8px",fontSize:"14px"}}>
+                {userNameE && (isLanguageEnglish?"Account does not exist!":"Tài khoản không tồn tại!")}
+                {passwordE && !userNameE && (isLanguageEnglish?"Wrong password!":"Mật khẩu bạn nhập bị sai")}      
+              </span>
+            }
             {isSignup && (
-              <Input
-                name="confirmPassword"
-                label="Repeat password"
-                handleChange={handleChange}
-                type="password"
-              />
+              <>
+                <Input
+                  invalid={confirmPasswordE}
+                  name="confirmPassword"
+                  label="Repeat password"
+                  handleChange={handleChange}
+                  type="password"
+                />
+                {<span style={{color:"red",marginLeft:"8px",fontSize:"14px"}}>
+                  {confirmPasswordE && (isLanguageEnglish?"Password does not match!":"Tài khoản không tồn tại!")}    
+                </span>}
+              </>
             )}
           </Grid>
           <Button
@@ -184,7 +281,7 @@ function Auth() {
                     : "Bạn đã có tài khoản? Đăng nhập"
                   : isLanguageEnglish
                   ? "Don't have an account? Sign Up"
-                  : "Bạn đã có tài khoản? Đăng kí"}
+                  : "Bạn chưa có tài khoản? Đăng kí"}
               </Button>
             </Grid>
           </Grid>

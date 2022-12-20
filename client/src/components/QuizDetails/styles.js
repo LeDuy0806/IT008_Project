@@ -40,6 +40,6 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     padding: "20px",
     borderRadius: "15px",
-    height: "39vh",
+    height: "100vh",
   },
 }))

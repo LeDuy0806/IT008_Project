@@ -27,6 +27,7 @@ const Paginate = ({ page }) => {
       color="primary"
       renderItem={(item) => (
         <PaginationItem
+        
           {...item}
           component={Link}
           to={`/quizes?page=${item.page}`}

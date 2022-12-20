@@ -42,16 +42,15 @@ const register = async (req, res) => {
     userName,
     mail,
     password,
-    confirmPassword,
   } = req.body;
   const existingEmail = await User.findOne({ mail });
   const existingUserName = await User.findOne({ userName });
-
-  if (existingEmail || existingUserName) {
-    return res.status(400).json({ message: "User already exists." });
+  
+  if(existingEmail){
+    return res.send({ message: "Email already exists" });
   }
-  if (password !== confirmPassword) {
-    return res.status(400).json({ message: "Passwords don't match" });
+  if (existingUserName) {
+    return res.send({ message: "UserName already exists" });
   }
 
   const salt = await bcrypt.genSalt();
