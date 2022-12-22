@@ -14,7 +14,7 @@ export const login = (formData, history,handleNotify,setAuthError) => async (dis
             },
             position:"top-center",
             onClose: ()=>{}
-      },
+        },
       }
     )
     console.log(data);
@@ -36,7 +36,9 @@ export const login = (formData, history,handleNotify,setAuthError) => async (dis
       default:
         dispatch({ type: AUTH, data });
         handleNotify(true)
-        history.push("/");
+        setTimeout(()=>{
+          history.push("/");
+        },1500)
         break;
     }
   } catch (error) {
@@ -77,7 +79,9 @@ export const register = (formData, history,handleNotify,setAuthError) => async (
       default:
         handleNotify(true)
         dispatch({ type: AUTH, data });
-        history.push("/"); 
+        setTimeout(()=>{
+          history.push("/");
+        },1500)
         break;
     }
     

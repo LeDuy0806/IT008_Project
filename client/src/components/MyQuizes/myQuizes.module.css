@@ -1,143 +1,143 @@
 .quizes-list {
-  margin: 2.4rem 1.5rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 70vh;
+    margin: 2.4rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
 }
 
 .quiz-settings {
-  width: 75%;
-  padding: 24px;
-  box-shadow: 0px 0px 5px #80838b;
+    width: 75%;
+    padding: 24px;
+    box-shadow: 0px 0px 5px #80838b;
 }
 
 .quiz-settings h2 {
-  line-height: 100%;
-  font-size: 42px;
-  font-weight: 700;
-  background-image: linear-gradient(to right, #e37a47, #f4b183);
-  color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
+    line-height: 100%;
+    font-size: 42px;
+    font-weight: 700;
+    background-image: linear-gradient(to right, #e37a47, #f4b183);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 
 .quiz-form {
-  color: rgb(110, 110, 110);
-  font-size: 1.2rem;
+    color: rgb(110, 110, 110);
+    font-size: 1.2rem;
 }
 
 .option-label {
-  display: flex;
-  align-items: center;
-  margin-top: 8px;
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
 }
 
 .quiz-input {
-  margin-top: 8px;
-  width: 100%;
-  padding: 6px 10px;
-  font-size: 1rem;
-  resize: none;
-  border-radius: 4px;
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    margin-top: 8px;
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 1rem;
+    resize: none;
+    border-radius: 4px;
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 .quiz-input:hover {
-  border: 1px solid #000;
+    border: 1px solid #000;
 }
 
 .quiz-input-desc {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 .option-buttons {
-  display: flex;
-  margin-top: 8px;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    margin-top: 8px;
+    align-items: center;
+    justify-content: center;
 }
 
 .option-button,
 .submit-button {
-  background-color: inherit;
-  outline: none;
-  color: rgb(110, 110, 110);
-  font-size: 1rem;
-  border: 1px solid black;
-  border-radius: 2%;
+    background-color: inherit;
+    outline: none;
+    color: rgb(110, 110, 110);
+    font-size: 1rem;
+    border: 1px solid black;
+    border-radius: 2%;
 }
 
 .option-button {
-  width: 120px;
-  height: 40px;
-  /* margin-right: 8px;
+    width: 120px;
+    height: 40px;
+    /* margin-right: 8px;
   border-radius: 4px; */
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .option-button-public {
-  border-right: none;
+    border-right: none;
 }
 
 .option-button-private {
-  border-left: none;
+    border-left: none;
 }
 
 @keyframes changeColorActive {
-  from {
-    background-color: white;
-  }
+    from {
+        background-color: white;
+    }
 
-  to {
-    background-color: rgb(19, 104, 206);
-  }
+    to {
+        background-color: rgb(19, 104, 206);
+    }
 }
 
 @keyframes changeColorDisabled {
-  from {
-    background-color: rgb(19, 104, 206);
-  }
+    from {
+        background-color: rgb(19, 104, 206);
+    }
 
-  to {
-    background-color: white;
-  }
+    to {
+        background-color: white;
+    }
 }
 
 .active {
-  background-color: rgb(19, 104, 206);
-  color: #fff;
-  animation-name: changeColorActive;
-  animation-duration: .5s;
+    background-color: rgb(19, 104, 206);
+    color: #fff;
+    animation-name: changeColorActive;
+    animation-duration: 0.5s;
 }
 
 .disabled {
-  background-color: white;
-  animation-name: changeColorDisabled;
-  animation-duration: .5s;
+    background-color: white;
+    animation-name: changeColorDisabled;
+    animation-duration: 0.5s;
 }
 
 .disabled:hover {
-  background-color: rgb(185, 217, 255);
-  color: #000;
+    background-color: rgb(185, 217, 255);
+    color: #000;
 }
 
 .submit {
-  display: flex;
-  justify-content: center;
+    display: flex;
+    justify-content: center;
 }
 
 .submit-button {
-  cursor: pointer;
-  margin-top: 12px;
-  min-width: 200px;
-  height: 50px;
-  background-color: #e37a47;
-  color: white;
-  border-radius: 999px;
+    cursor: pointer;
+    margin-top: 12px;
+    min-width: 200px;
+    height: 50px;
+    background-color: #e37a47;
+    color: white;
+    border-radius: 999px;
 }
 
 .submit-button:hover {
-  opacity: .8;
+    opacity: 0.8;
 }

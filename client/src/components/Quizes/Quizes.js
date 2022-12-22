@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import Quiz from "./Quiz/Quiz";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
@@ -50,18 +50,21 @@ function Quizes() {
         }
     };
 
+    useEffect(()=>{
+        if(isLoading){
+            setNoresult(false)
+        }
+    },[isLoading])
     useLayoutEffect(()=>{
-        console.log(quizes.length)
         if(quizes.length===0)
         {
             setNoresult(true)
-            console.log("Khong co")
         }
         else
         {
             setNoresult(false)
-            console.log("Co")
         }
+        
     },[quizes.length])
 
     
@@ -120,7 +123,7 @@ function Quizes() {
             </AppBar>
             {noresults&&<Noresult/>}
             {isLoading ? (
-                <CircularProgress />
+                <CircularProgress style={{marginTop:'20px'}}/>
             ) : (
                 quizes.map((quiz) => <Quiz key={quiz._id} quiz={quiz} />)
             )}

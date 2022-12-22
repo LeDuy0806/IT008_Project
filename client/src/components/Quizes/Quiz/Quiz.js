@@ -24,7 +24,7 @@ function Quiz({ quiz }) {
           {quiz.likesCount.length > 2
             ? isLanguageEnglish
               ? `You and ${quiz.likesCount.length - 1} others`
-              : `Bạn và ${quiz.likesCount.length - 1} khác`
+              : `Bạn và ${quiz.likesCount.length - 1} người khác`
             : isLanguageEnglish
             ? `${quiz.likesCount.length} like${
                 quiz.likesCount.length > 1 ? "s" : ""
@@ -38,10 +38,10 @@ function Quiz({ quiz }) {
           {quiz.likesCount.length === 1
             ? isLanguageEnglish
               ? "Like"
-              : "Thích"
+              : "người thích"
             : isLanguageEnglish
             ? "Likes"
-            : "Thích"}
+            : "người thích"}
         </>
       )
     }
