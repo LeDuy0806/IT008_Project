@@ -25,8 +25,10 @@ import Dashboard from './components/Dashboard/dashboard';
 function App() {
     const user = JSON.parse(localStorage.getItem('profile'));
     const dispatch = useDispatch();
+    // const SOCKET_URL="https://it008-project.onrender.com"
+    const SOCKET_URL = "http://localhost:3001"
     useEffect(() => {
-        const socket = io('http://localhost:3001', {
+        const socket = io(SOCKET_URL, {
             transports: ['websocket'],
         });
         dispatch(createSocket(socket));
