@@ -1,22 +1,25 @@
 import React, { useEffect } from 'react';
 import {
-    Paper,
+    // Paper,
     Typography,
-    CircularProgress,
+    // CircularProgress,
     Divider,
+    // Backdrop,
 } from '@material-ui/core/';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import Quiz from '../Quizes/Quiz/Quiz';
+// import Quiz from '../Quizes/Quiz/Quiz';
 import Question from './Question/Question';
 import CommentSection from './CommentSection/CommentSection';
 import { getQuiz, getQuizesBySearch } from '../../actions/quiz';
 import useStyles from './styles';
 import defaultQuizBackground from '../../assets/defaultQuizBackground.jpg';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 const Post = () => {
-    const { quiz, quizes, isLoading } = useSelector((state) => state.quiz);
+    const { quiz, isLoading } = useSelector((state) => state.quiz);
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
     const dispatch = useDispatch();
     const classes = useStyles();
@@ -35,6 +38,7 @@ const Post = () => {
                 }),
             );
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
 
     if (!quiz) return null;
@@ -42,12 +46,66 @@ const Post = () => {
     if (isLoading || quiz === null) {
         return (
             // <Paper elevation={6} className={classes.loadingPaper}>
-            <CircularProgress size="7em" />
+            //     <Backdrop
+            //         sx={{ color: '#333', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            //     >
+            //         <CircularProgress color="inherit" />
+            //     </Backdrop>
+            //     <CircularProgress size="3em" />
             // </Paper>
+
+
+            <div className={classes.card}>
+                {/* Background Image */}
+                <div className={classes.imageSection}>
+                    <div >
+                        <Skeleton style={{ height: "200px", width: "100%" }} />
+                    </div>
+
+                    <div className={classes.info}>
+                        <Typography variant="h3" component="h2">
+                            <Skeleton />
+                        </Typography>
+                        <Typography
+                            gutterBottom
+                            variant="h6"
+                            color="textSecondary"
+                            component="h2"
+                        >
+                            <Skeleton />
+                        </Typography>
+                        <Typography gutterBottom variant="body1" component="p">
+                            <Skeleton />
+                        </Typography>
+                        <Typography variant="h6">
+                            <Skeleton />
+                        </Typography>
+                        <Typography variant="body1">
+                            <Skeleton />
+                        </Typography>
+
+                        <CommentSection quiz={null} />
+                    </div>
+                </div>
+
+                <div className={classes.questions} style={{ marginLeft: "40px" }}>
+                    <div>
+                        <Typography gutterBottom variant="h5">
+                            <Skeleton />
+                        </Typography>
+                        {/* <Divider /> */}
+
+                        <Question quiz={null} />
+                        <Question quiz={null} />
+                        <Question quiz={null} />
+                        <Divider style={{ marginBottom: '20px' }} />
+                    </div>
+                </div>
+            </div>
         );
     }
 
-    const recommendedQuizes = quizes.filter(({ _id }) => _id !== quiz._id);
+    // const recommendedQuizes = quizes.filter(({ _id }) => _id !== quiz._id);
 
     return (
         // <Paper style={{ height: '100%', padding: '40px 50px' }} elevation={6}>

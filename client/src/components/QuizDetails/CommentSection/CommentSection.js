@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { commentQuiz } from '../../../actions/quiz';
 import useStyles from './styles';
 
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
 const CommentSection = ({ quiz }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const [comment, setComment] = useState('');
@@ -13,6 +16,22 @@ const CommentSection = ({ quiz }) => {
     const classes = useStyles();
     const commentsRef = useRef();
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+
+    if (quiz == null) {
+        return (
+            <div className={classes.commentsOuterContainer}>
+                <div style={{ width: '95%' }}>
+                    <div style={{ marginTop: '16px', width: '100%' }}>
+                        <Skeleton />
+                    </div>
+                    <br />
+                    <div style={{ marginTop: '16px', width: '100%' }}>
+                        <Skeleton />
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     const handleComment = async () => {
         const newComments = await dispatch(
@@ -24,7 +43,6 @@ const CommentSection = ({ quiz }) => {
 
         commentsRef.current.scrollIntoView({ behavior: 'smooth' });
     };
-
     return (
         <div>
             <div className={classes.commentsOuterContainer}>
@@ -70,11 +88,14 @@ const CommentSection = ({ quiz }) => {
                         {comments?.map((comment, index) => (
                             <Typography
                                 key={index}
+                                className={classes.commentItem}
                                 gutterBottom
                                 variant="subtitle1"
                             >
-                                <strong>{comment.split(': ')[0]}</strong>
-                                {comment.split(':')[1]}
+                                <span>
+                                    <strong>{comment.split(': ')[0] + ": "}</strong>
+                                    {comment.split(':')[1]}
+                                </span>
                             </Typography>
                         ))}
                         <div ref={commentsRef} />

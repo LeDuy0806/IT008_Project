@@ -8,12 +8,13 @@ import img4 from '../../assets/img4.svg';
 import img5 from '../../assets/img5.svg';
 import pic1 from '../../assets/pic1.jpeg';
 import pic2 from '../../assets/pic2.jpeg';
+import snow from '../../assets/snow-flake.png'
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
 import Snowfall from 'react-snowfall'
 
 const snowflake = document.createElement('img')
-snowflake.src = '../../assets/snow-flake.png'
+snowflake.src = snow
 const images = [snowflake]
 
 function Home() {
@@ -21,7 +22,7 @@ function Home() {
 
     return (
         <main className={styles.page}>
-            <Snowfall speed={[0, 2]} style={{ position: "fixed", zIndex: "1000", height: "100vh", width: "100vw" }} />
+            <Snowfall speed={[0, 2]} radius={[5, 20]} style={{ position: "fixed", zIndex: "1000", height: "100vh", width: "100vw" }} images={images} />
             <section className={styles['page-section']}>
                 <section className={styles['first-section']}>
                     <div className={styles.banner}>
