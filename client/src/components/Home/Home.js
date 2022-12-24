@@ -9,12 +9,19 @@ import img5 from '../../assets/img5.svg';
 import pic1 from '../../assets/pic1.jpeg';
 import pic2 from '../../assets/pic2.jpeg';
 import Footer from '../../components/Footer/Footer';
+import { Link } from 'react-router-dom';
+import Snowfall from 'react-snowfall'
+
+const snowflake = document.createElement('img')
+snowflake.src = '../../assets/snow-flake.png'
+const images = [snowflake]
 
 function Home() {
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
 
     return (
         <main className={styles.page}>
+            <Snowfall speed={[0, 2]} style={{ position: "fixed", zIndex: "1000", height: "100vh", width: "100vw" }} />
             <section className={styles['page-section']}>
                 <section className={styles['first-section']}>
                     <div className={styles.banner}>
@@ -56,11 +63,16 @@ function Home() {
                                     : 'Khám phá nội dung và tham gia một trong những cộng đồng giáo dục lớn nhất thế giới'}
                             </p>
                             <button className={styles['banner-button']}>
-                                <a href="/">
+                                <Link to="/quizes">
                                     {isLanguageEnglish
                                         ? 'Check public Telexercise'
                                         : 'Kiểm tra Telexercise công khai'}
-                                </a>
+                                </Link>
+                                {/* <a href="/">
+                                    {isLanguageEnglish
+                                        ? 'Check public Telexercise'
+                                        : 'Kiểm tra Telexercise công khai'}
+                                </a> */}
                             </button>
                         </div>
                         <img
@@ -134,7 +146,7 @@ function Home() {
                     </div>
                 </section>
                 <section className={styles['third-section']}>
-                    <h1>
+                    <h1 style={{ color: "white" }}>
                         {isLanguageEnglish
                             ? 'How does Telexercise work?'
                             : 'Telexercise hoạt động như thế nào?'}

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import styles from './dashboard.module.css';
 import telehome from '../../assets/telehome.png';
 import { CgMicrosoft } from 'react-icons/cg';
@@ -10,9 +11,12 @@ import { MdErrorOutline } from 'react-icons/md';
 import { FiSettings } from 'react-icons/fi';
 import { IoIosAdd } from 'react-icons/io';
 import { CgLogOut } from 'react-icons/cg';
+import { Link } from 'react-router-dom';
 // import { VscPreview } from "react-icons/vsc";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import noava from '../../assets/noava.jpg';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../../actions/users';
 const orders = [
     {
         productName: 'Anh Quoc',
@@ -77,6 +81,16 @@ const orders = [
 ];
 
 function Dashboard() {
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getUsers);
+    }, [dispatch]);
+
+    const users = useSelector((state) => state.users);
+    useEffect(() => {
+        console.log(users);
+    }, [dispatch, users]);
+
     const current = new Date();
     const date = `${current.getDate()}/${
         current.getMonth() + 1
@@ -93,17 +107,30 @@ function Dashboard() {
             <div className={styles['container']}>
                 <aside>
                     <div className={styles['top']}>
-                        <img
-                            className={styles['imagelogo']}
-                            src={telehome}
-                            alt=""
-                        ></img>
+                        <div>
+                            <Link
+                                to="/"
+                                className={styles['tele-link']}
+                                style={{ width: '200px' }}
+                            >
+                                <img
+                                    className={styles['imagelogo']}
+                                    src={telehome}
+                                    alt=""
+                                ></img>
+                            </Link>
+                        </div>
                         <div className={styles['tele']}>
                             <h2
                                 className={`${styles['text-muted']} ${styles['h2_text']}`}
                             >
                                 TEL
-                                <span className="danger">EXERCISE</span>
+                                <span
+                                    style={{ color: '#ff7782' }}
+                                    className="danger"
+                                >
+                                    EXERCISE
+                                </span>
                             </h2>
                         </div>
                     </div>

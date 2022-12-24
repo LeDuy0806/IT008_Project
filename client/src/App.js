@@ -19,14 +19,17 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import Notify from "./components/Notify/notify";
 import Dashboard from './components/Dashboard/dashboard';
+import Profile from './components/Profile/profile';
 // import Notify from "./components/Notify/notify";
 // import dashboard from "./components/Dashboard/dashboard";
 
 function App() {
     const user = JSON.parse(localStorage.getItem('profile'));
     const dispatch = useDispatch();
+    // const SOCKET_URL="https://it008-project.onrender.com"
+    const SOCKET_URL = 'http://localhost:3001';
     useEffect(() => {
-        const socket = io('http://localhost:3001', {
+        const socket = io(SOCKET_URL, {
             transports: ['websocket'],
         });
         dispatch(createSocket(socket));
@@ -74,6 +77,8 @@ function App() {
                 />
                 <Route path="/myquizes" exact component={MyQuizes} />
                 <Route path="/dashboard" exact component={Dashboard} />
+                <Route path="/profile/:nickname" exact component={Profile} />
+
                 {/* {(isNav===false) && <Dashboard handleNav={handleNav}/>} */}
             </Switch>
             {/* <Footer /> */}
