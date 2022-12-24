@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Input from './Input';
 import { login, register } from '../../actions/auth';
 import { toast } from 'react-toastify';
+import Snowfall from 'react-snowfall';
 
 const initialState = {
     userType: '',
@@ -169,18 +170,20 @@ function Auth() {
                         };
                         return newState;
                     });
-                if (e.target.value.length < 6 || e.target.value.length > 15) {
+                if (e.target.value.length < 5 || e.target.value.length > 15) {
                     var l = e.target.value.length;
                     setAuthError((preState) => {
                         var newState = {
                             ...preState,
                             requestQuantity: true,
                             EngtextRequestQuantity:
-                                l < 6
-                                    ? 'Enter at least 6 characters !'
+                                l < 5
+                                    ? 'Enter at least 5 characters !'
                                     : 'Enter at most 15 characters !',
                             VietextRequestQuantity:
-                                l < 6 ? 'Nhập tối thiểu !' : 'Nhập tối đa !',
+                                l < 5
+                                    ? 'Nhập tối thiểu 5 ký tự !'
+                                    : 'Nhập tối đa 15 ký tự !',
                         };
                         return newState;
                     });
@@ -223,7 +226,8 @@ function Auth() {
                 alignItems: 'center',
             }}
         >
-            <Container component="main" maxWidth="xs">
+            <Snowfall speed={[0, 2]} style={{ position: "fixed", zIndex: "1000", height: "100vh", width: "100vw" }} />
+            <Container component="main" maxWidth="xs" style={{ zIndex: "1001" }}>
                 <Paper
                     className={classes.paper}
                     elevation={3}
@@ -241,8 +245,8 @@ function Auth() {
                                 ? 'Sign up'
                                 : 'Đăng kí'
                             : isLanguageEnglish
-                            ? 'Sign in'
-                            : 'Đăng nhập'}
+                                ? 'Sign in'
+                                : 'Đăng nhập'}
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -310,7 +314,7 @@ function Auth() {
                                         : VietextRequestQuantity}
                                 </span>
                             ) : (
-                                <span>{}</span>
+                                <span>{ }</span>
                             )}
                             <span
                                 style={{
@@ -389,8 +393,8 @@ function Auth() {
                                     ? 'Sign up'
                                     : 'Đăng kí'
                                 : isLanguageEnglish
-                                ? 'Sign in'
-                                : 'Đăng nhập'}
+                                    ? 'Sign in'
+                                    : 'Đăng nhập'}
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
@@ -400,8 +404,8 @@ function Auth() {
                                             ? 'Already have an account? Sign in'
                                             : 'Bạn đã có tài khoản? Đăng nhập'
                                         : isLanguageEnglish
-                                        ? "Don't have an account? Sign Up"
-                                        : 'Bạn chưa có tài khoản? Đăng kí'}
+                                            ? "Don't have an account? Sign Up"
+                                            : 'Bạn chưa có tài khoản? Đăng kí'}
                                 </Button>
                             </Grid>
                         </Grid>
