@@ -55,8 +55,8 @@ const CommentSection = ({ quiz }) => {
                         </Typography> */}
                         <TextField
                             fullWidth
-                            rows={1}
-                            variant="outlined"
+                            minRows={1}
+                            variant="filled"
                             label={
                                 isLanguageEnglish
                                     ? 'Add a comment'
@@ -65,7 +65,10 @@ const CommentSection = ({ quiz }) => {
                             multiline
                             value={comment}
                             onChange={(e) => setComment(e.target.value)}
-                            style={{ marginTop: '16px', width: '100%' }}
+                            style={{
+                                marginTop: '16px',
+                                width: '100%',
+                            }}
                         />
                         <br />
                         <Button
