@@ -129,16 +129,19 @@ aside {
 }
 
 aside img {
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     border-radius: 50%;
 }
 
+aside img:hover {
+    box-shadow: 0px 0px 3px 2px rgb(149, 145, 145);
+}
 @keyframes showMenu {
 }
 
 aside .tele {
-    margin-left: 5px;
+    margin-right: -40px;
     align-items: center;
 }
 
@@ -512,6 +515,7 @@ main .recent-orders a {
 .right .sales-analytics .add-product:hover {
     background-color: var(--color-primary);
     color: var(--color-white);
+    cursor: pointer;
 }
 
 .right .sales-analytics .add-product div {

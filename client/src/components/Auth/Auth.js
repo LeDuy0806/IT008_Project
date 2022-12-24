@@ -169,18 +169,20 @@ function Auth() {
                         };
                         return newState;
                     });
-                if (e.target.value.length < 6 || e.target.value.length > 15) {
+                if (e.target.value.length < 5 || e.target.value.length > 15) {
                     var l = e.target.value.length;
                     setAuthError((preState) => {
                         var newState = {
                             ...preState,
                             requestQuantity: true,
                             EngtextRequestQuantity:
-                                l < 6
-                                    ? 'Enter at least 6 characters !'
+                                l < 5
+                                    ? 'Enter at least 5 characters !'
                                     : 'Enter at most 15 characters !',
                             VietextRequestQuantity:
-                                l < 6 ? 'Nhập tối thiểu !' : 'Nhập tối đa !',
+                                l < 5
+                                    ? 'Nhập tối thiểu 5 ký tự !'
+                                    : 'Nhập tối đa 15 ký tự !',
                         };
                         return newState;
                     });
