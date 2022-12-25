@@ -1,10 +1,17 @@
 import styles from './profile.module.css';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+
+let checkUserName = true;
+let checkName = true;
+let checkBio = true;
 
 export default function Profile() {
     const user = JSON.parse(localStorage.getItem('profile'));
     const info = JSON.parse(localStorage.getItem('profilechange'));
+    const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
     const [profile, setProfile] = useState(
         info === null
             ? {
@@ -39,9 +46,6 @@ export default function Profile() {
     const handleChange = (e) => {
         let name = e.target.name;
         console.log(name);
-        let checkUserName = true;
-        let checkName = true;
-        let checkBio = true;
 
         // eslint-disable-next-line default-case
         switch (name) {
@@ -108,7 +112,17 @@ export default function Profile() {
 
     const handleSave = () => {
         localStorage.setItem('profilechange', JSON.stringify(profile));
-
+        if (save) {
+            toast.success(
+                isLanguageEnglish ? 'save successfully !' : 'Lưu thành công !',
+                {
+                    style: { color: '#fff' },
+                    position: 'top-center',
+                    autoClose: 3000,
+                    theme: 'dark',
+                },
+            );
+        }
         // localStorage.setItem('profile', user);
     };
 
