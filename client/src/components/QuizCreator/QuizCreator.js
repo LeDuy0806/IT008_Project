@@ -12,6 +12,10 @@ import {
     DialogContentText,
     DialogActions,
 } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import CancelIcon from '@mui/icons-material/Cancel';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 
 import styles from './quizCreator.module.css';
 import QuestionListItem from './QuestionListItem/QuestionListItem';
@@ -67,6 +71,7 @@ function QuizCreator() {
 
     useEffect(() => {
         dispatch(getQuiz(id));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     const [modalIsOpen, setIsOpen] = React.useState(false);
@@ -76,6 +81,10 @@ function QuizCreator() {
     useEffect(() => {
         if (quiz) {
             setQuizData(quiz);
+            setQuestionData((prev) => ({
+                ...prev,
+                questionIndex: quiz.numberOfQuestions + 1,
+            }));
         }
     }, [quiz]);
 
@@ -423,7 +432,15 @@ function QuizCreator() {
         setIsQuestionTrueFalse((prevState) => !prevState);
         if (!isQuestionTrueFalse) {
             questionData.answerList.splice(2, 2);
+            questionData.answerList[0].body = isLanguageEnglish
+                ? 'True'
+                : 'Đúng';
+            questionData.answerList[1].body = isLanguageEnglish
+                ? 'False'
+                : 'Sai';
         } else {
+            questionData.answerList[0].body = '';
+            questionData.answerList[1].body = '';
             questionData.answerList.push({
                 name: 'c',
                 body: '',
@@ -435,8 +452,7 @@ function QuizCreator() {
                 isCorrect: false,
             });
         }
-        questionData.answerList[0].body = isLanguageEnglish ? 'True' : 'Đúng';
-        questionData.answerList[1].body = isLanguageEnglish ? 'False' : 'Sai';
+
         setMaxCorrectAnswerCount(1);
         questionData.answerList.forEach((answer) => (answer.isCorrect = false));
         setCorrectAnswerCount(0);
@@ -1072,15 +1088,28 @@ function QuizCreator() {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button autoFocus onClick={handleQuizSubmit}>
+                    <Button
+                        variant="contained"
+                        onClick={handleQuizSubmit}
+                        startIcon={<ChangeCircleIcon />}
+                        autoFocus
+                    >
                         {isLanguageEnglish
                             ? 'Keep changes'
                             : 'Giữ các thay đổi'}
                     </Button>
-                    <Button onClick={() => history.push('/myquizes')}>
+                    <Button
+                        variant="outlined"
+                        onClick={() => history.push('/myquizes')}
+                        startIcon={<ExitToAppIcon />}
+                    >
                         {isLanguageEnglish ? 'Discard all' : 'Xóa bỏ tất cả'}
                     </Button>
-                    <Button onClick={() => setOpenExitDialog(false)}>
+                    <Button
+                        variant="contained"
+                        onClick={() => setOpenExitDialog(false)}
+                        startIcon={<DeleteIcon />}
+                    >
                         {isLanguageEnglish ? 'Cancel' : 'Hủy'}{' '}
                     </Button>
                 </DialogActions>
@@ -1108,10 +1137,18 @@ function QuizCreator() {
                 </DialogContent>
 
                 <DialogActions>
-                    <Button onClick={handleQuestionRemove}>
+                    <Button
+                        variant="contained"
+                        onClick={handleQuestionRemove}
+                        startIcon={<DeleteIcon />}
+                    >
                         {isLanguageEnglish ? 'Delete' : 'Xóa'}
                     </Button>
-                    <Button onClick={() => setOpenDeleteDialog(false)}>
+                    <Button
+                        variant="outlined"
+                        onClick={() => setOpenDeleteDialog(false)}
+                        startIcon={<CancelIcon />}
+                    >
                         {isLanguageEnglish ? 'Cancel' : 'Hủy'}{' '}
                     </Button>
                 </DialogActions>
