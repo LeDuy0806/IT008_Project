@@ -1,27 +1,26 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import Quiz from "./Quiz/Quiz";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
-import styles from "./quizes.module.css";
-import ChipInput from "material-ui-chip-input";
+import React, { useEffect, useLayoutEffect, useState } from 'react';
+import Quiz from './Quiz/Quiz';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import styles from './quizes.module.css';
+import ChipInput from 'material-ui-chip-input';
 import {
     AppBar,
     TextField,
     Button,
     Paper,
     CircularProgress,
-} from "@material-ui/core";
-import useStyles from "./styles";
-import { getQuizesBySearch } from "../../actions/quiz";
-import Pagination from "../Pagination/Pagination";
-import Noresult from "../Noresults/noresults";
+} from '@material-ui/core';
+import useStyles from './styles';
+import { getQuizesBySearch } from '../../actions/quiz';
+import Pagination from '../Pagination/Pagination';
+import Noresult from '../Noresults/noresults';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 function Quizes() {
-
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -29,45 +28,40 @@ function Quizes() {
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
 
     const query = useQuery();
-    const page = query.get("page") || 1;
-    const searchQuery = query.get("searchQuery");
+    const page = query.get('page') || 1;
+    const searchQuery = query.get('searchQuery');
 
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState('');
     const [tags, setTags] = useState([]);
-    const [noresults,setNoresult]=useState(false)
+    const [noresults, setNoresult] = useState(false);
 
     const searchPost = () => {
-        if (search.trim() !== "" || tags.length !== 0) {
+        if (search.trim() !== '' || tags.length !== 0) {
             console.log(search.trim());
-            dispatch(getQuizesBySearch({ search, tags: tags.join(",") }));
+            dispatch(getQuizesBySearch({ search, tags: tags.join(',') }));
             history.push(
                 `/quizes/search?searchQuery=${
-                    search || "none"
-                }&tags=${tags.join(",")}`
+                    search || 'none'
+                }&tags=${tags.join(',')}`,
             );
         } else {
-            history.push("/quizes");
+            history.push('/quizes');
         }
     };
 
-    useEffect(()=>{
-        if(isLoading){
-            setNoresult(false)
+    useEffect(() => {
+        if (isLoading) {
+            setNoresult(false);
         }
-    },[isLoading])
-    useLayoutEffect(()=>{
-        if(quizes.length===0)
-        {
-            setNoresult(true)
-        }
-        else
-        {
-            setNoresult(false)
-        }
-        
-    },[quizes.length])
+    }, [isLoading]);
 
-    
+    useLayoutEffect(() => {
+        if (quizes.length === 0) {
+            setNoresult(true);
+        } else {
+            setNoresult(false);
+        }
+    }, [quizes.length]);
 
     const handleKeyPress = (e) => {
         if (e.keyCode === 13) {
@@ -81,7 +75,7 @@ function Quizes() {
         setTags(tags.filter((tag) => tag !== chipToDelete));
 
     return (
-        <div className={styles["quizes-list"]}>
+        <div className={styles['quizes-list']}>
             <AppBar
                 className={classes.appBarSearch}
                 position="relative"
@@ -93,22 +87,22 @@ function Quizes() {
                     variant="outlined"
                     label={
                         isLanguageEnglish
-                            ? "Search quizzes by name"
-                            : "Tìm kiếm các câu đố theo tên"
+                            ? 'Search quizzes by name'
+                            : 'Tìm kiếm các câu đố theo tên'
                     }
                     fullWidth
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                 />
                 <ChipInput
-                    style={{ margin: "16px 0" }}
+                    style={{ margin: '16px 0' }}
                     value={tags}
                     onAdd={(chip) => handleAddChip(chip)}
                     onDelete={(chip) => handleDeleteChip(chip)}
                     label={
                         isLanguageEnglish
-                            ? "Search quizzes by tags"
-                            : "Tìm kiếm các câu đố sau các danh mục"
+                            ? 'Search quizzes by tags'
+                            : 'Tìm kiếm các câu đố sau các danh mục'
                     }
                     variant="outlined"
                 />
@@ -118,12 +112,12 @@ function Quizes() {
                     variant="contained"
                     color="primary"
                 >
-                    {isLanguageEnglish ? "Search" : "Tìm kiếm"}
+                    {isLanguageEnglish ? 'Search' : 'Tìm kiếm'}
                 </Button>
             </AppBar>
-            {noresults&&<Noresult/>}
+            {noresults && <Noresult />}
             {isLoading ? (
-                <CircularProgress style={{marginTop:'20px'}}/>
+                <CircularProgress style={{ marginTop: '20px' }} />
             ) : (
                 quizes.map((quiz) => <Quiz key={quiz._id} quiz={quiz} />)
             )}

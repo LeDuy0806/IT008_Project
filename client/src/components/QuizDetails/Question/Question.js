@@ -7,23 +7,32 @@ import 'react-loading-skeleton/dist/skeleton.css';
 function Question({ question }) {
     console.log(question);
     if (question == null) {
-        return <>
-            <div className={styles['quiz-card']}>
-                <div style={{ padding: "5px", borderRadius: "5%" }}>
-                    <h4>
-                        <Skeleton />
-                    </h4>
-                    <div style={{ padding: "5px", margin: "5px", top: "-10px", height: "80px" }}>
-                        <Skeleton height="100%" />
+        return (
+            <>
+                <div className={styles['quiz-card']}>
+                    <div style={{ padding: '5px', borderRadius: '5%' }}>
+                        <h4>
+                            <Skeleton />
+                        </h4>
+                        <div
+                            style={{
+                                padding: '5px',
+                                margin: '5px',
+                                top: '-10px',
+                                height: '80px',
+                            }}
+                        >
+                            <Skeleton height="100%" />
+                        </div>
+                    </div>
+                    <div className={styles['card-body']}>
+                        <p className={styles['quiz-description']}>
+                            <Skeleton />
+                        </p>
                     </div>
                 </div>
-                <div className={styles['card-body']}>
-                    <p className={styles['quiz-description']}>
-                        <Skeleton />
-                    </p>
-                </div>
-            </div>
-        </>
+            </>
+        );
     }
     return (
         <div className={styles['quiz-card']}>
