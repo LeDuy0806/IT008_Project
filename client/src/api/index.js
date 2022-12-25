@@ -1,16 +1,14 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:3000';
-// "https://it008-project.onrender.com"
-//
+// const BASE_URL="https://it008-project.onrender.com"
+const BASE_URL = "http://localhost:3000"
 
 const API = axios.create({ baseURL: `${BASE_URL}/api` });
 
 API.interceptors.request.use((req) => {
     if (localStorage.getItem('profile')) {
-        req.headers.Authorization = `Bearer ${
-            JSON.parse(localStorage.getItem('profile')).accessToken
-        }`;
+        req.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem('profile')).accessToken
+            }`;
     }
     return req;
 });
@@ -26,8 +24,7 @@ export const fetchPublicQuizes = (page) =>
     API.get(`/quizes/public?page=${page}`);
 export const fetchQuizesBySearch = (searchQuery) =>
     API.get(
-        `/quizes/search?searchQuery=${searchQuery.search || 'none'}&tags=${
-            searchQuery.tags
+        `/quizes/search?searchQuery=${searchQuery.search || 'none'}&tags=${searchQuery.tags
         }`,
     );
 export const fetchTeacherQuizes = (teacherId) =>
