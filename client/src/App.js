@@ -49,7 +49,7 @@ function App() {
                 hideProgressBar={false}
                 closeOnClick={true}
                 pauseOnHover={true}
-                pauseOnFocusLoss={true}
+                pauseOnFocusLoss={false}
                 draggable={true}
                 theme="light"
             />

@@ -19,14 +19,14 @@ export default makeStyles((theme) => ({
     },
     imageSection: {
         // display: 'flex',
-        flex: '1',
+        flex: 1,
         marginLeft: '20px',
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
         },
     },
     questions: {
-        flex: 1,
+        flex: 2,
     },
     recommendedQuizes: {
         display: 'flex',
