@@ -29,7 +29,7 @@ function Navbar() {
     let username;
     if (user !== null) username = user.result.userName;
 
-    console.log(user);
+    // console.log(user);
 
     const logout = () => {
         dispatch({ type: actionType.LOGOUT });

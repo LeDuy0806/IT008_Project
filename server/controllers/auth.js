@@ -45,8 +45,8 @@ const register = async (req, res) => {
   } = req.body;
   const existingEmail = await User.findOne({ mail });
   const existingUserName = await User.findOne({ userName });
-  
-  if(existingEmail){
+
+  if (existingEmail) {
     return res.send({ message: "Email already exists" });
   }
   if (existingUserName) {
@@ -56,6 +56,7 @@ const register = async (req, res) => {
   const salt = await bcrypt.genSalt();
   const hashedPassword = await bcrypt.hash(password, salt);
   const user = new User({
+    avatar: "",
     userType,
     firstName,
     lastName,

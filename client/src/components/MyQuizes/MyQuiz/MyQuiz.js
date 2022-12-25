@@ -1,16 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './myQuiz.module.css';
 import { deleteQuiz } from '../../../actions/quiz';
 import { createGame } from '../../../actions/game';
 import moment from 'moment';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CancelIcon from '@material-ui/icons/Cancel';
 import EditIcon from '@material-ui/icons/Edit';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import { useHistory } from 'react-router-dom';
 import { createLeaderboard } from '../../../actions/leaderboard';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import {
+    Button,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    DialogActions,
+} from '@mui/material';
 
 function MyQuiz({ quiz }) {
     const dispatch = useDispatch();
@@ -36,6 +45,11 @@ function MyQuiz({ quiz }) {
         socket.emit('init-game', newGame, newLeaderboard);
     };
 
+    // Delete Dialog
+    const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+
+    const handleQuizDelete = () => dispatch(deleteQuiz(quiz._id));
+
     return (
         <>
             {quiz ? (
@@ -60,6 +74,7 @@ function MyQuiz({ quiz }) {
                             {quiz.numberOfQuestions}
                         </h3>
                     </div>
+
                     <div className={styles['card-body']}>
                         <div className={styles['card-body-heading']}>
                             <h4 className={styles['quiz-tags']}>
@@ -88,9 +103,7 @@ function MyQuiz({ quiz }) {
                                 </button>
                                 <button
                                     className={`${styles['btn']} ${styles['btn-delete']}`}
-                                    onClick={() =>
-                                        dispatch(deleteQuiz(quiz._id))
-                                    }
+                                    onClick={() => setOpenDeleteDialog(true)}
                                 >
                                     <DeleteIcon fontSize="small" />
                                     <span>
@@ -99,6 +112,7 @@ function MyQuiz({ quiz }) {
                                 </button>
                             </div>
                         </div>
+
                         <div className={styles['card-body-info']}>
                             <h2 className={styles['quiz-title']}>
                                 {quiz.name}
@@ -107,6 +121,47 @@ function MyQuiz({ quiz }) {
                                 {quiz.description}
                             </p>
                         </div>
+
+                        {/* Delete Dialog */}
+                        <Dialog
+                            open={openDeleteDialog}
+                            onClose={() => setOpenDeleteDialog(false)}
+                        >
+                            <DialogTitle>
+                                <h3 className={styles['dialog-title']}>
+                                    {isLanguageEnglish
+                                        ? 'Delete quiz'
+                                        : 'Xóa bộ câu hỏi'}
+                                </h3>
+                            </DialogTitle>
+
+                            <DialogContent>
+                                <DialogContentText>
+                                    <p className={styles['dialog-content']}>
+                                        {isLanguageEnglish
+                                            ? 'Are you sure you want to delete this quiz? This action can’t be undone.'
+                                            : 'Bạn có chắc muốn xóa bộ câu hỏi này không? Hành động này không thể hủy'}
+                                    </p>
+                                </DialogContentText>
+                            </DialogContent>
+
+                            <DialogActions>
+                                <Button
+                                    variant="contained"
+                                    onClick={handleQuizDelete}
+                                    startIcon={<DeleteIcon />}
+                                >
+                                    {isLanguageEnglish ? 'Delete' : 'Xóa'}
+                                </Button>
+                                <Button
+                                    variant="outlined"
+                                    onClick={() => setOpenDeleteDialog(false)}
+                                    startIcon={<CancelIcon />}
+                                >
+                                    {isLanguageEnglish ? 'Cancel' : 'Hủy'}{' '}
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
                 </div>
             ) : (

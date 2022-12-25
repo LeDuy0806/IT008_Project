@@ -142,6 +142,10 @@ io.on("connection", (socket) => {
     let player = getPlayer(socket.id)
     socket.to(game.pin).emit("get-answer-from-player", data, leaderboard._id, score, player)
   })
+
+  socket.on("host-end-game", (playerlist, leaderboard,) => {
+    socket.to(game.pin).emit("host-end-game", playerlist, leaderboard)
+  })
 })
 
 instrument(io, { auth: false })
