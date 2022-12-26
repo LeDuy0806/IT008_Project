@@ -122,6 +122,7 @@ export default function Profile() {
                     theme: 'dark',
                 },
             );
+            setSave(false);
         }
         // localStorage.setItem('profile', user);
     };
