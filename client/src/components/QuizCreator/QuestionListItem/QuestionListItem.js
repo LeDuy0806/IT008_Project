@@ -24,8 +24,12 @@ function QuestionListItem({ number, type, name, time, image, onClick }) {
                 <div className={styles['question-preview-answers']}>
                     <div className={styles['answer-image']}></div>
                     <div className={styles['answer-image']}></div>
-                    <div className={styles['answer-image']}></div>
-                    <div className={styles['answer-image']}></div>
+                    {type !== 'True/False' && (
+                        <>
+                            <div className={styles['answer-image']}></div>
+                            <div className={styles['answer-image']}></div>
+                        </>
+                    )}
                 </div>
             </div>
         </div>
