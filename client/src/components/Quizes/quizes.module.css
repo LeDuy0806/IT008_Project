@@ -1,7 +1,8 @@
 .quizes-list {
-  margin: 1.5rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #497174, #E6E2C3);
 }
