@@ -477,15 +477,15 @@ function QuizCreator() {
     }
 
     // Settings Modal
-    function afterOpenModal() {
+    const afterOpenModal = () => {
         // references are now sync'd and can be accessed.
         subtitle.style.color = '#f9591e';
         subtitle.style.fontSize = '36px';
-    }
+    };
 
-    function closeModal() {
+    const closeModal = () => {
         setIsOpen(false);
-    }
+    };
 
     const customStyles = {
         overlay: {
