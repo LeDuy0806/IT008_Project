@@ -1,16 +1,18 @@
 .quizes-list {
-    margin: 2.4rem 1.5rem 1.5rem;
+    padding: 2.4rem 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 70vh;
+    background: linear-gradient(135deg, #1C315E, #E6E2C3);
 }
 
 .quiz-settings {
     width: 75%;
     padding: 24px;
     box-shadow: 0px 0px 5px #80838b;
+    background: white;
 }
 
 .quiz-settings h2 {

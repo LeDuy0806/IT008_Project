@@ -1,11 +1,11 @@
 import React from 'react';
-import QuestionListItem from '../../QuizCreator/QuestionListItem/QuestionListItem';
-import styles from './question.module.css';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-function Question({ question }) {
-    console.log(question);
+import QuestionListItem from '../../QuizCreator/QuestionListItem/QuestionListItem';
+import styles from './question.module.css';
+
+function Question({ question, onClick }) {
     if (question == null) {
         return (
             <>
@@ -34,23 +34,25 @@ function Question({ question }) {
             </>
         );
     }
+
     return (
-        <div className={styles['quiz-card']}>
-            <div>
-                <QuestionListItem
-                    key={question.questionIndex}
-                    number={question.questionIndex}
-                    type={question.questionType}
-                    time={question.answerTime}
-                    image={question.backgroundImage}
-                />
-            </div>
-            <div className={styles['card-body']}>
-                <p className={styles['quiz-description']}>
-                    {question.question}
-                </p>
-            </div>
-        </div>
+          <div className={styles['quiz-card']}>
+              <div>
+                  <QuestionListItem
+                      key={question.questionIndex}
+                      number={question.questionIndex}
+                      type={question.questionType}
+                      time={question.answerTime}
+                      image={question.backgroundImage}
+                      onClick={onClick}
+                  />
+              </div>
+              <div className={styles['card-body']}>
+                  <p className={styles['quiz-description']}>
+                      {question.question}
+                  </p>
+              </div>
+          </div>
     );
 }
 
