@@ -8,21 +8,32 @@ import img4 from '../../assets/img4.svg';
 import img5 from '../../assets/img5.svg';
 import pic1 from '../../assets/pic1.jpeg';
 import pic2 from '../../assets/pic2.jpeg';
-import snow from '../../assets/snow-flake.png'
+import snow from '../../assets/snow-flake.png';
 import Footer from '../../components/Footer/Footer';
 import { Link } from 'react-router-dom';
-import Snowfall from 'react-snowfall'
+import Snowfall from 'react-snowfall';
 
-const snowflake = document.createElement('img')
-snowflake.src = snow
-const images = [snowflake]
+const snowflake = document.createElement('img');
+snowflake.src = snow;
+const images = [snowflake];
 
 function Home() {
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
         <main className={styles.page}>
-            <Snowfall speed={[0, 2]} radius={[5, 20]} style={{ position: "fixed", zIndex: "1000", height: "100vh", width: "100vw" }} images={images} />
+            <Snowfall
+                speed={[0, 2]}
+                radius={[5, 20]}
+                style={{
+                    position: 'fixed',
+                    zIndex: '1000',
+                    height: '100vh',
+                    width: '100vw',
+                }}
+                images={images}
+            />
             <section className={styles['page-section']}>
                 <section className={styles['first-section']}>
                     <div className={styles.banner}>
@@ -38,11 +49,19 @@ function Home() {
                                     : 'Telexercise cung cấp việc học hấp dẫn cho hàng triệu người có liên quan'}
                             </p>
                             <button className={styles['banner-button']}>
-                                <a href="/">
-                                    {isLanguageEnglish
-                                        ? 'Sign up for free'
-                                        : 'Đăng kí miễn phí'}
-                                </a>
+                                {user ?
+                                    <a href="/myquizes">
+                                        {isLanguageEnglish
+                                            ? 'My Quizes'
+                                            : 'Câu hỏi của tôi'}
+                                    </a>
+                                    :
+                                    <a href="/auth">
+                                        {isLanguageEnglish
+                                            ? 'Sign up for free'
+                                            : 'Đăng kí miễn phí'}
+                                    </a>
+                                }
                             </button>
                         </div>
                         <img
@@ -147,7 +166,7 @@ function Home() {
                     </div>
                 </section>
                 <section className={styles['third-section']}>
-                    <h1 style={{ color: "white" }}>
+                    <h1 style={{ color: 'white' }}>
                         {isLanguageEnglish
                             ? 'How does Telexercise work?'
                             : 'Telexercise hoạt động như thế nào?'}

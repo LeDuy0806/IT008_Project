@@ -49,25 +49,35 @@ const getUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   const { id } = req.params;
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).send(`No user with id: ${id}`);
+  // if (!mongoose.Types.ObjectId.isValid(id)) {
+  //   return res.status(404).send(`No user with id: ${id}`);
+  // }
+  let oldUser;
+  try {
+    oldUser = await User.findById(req.params.id);
+    if (oldUser == null) {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
+
 
   const { avatar, userType, firstName, lastName, userName, mail, password } = req.body;
   const user = new User({
     _id: id,
     avatar,
-    userType,
+    userType: userType || oldUser.userType,
     firstName,
     lastName,
     userName,
-    mail,
-    password,
+    mail: mail || oldUser.mail,
+    password: password || oldUser.password,
   });
 
   try {
     const updatedUser = await User.findByIdAndUpdate(id, user, { new: true });
-    res.json(updatedUser);
+    res.send(updatedUser);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

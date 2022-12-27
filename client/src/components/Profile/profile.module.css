@@ -65,7 +65,7 @@
     font-feature-settings: 'tnum';
     overflow: hidden;
     color: #fff;
-    border-radius: 50%;
+
     background-color: rgba(136, 136, 136, 0.5);
     border-color: rgba(22, 24, 35, 0.12);
     border-width: 0.5px;
@@ -74,6 +74,8 @@
 }
 
 .contain_editavachilimg {
+    cursor: pointer;
+    border-radius: 50%;
     width: 96px;
     height: 96px;
     object-fit: cover;
@@ -94,12 +96,15 @@
     cursor: pointer;
     position: absolute;
     bottom: 0px;
-    margin-left: 192px;
+    margin-left: 60px;
+}
+.contain_editicon label {
+    cursor: pointer;
 }
 
 .contain_editiconinput {
-    width: 1px;
-    height: 1px;
+    width: 0px;
+    height: 0px;
     position: absolute;
     top: 0px;
     left: 0px;
@@ -112,7 +117,7 @@
     border-bottom: 0.5px solid rgba(22, 24, 35, 0.12);
 }
 
-.edit-profile-username-name {
+.edit-profile-name {
     font-family: ProximaNova, Arial, Tahoma, PingFangSC, sans-serif;
     font-weight: 600;
     line-height: 24px;
@@ -121,16 +126,28 @@
     margin-right: 24px;
 }
 
-.edit-profile-username-input {
+.edit-profile-input {
     position: relative;
+    width: 360px;
 }
 
-.edit-profile-username-input-chil {
-    width: 360px;
+.edit-profile-name-input {
+    display: flex;
+}
+
+.edit-profile-input input:focus {
+    border: 1px solid rgba(0, 0, 0);
+    background: rgba(22, 24, 35, 0.08);
+}
+
+.edit-profile-name-input .edit-profile-input-chil {
+    width: 160px;
+}
+.edit-profile-input-chil {
     height: 38px;
     border-radius: 4px;
-    background: rgba(22, 24, 35, 0.06);
-    caret-color: rgb(254, 44, 85);
+    background: rgba(22, 24, 35, 0.12);
+    caret-color: hwb(16deg 12% 2%);
     font-size: 16px;
     color: rgb(22, 24, 35);
     line-height: 24px;
@@ -138,24 +155,28 @@
     border: none;
     padding: 7px 12px;
     box-sizing: border-box;
+    border: 1px solid transparent;
+}
+.edit-profile-input-chil + .edit-profile-input-chil {
+    margin-left: 16px;
 }
 
-.edit-profile-username-input-p1 {
+.edit-profile-input-p1 {
     font-size: 12px;
     color: rgba(22, 24, 35, 0.75);
     line-height: 18px;
-    margin-top: 16px;
+    margin-top: 4px;
     max-width: 460px;
     overflow: hidden;
 }
 
-.edit-profile-username-input-p2 {
+.edit-profile-input-p2 {
     font-size: 12px;
     color: rgba(22, 24, 35, 0.75);
     line-height: 18px;
     max-width: 460px;
     overflow: hidden;
-    margin-top: 8px;
+    margin-top: 4px;
     width: 360px;
 }
 
