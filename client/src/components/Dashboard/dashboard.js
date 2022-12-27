@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import styles from './dashboard.module.css';
 import telehome from '../../assets/telehome.png';
@@ -13,84 +14,12 @@ import { IoIosAdd } from 'react-icons/io';
 import { CgLogOut } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 // import { VscPreview } from "react-icons/vsc";
-import { useEffect, useState } from 'react';
-import noava from '../../assets/noava.jpg';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { getQuizes } from '../../actions/quiz';
 import { getUsers } from '../../actions/users';
-const orders = [
-    {
-        productName: 'Anh Quoc',
-        productNumber: '1360',
-        paymentStatus: 'Paid',
-        shipping: 'Decline',
-    },
-    {
-        productName: 'Thu Hien',
-        productNumber: '1259',
-        paymentStatus: 'Paid',
-        shipping: 'pending',
-    },
-    {
-        productName: 'Dinh Khoi',
-        productNumber: '1008',
-        paymentStatus: 'Paid',
-        shipping: 'Delivered',
-    },
-    {
-        productName: 'Van Duy',
-        productNumber: '1223',
-        paymentStatus: 'Paid',
-        shipping: 'pending',
-    },
-    {
-        productName: 'Phuoc Long',
-        productNumber: '1154',
-        paymentStatus: 'Paid',
-        shipping: 'pending',
-    },
-    {
-        productName: 'Minh Nhat',
-        productNumber: '1111',
-        paymentStatus: 'Paid',
-        shipping: 'Delivered',
-    },
-    {
-        productName: 'Quoc Tuan',
-        productNumber: '1888',
-        paymentStatus: 'Paid',
-        shipping: 'pending',
-    },
-    {
-        productName: 'Duc Minh',
-        productNumber: '1777',
-        paymentStatus: 'Paid',
-        shipping: 'Delivered',
-    },
-    {
-        productName: 'Khiet Tuong',
-        productNumber: '1666',
-        paymentStatus: 'Paid',
-        shipping: 'Delivered',
-    },
-    {
-        productName: 'Minh Chinh',
-        productNumber: '1143',
-        paymentStatus: 'Paid',
-        shipping: 'Delivered',
-    },
-];
 
 function Dashboard() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getUsers);
-    }, [dispatch]);
-
-    const users = useSelector((state) => state.users);
-    useEffect(() => {
-        console.log(users);
-    }, [dispatch, users]);
-
     const current = new Date();
     const date = `${current.getDate()}/${
         current.getMonth() + 1
@@ -100,6 +29,160 @@ function Dashboard() {
     const HandleThemeToggle = () => {
         document.body.classList.toggle(styles['dark-theme-variables']);
         SetCheckTG(!checkTG);
+    };
+
+    const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
+
+    useEffect(() => {
+        dispatch(getQuizes(quizes));
+        dispatch(getUsers(user));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [dispatch]);
+
+    const { quizes } = useSelector((state) => state.quiz);
+    const users = useSelector((state) => state.users);
+
+    //Xử lí số liệu
+    var CountTeacher = 0;
+    var CountStudent = 0;
+    users.map((user) => {
+        if (user.userType === 'Teacher') {
+            CountTeacher++;
+        } else {
+            CountStudent++;
+        }
+    });
+
+    var CountPublic = 0;
+    var CountAll = 0;
+    // eslint-disable-next-line array-callback-return
+    quizes.map((quize) => {
+        if (quize.isPublic === true) {
+            CountPublic++;
+        }
+        CountAll++;
+    });
+
+    let a = 0;
+    let Sum = 0;
+    const UserTeacher = users.filter((user) => {
+        return user.userType === 'Teacher';
+    });
+
+    const SetQuizesUserTeacher = UserTeacher.map((user) => {
+        a = 0;
+        quizes.map((quize) => {
+            if (user.firstName + ' ' + user.lastName === quize.creatorName) {
+                a++;
+            }
+        });
+        user.Count = a;
+        Sum += a;
+        return user;
+    });
+
+    const leaderboardTeacher = SetQuizesUserTeacher.sort(
+        (teacher1, teacher2) => {
+            if (teacher1.Count < teacher2.Count) return 1;
+            if (teacher1.Count > teacher2.Count) return -1;
+            return 0;
+        },
+    );
+    ///
+
+    const [RCpercentTC, setRCpercentTC] = useState(0);
+    const percentTeacher = Math.round(
+        (CountTeacher * 100) / (CountStudent + CountTeacher),
+    );
+    let timeTC = useRef();
+    useEffect(() => {
+        timeTC.current = setInterval(() => {
+            setRCpercentTC((preState) => preState + 1);
+        }, 20);
+    }, []);
+    if (RCpercentTC === percentTeacher) {
+        clearInterval(timeTC.current);
+    }
+
+    const [RCpercentST, setRCpercentST] = useState(0);
+    const percentStudent = Math.round(
+        (CountStudent * 100) / (CountStudent + CountTeacher),
+    );
+    let timeST = useRef();
+    useEffect(() => {
+        timeST.current = setInterval(() => {
+            setRCpercentST((preState) => preState + 1);
+        }, 100);
+    }, []);
+    if (RCpercentST === percentStudent) {
+        clearInterval(timeST.current);
+    }
+
+    const [RCpercentPL, setRCpercentPL] = useState(0);
+    const percentPublic = Math.round((CountPublic * 100) / CountAll);
+    let timePL = useRef();
+    useEffect(() => {
+        timePL.current = setInterval(() => {
+            setRCpercentPL((preState) => preState + 1);
+        }, 20);
+    }, []);
+    if (RCpercentPL === percentPublic) {
+        clearInterval(timePL.current);
+    }
+
+    const [tableUsers, setTableUser] = useState(true);
+    const [tableQuizes, setTableQuizes] = useState(false);
+    const [active, SetActive] = useState({
+        Dashboard: false,
+        Customers: true,
+        Quizes: false,
+        Analytics: false,
+        Messages: false,
+        Prducts: false,
+        Reports: false,
+        Settings: false,
+        AddProduct: false,
+        Logout: false,
+    });
+
+    const [showAll, SetShowAll] = useState(false);
+
+    const handleClick = (e) => {
+        switch (e.target.name) {
+            case 'Customers':
+                SetActive((preState) => {
+                    var newState = {
+                        ...preState,
+                        Customers: true,
+                        Quizes: false,
+                    };
+                    return newState;
+                });
+                setTableUser(true);
+                setTableQuizes(false);
+
+                break;
+            case 'Quizes':
+                SetActive((preState) => {
+                    var newState = {
+                        ...preState,
+                        Customers: false,
+                        Quizes: true,
+                    };
+                    return newState;
+                });
+                setTableUser(false);
+                setTableQuizes(true);
+                break;
+            default:
+                break;
+        }
+        console.log(e.target.name);
+    };
+
+    const handleShow = () => {
+        SetShowAll(!showAll);
     };
 
     return (
@@ -123,11 +206,12 @@ function Dashboard() {
                         <div className={styles['tele']}>
                             <h2
                                 className={`${styles['text-muted']} ${styles['h2_text']}`}
+                                style={{ paddingRight: '60px' }}
                             >
                                 TEL
                                 <span
                                     style={{ color: '#ff7782' }}
-                                    className="danger"
+                                    className={styles['danger']}
                                 >
                                     EXERCISE
                                 </span>
@@ -135,86 +219,205 @@ function Dashboard() {
                         </div>
                     </div>
                     <div className={styles['sidebar']}>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Dashboard"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <CgMicrosoft />
                             </span>
-                            <h3 className={styles['h3_text']}>Dashboard</h3>
-                        </a>
-                        <a href="#" className={styles['active']}>
-                            <span
-                                className={styles['material-symbols-outlined']}
+                            <h3
+                                className={styles['h3_text']}
+                                name="Dashboard"
+                                onClick={handleClick}
                             >
-                                <FiUser />
-                            </span>
-                            <h3 className={styles['h3_text']}>Customers</h3>
+                                Dashboard
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            href="#"
+                            className={
+                                styles[active.Customers ? 'active' : 'link_a']
+                            }
+                            onClick={handleClick}
+                            name="Customers"
+                        >
+                            <div>
+                                <span
+                                    className={
+                                        styles['material-symbols-outlined']
+                                    }
+                                    onClick={handleClick}
+                                >
+                                    <FiUser />
+                                </span>
+                            </div>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Customers
+                            </h3>
+                        </a>
+                        <a
+                            className={
+                                styles[active.Quizes ? 'active' : 'link_a']
+                            }
+                            href="#"
+                            onClick={handleClick}
+                            name="Quizes"
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <AiOutlineFileProtect />
                             </span>
-                            <h3 className={styles['h3_text']}>Orders</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Quizes
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Analytics"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <IoAnalytics />
                             </span>
-                            <h3 className={styles['h3_text']}>Analytics</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Analytics
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Messages"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <BiMessageSquareDetail />
                             </span>
-                            <h3 className={styles['h3_text']}>Messages</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Messages
+                            </h3>
                             <span className={styles['message-count']}>26</span>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Products"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <MdFactCheck />
                             </span>
-                            <h3 className={styles['h3_text']}>Products</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Products
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Reports"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <MdErrorOutline />
                             </span>
-                            <h3 className={styles['h3_text']}>Reports</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Reports
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Settings"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <FiSettings />
                             </span>
-                            <h3 className={styles['h3_text']}>Settings</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Settings
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="AddProduct"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <IoIosAdd />
                             </span>
-                            <h3 className={styles['h3_text']}>Add Product</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Add Product
+                            </h3>
                         </a>
-                        <a className={styles['link_a']} href="#">
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            name="Logout"
+                            onClick={handleClick}
+                        >
                             <span
                                 className={styles['material-symbols-outlined']}
+                                onClick={handleClick}
                             >
                                 <CgLogOut />
                             </span>
-                            <h3 className={styles['h3_text']}>Logout</h3>
+                            <h3
+                                className={styles['h3_text']}
+                                onClick={handleClick}
+                            >
+                                Logout
+                            </h3>
                         </a>
                     </div>
                 </aside>
@@ -232,27 +435,49 @@ function Dashboard() {
                             <div className={styles['middle']}>
                                 <div className={styles['left']}>
                                     <h3 className={styles['h3_text']}>
-                                        Total Sales
+                                        Total Teachers
                                     </h3>
-                                    <h1 className={styles['h1_text']}>
-                                        $25,024
+                                    <h1
+                                        className={styles['h1_text']}
+                                        style={{ fontSize: '1.2rem' }}
+                                    >
+                                        {CountTeacher} Person
                                     </h1>
                                 </div>
                                 <div className={styles['progress']}>
-                                    <svg>
-                                        <circle cx="38" cy="38" r="36"></circle>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        version="1.1"
+                                    >
+                                        <defs>
+                                            <linearGradient id="GradientColor">
+                                                <stop
+                                                    offset="0%"
+                                                    stopColor="#e91e63"
+                                                />
+                                                <stop
+                                                    offset="100%"
+                                                    stopColor="#673ab7"
+                                                />
+                                            </linearGradient>
+                                        </defs>
+
+                                        <circle
+                                            className="Teacher"
+                                            cx="38"
+                                            cy="38"
+                                            r="36"
+                                        ></circle>
                                     </svg>
                                     <div className={styles['number']}>
-                                        <p className={styles['p_text']}>81%</p>
+                                        <p className={styles['p_text']}>
+                                            {RCpercentTC}%
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <small
-                                className={`${styles['text-muted']} ${styles['small_text']}`}
-                            >
-                                Last 24 Hours
-                            </small>
                         </div>
+
                         {/* <!-- END OF SALES --> */}
                         <div className={styles['expenses']}>
                             <span className="material-symbols-outlined">
@@ -261,26 +486,42 @@ function Dashboard() {
                             <div className={styles['middle']}>
                                 <div className={styles['left']}>
                                     <h3 className={styles['h3_text']}>
-                                        Total Expenses
+                                        Total Students
                                     </h3>
-                                    <h1 className={styles['h1_text']}>
-                                        $14,160
+                                    <h1
+                                        className={styles['h1_text']}
+                                        style={{ fontSize: '1.2rem' }}
+                                    >
+                                        {CountStudent} Person
                                     </h1>
                                 </div>
                                 <div className={styles['progress']}>
-                                    <svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        version="1.1"
+                                    >
+                                        <defs>
+                                            <linearGradient id="GradientColor">
+                                                <stop
+                                                    offset="0%"
+                                                    stopColor="#e91e63"
+                                                />
+                                                <stop
+                                                    offset="100%"
+                                                    stopColor="#673ab7"
+                                                />
+                                            </linearGradient>
+                                        </defs>
+
                                         <circle cx="38" cy="38" r="36"></circle>
                                     </svg>
                                     <div className={styles['number']}>
-                                        <p className={styles['p_text']}>62%</p>
+                                        <p className={styles['p_text']}>
+                                            {RCpercentST}%
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <small
-                                className={`${styles['text-muted']} ${styles['small_text']}`}
-                            >
-                                Last 24 Hours
-                            </small>
                         </div>
                         {/* END OF EXPENSES  */}
                         <div className={styles['income']}>
@@ -290,66 +531,175 @@ function Dashboard() {
                             <div className={styles['middle']}>
                                 <div className={styles['left']}>
                                     <h3 className={styles['h3_text']}>
-                                        Total Income
+                                        Total Public
                                     </h3>
-                                    <h1 className={styles['h1_text']}>
-                                        $10,806
+                                    <h1
+                                        className={styles['h1_text']}
+                                        style={{ fontSize: '1.2rem' }}
+                                    >
+                                        {CountPublic} Quizes
                                     </h1>
                                 </div>
                                 <div className={styles['progress']}>
-                                    <svg>
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        version="1.1"
+                                    >
+                                        <defs>
+                                            <linearGradient id="GradientColor">
+                                                <stop
+                                                    offset="0%"
+                                                    stopColor="#e91e63"
+                                                />
+                                                <stop
+                                                    offset="100%"
+                                                    stopColor="#673ab7"
+                                                />
+                                            </linearGradient>
+                                        </defs>
+
                                         <circle cx="38" cy="38" r="36"></circle>
                                     </svg>
                                     <div className={styles['number']}>
-                                        <p className={styles['p_text']}>44%</p>
+                                        <p className={styles['p_text']}>
+                                            {RCpercentPL}%
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-                            <small
-                                className={`${styles['text-muted']} ${styles['small_text']}`}
-                            >
-                                Last 24 Hours
-                            </small>
                         </div>
                     </div>
                     {/* Recent-orders */}
                     <div className={styles['recent-orders']}>
-                        <h2 className={styles['h2_text']}>Recent-Topics</h2>
+                        <h2 className={styles['h2_text']}>
+                            {tableUsers && 'Users-List'}
+                            {tableQuizes && 'Quizes-List'}
+                        </h2>
                         <table>
                             <thead>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Product Number</th>
-                                    <th>Payment</th>
-                                    <th>Status</th>
-                                    <th></th>
-                                </tr>
+                                {tableUsers && (
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>User Name</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>User Type</th>
+                                    </tr>
+                                )}
+                                {tableQuizes && (
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>CreatorName</th>
+                                        <th>isPublic</th>
+                                        <th>QuestionNumber</th>
+                                        <th>dateCreated</th>
+                                    </tr>
+                                )}
                             </thead>
                             <tbody>
-                                {orders.map((order) => (
-                                    <tr>
-                                        <td>{order.productName}</td>
-                                        <td>{order.productNumber}</td>
-                                        <td>{order.paymentStatus}</td>
-                                        <td
-                                            className={
-                                                order.shipping === 'Decline'
-                                                    ? 'danger'
-                                                    : order.shipping ===
-                                                      'pending'
-                                                    ? 'warning'
-                                                    : 'primary'
-                                            }
-                                        >
-                                            {order.shipping}
-                                        </td>
-                                        <td class="primary">Details</td>
-                                    </tr>
-                                ))}
+                                {tableQuizes &&
+                                    (showAll
+                                        ? quizes.map((quize) => (
+                                              <tr>
+                                                  <td>{quize.name}</td>
+                                                  <td>{quize.creatorName}</td>
+                                                  <td
+                                                      style={{
+                                                          color:
+                                                              quize.isPublic ===
+                                                              true
+                                                                  ? '#41F1B6'
+                                                                  : 'red',
+                                                          fontWeight: '700',
+                                                      }}
+                                                  >
+                                                      {quize.isPublic.toString()}
+                                                  </td>
+                                                  <td>
+                                                      {
+                                                          quize.questionList
+                                                              .length
+                                                      }
+                                                  </td>
+                                                  <td>
+                                                      {quize.dateCreated.slice(
+                                                          0,
+                                                          10,
+                                                      )}
+                                                  </td>
+                                              </tr>
+                                          ))
+                                        : quizes
+                                              .slice(0, 7)
+                                              .map((quize, index) => (
+                                                  <tr key={index}>
+                                                      <td>{quize.name}</td>
+                                                      <td>
+                                                          {quize.creatorName}
+                                                      </td>
+                                                      <td
+                                                          style={{
+                                                              color:
+                                                                  quize.isPublic ===
+                                                                  true
+                                                                      ? '#41F1B6'
+                                                                      : 'red',
+                                                              fontWeight: '700',
+                                                          }}
+                                                      >
+                                                          {quize.isPublic.toString()}
+                                                      </td>
+                                                      <td>
+                                                          {
+                                                              quize.questionList
+                                                                  .length
+                                                          }
+                                                      </td>
+                                                      <td>
+                                                          {quize.dateCreated.slice(
+                                                              0,
+                                                              10,
+                                                          )}
+                                                      </td>
+                                                  </tr>
+                                              )))}
+
+                                {tableUsers &&
+                                    (showAll
+                                        ? users.map((user, index) => (
+                                              <tr key={index}>
+                                                  <td>{user._id}</td>
+                                                  <td>{user.userName}</td>
+                                                  <td>
+                                                      {user.firstName +
+                                                          user.lastName}
+                                                  </td>
+                                                  <td>{user.mail}</td>
+                                                  <td>{user.userType}</td>
+                                              </tr>
+                                          ))
+                                        : users
+                                              .slice(0, 7)
+                                              .map((user, index) => (
+                                                  <tr key={index}>
+                                                      <td>{user._id}</td>
+                                                      <td>{user.userName}</td>
+                                                      <td>
+                                                          {user.firstName +
+                                                              user.lastName}
+                                                      </td>
+                                                      <td>{user.mail}</td>
+                                                      <td>{user.userType}</td>
+                                                  </tr>
+                                              )))}
                             </tbody>
                         </table>
-                        <a className={styles['link_a']} href="#">
-                            Show All
+                        <a
+                            className={styles['link_a']}
+                            href="#"
+                            onClick={handleShow}
+                        >
+                            {showAll ? 'Collapse' : 'Show All'}
                         </a>
                     </div>
                 </main>
@@ -389,12 +739,16 @@ function Dashboard() {
                         <div className={styles['profile']}>
                             <div className={styles['info']}>
                                 <p className={styles['p_text']}>
-                                    Hey, <b>AnhQuoc</b>
+                                    Hey,{' '}
+                                    <b>
+                                        {user.result.firstName +
+                                            user.result.lastName}
+                                    </b>
                                 </p>
                                 <small
                                     className={`${styles['text-muted']} ${styles['small_text']}`}
                                 >
-                                    Admin
+                                    Have a good day
                                 </small>
                             </div>
                             <div className={styles['profile-photo']}>
@@ -407,167 +761,73 @@ function Dashboard() {
                         </div>
                     </div>
                     {/* <!-- End OF TOP --> */}
-                    <div className={styles['recent-updates']}>
-                        <h2 className={styles['h2_text']}>Recent-Users</h2>
-                        <div className={styles['updates']}>
-                            <div className={styles['update']}>
-                                <div className={styles['profile-photo']}>
-                                    <img
-                                        className={styles['image']}
-                                        src={noava}
-                                        alt=""
-                                    ></img>
-                                </div>
-                                <div className={styles['message']}>
-                                    <p className={styles['p_text']}>
-                                        <b>Anh Quoc</b> received his oder of
-                                        Night lion tech PGS drone.
-                                    </p>
-                                    <small
-                                        className={`${styles['text-muted']} ${styles['small_text']}`}
-                                    >
-                                        2 Minutes Ago
-                                    </small>
-                                </div>
-                            </div>
-                            <div className={styles['update']}>
-                                <div className={styles['profile-photo']}>
-                                    <img
-                                        className={styles['image']}
-                                        src={noava}
-                                        alt=""
-                                    ></img>
-                                </div>
-                                <div className={styles['message']}>
-                                    <p className={styles['p_text']}>
-                                        <b>Van Duy</b> received his oder of
-                                        Night lion tech PGS drone.
-                                    </p>
-                                    <small
-                                        className={`${styles['text-muted']} ${styles['small_text']}`}
-                                    >
-                                        2 Minutes Ago
-                                    </small>
-                                </div>
-                            </div>
-                            <div className={styles['update']}>
-                                <div className={styles['profile-photo']}>
-                                    <img
-                                        className={styles['image']}
-                                        src={noava}
-                                        alt=""
-                                    ></img>
-                                </div>
-                                <div className={styles['message']}>
-                                    <p className={styles['p_text']}>
-                                        <b>Phuoc Long</b> received his oder of
-                                        Night lion tech PGS drone.
-                                    </p>
-                                    <small
-                                        className={`${styles['text-muted']} ${styles['small_text']}`}
-                                    >
-                                        2 Minutes Ago
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                     {/* <!-- END OF RECENT-UPDATES --> */}
                     <div className={styles['sales-analytics']}>
-                        <h2 className={styles['h2_text']}>Sales Analytics</h2>
-                        <div
-                            className={`${styles['item']} ${styles['online']}`}
-                        >
-                            <div className={styles['icon']}>
-                                <span className="material-symbols-outlined">
-                                    shopping_cart
-                                </span>
-                            </div>
-                            <div className={styles['right']}>
-                                <div className={styles['info']}>
-                                    <h3 className={styles['h3_text']}>
-                                        ONLINE
-                                    </h3>
-                                    <small
-                                        className={`${styles['text-muted']} ${styles['small_text']}`}
+                        <h2 className={styles['h2_text']}>
+                            TeacherUsers-Quizes
+                        </h2>
+                        {leaderboardTeacher.map((teacher, index) => {
+                            return (
+                                teacher.Count !== 0 && (
+                                    <div
+                                        className={`${styles['item']} ${styles['online']}`}
+                                        key={index}
                                     >
-                                        Last 24 Hours
-                                    </small>
-                                </div>
-                                <h5
-                                    className={`${styles['danger']} ${styles['h5_text']}`}
-                                >
-                                    +39%
-                                </h5>
-                                <h3 className={styles['h3_text']}>3849</h3>
-                            </div>
-                        </div>
-                        <div
-                            className={`${styles['item']} ${styles['offline']}`}
-                        >
-                            <div className={styles['icon']}>
-                                <span className="material-symbols-outlined">
-                                    shopping_cart
-                                </span>
-                            </div>
-                            <div className={styles['right']}>
-                                <div className={styles['info']}>
-                                    <h3 className={styles['h3_text']}>
-                                        OFFLINE ORDERS
-                                    </h3>
-                                    <small
-                                        className={`${styles['text-muted']} ${styles['small_text']}`}
-                                    >
-                                        Last 24 Hours
-                                    </small>
-                                </div>
-                                <h5
-                                    className={`${styles['success']} ${styles['h5_text']}`}
-                                >
-                                    -17%
-                                </h5>
-                                <h3 className={styles['h3_text']}>1100</h3>
-                            </div>
-                        </div>
-                        <div
-                            className={`${styles['item']} ${styles['offline']}`}
-                        >
-                            <div className={styles['icon']}>
-                                <span className="material-symbols-outlined">
-                                    person
-                                </span>
-                            </div>
-                            <div className={styles['right']}>
-                                <div className={styles['info']}>
-                                    <h3 className={styles['h3_text']}>
-                                        NEW CUSTOMERS
-                                    </h3>
-                                    <small
-                                        className={`${styles['text-muted']} ${styles['small_text']}`}
-                                    >
-                                        Last 24 Hours
-                                    </small>
-                                </div>
-                                <h5
-                                    className={`${styles['success']} ${styles['h5_text']}`}
-                                >
-                                    +25%
-                                </h5>
-                                <h3 className={styles['h3_text']}>849</h3>
-                            </div>
-                        </div>
-                        <div
-                            className={`${styles['item']} ${styles['add-product']}`}
-                        >
-                            <div>
-                                <span class="material-symbols-outlined">
-                                    add
-                                </span>
-                                <h3 className={styles['h3_text']}>
-                                    Add Product
-                                </h3>
-                            </div>
-                        </div>
+                                        <div className={styles['icon']}>
+                                            <span className="material-symbols-outlined">
+                                                shopping_cart
+                                            </span>
+                                        </div>
+                                        <div className={styles['right']}>
+                                            <div className={styles['info']}>
+                                                <h3
+                                                    className={
+                                                        styles['h3_text']
+                                                    }
+                                                >
+                                                    {teacher.lastName +
+                                                        teacher.firstName}
+                                                </h3>
+                                                <small
+                                                    className={`${styles['text-muted']} ${styles['small_text']}`}
+                                                >
+                                                    Last{' '}
+                                                    {Math.floor(
+                                                        Math.random() * 10,
+                                                    )}{' '}
+                                                    Hours
+                                                </small>
+                                            </div>
+                                            <h5
+                                                className={`${styles['danger']} ${styles['h5_text']}`}
+                                                style={{
+                                                    color:
+                                                        parseInt(
+                                                            (parseInt(
+                                                                teacher.Count,
+                                                            ) /
+                                                                Sum) *
+                                                                100,
+                                                        ) >= 50
+                                                            ? '#41F1B6'
+                                                            : 'red',
+                                                }}
+                                            >
+                                                {Math.round(
+                                                    (parseInt(teacher.Count) /
+                                                        Sum) *
+                                                        100,
+                                                ) + '%'}
+                                            </h5>
+                                            <h3 className={styles['h3_text']}>
+                                                Quizes: {teacher.Count}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                )
+                            );
+                        })}
                     </div>
                 </div>
             </div>
