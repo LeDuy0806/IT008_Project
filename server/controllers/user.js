@@ -53,9 +53,10 @@ const updateUser = async (req, res) => {
     return res.status(404).send(`No user with id: ${id}`);
   }
 
-  const { userType, firstName, lastName, userName, mail, password } = req.body;
+  const { avatar, userType, firstName, lastName, userName, mail, password } = req.body;
   const user = new User({
     _id: id,
+    avatar,
     userType,
     firstName,
     lastName,

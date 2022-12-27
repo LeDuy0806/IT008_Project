@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux"
 import { getGame } from "../../../actions/game"
 import { getQuiz } from "../../../actions/quiz"
 import {
-  getLeaderboard,
+  // getLeaderboard,
   updateQuestionLeaderboard,
   updateCurrentLeaderboard,
 } from "../../../actions/leaderboard"
 import styles from "./hostScreen.module.css"
 import Question from "../Question/Question"
+import { toast } from "react-toastify"
 
 function HostScreen() {
   const socket = useSelector((state) => state.socket.socket)
@@ -62,13 +63,13 @@ function HostScreen() {
   useEffect(() => {
     setTimer(5)
   }, [])
-
   useEffect(() => {
     socket.on("get-answer-from-player", (data, id, score, player) => {
       updateLeaderboard(data, id, score)
       let playerData = { id: data.playerId, userName: player.userName }
       setPlayerList((prevstate) => [...prevstate, playerData])
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
 
   const updateLeaderboard = async (data, id, score) => {
@@ -134,12 +135,21 @@ function HostScreen() {
   const displayCurrentLeaderBoard = (index) => {
     setIsQuestionResultScreen(false)
     setIsLeaderboardScreen(true)
-    setTimeout(() => {
-      socket.emit("question-preview", () => {
-        startPreviewCountdown(5, index)
-        setPlayerList([])
+    if (index >= quiz.questionList.length) {
+      socket.emit("host-end-game", playerList, currentLeaderboard)
+      toast.info('Game ended!', {
+        position: "top-right",
+        autoClose: 2000,
       })
-    }, 5000)
+    }
+    else {
+      setTimeout(() => {
+        socket.emit("question-preview", () => {
+          startPreviewCountdown(5, index)
+          index !== quiz.questionList.length - 1 && setPlayerList([])
+        })
+      }, 5000)
+    }
   }
 
   const displayQuestion = (index) => {
@@ -150,6 +160,7 @@ function HostScreen() {
       setCurrentQuestionIndex((prevstate) => prevstate + 1)
       let time = quiz.questionList[index].answerTime
       let question = {
+        questionData: quiz.questionList[index],
         answerList: quiz.questionList[index].answerList,
         questionIndex: quiz.questionList[index].questionIndex,
         correctAnswersCount: quiz.questionList[index].answerList.filter(

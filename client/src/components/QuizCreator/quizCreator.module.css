@@ -230,6 +230,7 @@ body {
   height: 100%;
   color: rgb(110, 110, 110);
   font-size: 1.1rem;
+  background: #fadeda;
 }
 
 .option {
@@ -339,8 +340,6 @@ body {
 }
 
 /* Setting modal */
-.settings {}
-
 .settings-menu {
   display: flex;
   justify-content: space-between;
