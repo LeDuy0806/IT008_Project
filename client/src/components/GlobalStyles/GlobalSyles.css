@@ -38,3 +38,6 @@ button {
 .hide_navbar {
     padding-top: 0;
 }
+a {
+    text-decoration: none;
+}
