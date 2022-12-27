@@ -19,6 +19,7 @@ const images = [snowflake]
 
 function Home() {
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     return (
         <main className={styles.page}>
@@ -38,11 +39,19 @@ function Home() {
                                     : 'Telexercise cung cấp việc học hấp dẫn cho hàng triệu người có liên quan'}
                             </p>
                             <button className={styles['banner-button']}>
-                                <a href="/">
-                                    {isLanguageEnglish
-                                        ? 'Sign up for free'
-                                        : 'Đăng kí miễn phí'}
-                                </a>
+                                {user ?
+                                    <a href="/myquizes">
+                                        {isLanguageEnglish
+                                            ? 'My Quizes'
+                                            : 'Câu hỏi của tôi'}
+                                    </a>
+                                    :
+                                    <a href="/auth">
+                                        {isLanguageEnglish
+                                            ? 'Sign up for free'
+                                            : 'Đăng kí miễn phí'}
+                                    </a>
+                                }
                             </button>
                         </div>
                         <img
