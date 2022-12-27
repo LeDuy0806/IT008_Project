@@ -8,8 +8,7 @@
     padding: 0;
 }
 
-.lobby,
-.question-preview {
+.lobby {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,6 +18,12 @@
     height: 680px;
     border: 1px solid black;
     padding: 10px;
+}
+.question-preview {
+    display: flex;
+    width: 100%;
+    height: 94vh;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .leaderboard {

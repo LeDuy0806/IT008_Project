@@ -8,33 +8,35 @@ import Answer from "../Answer/Answer"
 
 function Question({ question, timer, host, isAnswerClicked, onClick }) {
   return (
-    <div className={styles["question"]}>
-      {host && (
-        <>
-          <h2 className={styles["question-name"]}>{question.question}</h2>
-          <div className={styles["container"]}>
-            <div className={styles["question-time"]}>{timer}</div>
-            {question.backgroundImage && (
-              <img src={question.backgroundImage} alt="" className={styles["question-image"]} />
-            )}
-            <div></div>
-          </div>
-        </>
-      )}
+    <div className={styles["container"]}>
+      <div className={styles["question"]}>
+        <div className={styles["question-time"]}><div>{timer}</div></div>
+        <h2 className={styles["question-name"]}>{question.question}</h2>
+        <div className={styles["image-container"]}
+          style={{
+            flex: question.backgroundImage === "" && '1',
+          }}
+        >
+          {question.backgroundImage && (
+            <img src={question.backgroundImage} alt="" />
+          )}
+        </div>
+      </div>
+
       <div className={styles["answers-container"]}>
         <Answer
           body={question.answerList[0].body}
           icon={triangle}
           showText={host ? true : false}
-          isAnswerClicked={isAnswerClicked}
-          onClick={onClick}
+          isAnswerClicked={!host && isAnswerClicked('a')}
+          onClick={() => onClick('a')}
         />
         <Answer
           body={question.answerList[1].body}
           icon={diamond}
           showText={host ? true : false}
-          isAnswerClicked={isAnswerClicked}
-          onClick={onClick}
+          isAnswerClicked={!host && isAnswerClicked('b')}
+          onClick={() => onClick('b')}
         />
         {question.questionType !== "True/False" && (
           <>
@@ -42,15 +44,15 @@ function Question({ question, timer, host, isAnswerClicked, onClick }) {
               body={question.answerList[2].body}
               icon={circle}
               showText={host ? true : false}
-              isAnswerClicked={isAnswerClicked}
-              onClick={onClick}
+              isAnswerClicked={!host && isAnswerClicked('c')}
+              onClick={() => onClick('c')}
             />
             <Answer
               body={question.answerList[3].body}
               icon={square}
               showText={host ? true : false}
-              isAnswerClicked={isAnswerClicked}
-              onClick={onClick}
+              isAnswerClicked={!host && isAnswerClicked('d')}
+              onClick={() => onClick('d')}
             />
           </>
         )}
