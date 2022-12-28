@@ -7,7 +7,7 @@ export default makeStyles(() => ({
         justifyContent: 'space-between',
     },
     commentsInnerContainer: {
-        height: '140px',
+        height: '200px',
         overflowY: 'auto',
         marginRight: '30px',
         border: '1px solid #ccc',
