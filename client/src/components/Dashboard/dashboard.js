@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuizes } from '../../actions/quiz';
 import { getUsers } from '../../actions/users';
+import noava from '../../assets/noava.jpg';
 
 function Dashboard() {
     const current = new Date();
@@ -33,6 +34,7 @@ function Dashboard() {
 
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
+    console.log(user.result);
 
     useEffect(() => {
         dispatch(getQuizes(quizes));
@@ -89,6 +91,7 @@ function Dashboard() {
             return 0;
         },
     );
+
     ///
 
     const [RCpercentTC, setRCpercentTC] = useState(0);
@@ -113,7 +116,7 @@ function Dashboard() {
     useEffect(() => {
         timeST.current = setInterval(() => {
             setRCpercentST((preState) => preState + 1);
-        }, 100);
+        }, 20);
     }, []);
     if (RCpercentST === percentStudent) {
         clearInterval(timeST.current);
@@ -739,7 +742,7 @@ function Dashboard() {
                         <div className={styles['profile']}>
                             <div className={styles['info']}>
                                 <p className={styles['p_text']}>
-                                    Hey,{' '}
+                                    Hello,{' '}
                                     <b>
                                         {user.result.firstName +
                                             user.result.lastName}
@@ -753,8 +756,8 @@ function Dashboard() {
                             </div>
                             <div className={styles['profile-photo']}>
                                 <img
-                                    className={styles['image']}
-                                    src={telehome}
+                                    className={styles['image-admin']}
+                                    src={user.result.avatar || noava}
                                     alt=""
                                 ></img>
                             </div>
@@ -774,11 +777,11 @@ function Dashboard() {
                                         className={`${styles['item']} ${styles['online']}`}
                                         key={index}
                                     >
-                                        <div className={styles['icon']}>
-                                            <span className="material-symbols-outlined">
-                                                shopping_cart
-                                            </span>
-                                        </div>
+                                        <img
+                                            className={styles['image']}
+                                            src={teacher.avatar || noava}
+                                            alt=""
+                                        ></img>
                                         <div className={styles['right']}>
                                             <div className={styles['info']}>
                                                 <h3
@@ -809,8 +812,16 @@ function Dashboard() {
                                                             ) /
                                                                 Sum) *
                                                                 100,
-                                                        ) >= 50
+                                                        ) >= 30
                                                             ? '#41F1B6'
+                                                            : parseInt(
+                                                                  (parseInt(
+                                                                      teacher.Count,
+                                                                  ) /
+                                                                      Sum) *
+                                                                      100,
+                                                              ) >= 20
+                                                            ? '#FFB100'
                                                             : 'red',
                                                 }}
                                             >
