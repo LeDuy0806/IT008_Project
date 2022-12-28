@@ -186,8 +186,12 @@ const Post = () => {
     return (
         <section>
             <div className={classes.card}>
-                {/* Background Image */}
-                <div className={classes.imageSection}>
+                <div
+                    className={classes.imageSection}
+                    style={{
+                        background: 'linear-gradient(90deg, #EFF5F5, #D6E4E5)',
+                    }}
+                >
                     {quiz.backgroundImage ? (
                         <img
                             className={classes.media}
@@ -206,7 +210,10 @@ const Post = () => {
                         <Typography
                             variant="h3"
                             component="h2"
-                            style={{ fontSize: '2rem' }}
+                            style={{
+                                fontSize: '2rem',
+                                fontWeight: '600',
+                            }}
                         >
                             {quiz.name}
                         </Typography>
@@ -215,12 +222,19 @@ const Post = () => {
                             color="textSecondary"
                             component="h2"
                             style={{
-                                fontSize: '.75rem',
+                                fontSize: '.8rem',
                             }}
                         >
                             {quiz.tags.map((tag) => `#${tag} `)}
                         </Typography>
-                        <Typography variant="body1" component="p">
+                        <Typography
+                            variant="body1"
+                            component="p"
+                            style={{
+                                lineHeight: '1.5',
+                                paddingRight: '30px',
+                            }}
+                        >
                             {quiz.description}
                         </Typography>
                         <Typography
@@ -239,14 +253,31 @@ const Post = () => {
                         <CommentSection quiz={quiz} />
                     </div>
                 </div>
-                <div className={classes.questions}>
+                <div
+                    className={classes.questions}
+                    style={{
+                        background: 'linear-gradient(90deg, #D6E4E5, #497174)',
+                    }}
+                >
                     {/* Render Question List */}
                     {quiz.questionList.length > 0 && (
                         <div>
-                            <Typography gutterBottom variant="h5">
+                            <Typography
+                                gutterBottom
+                                variant="h5"
+                                style={{
+                                    fontSize: '28px',
+                                    color: '#FFF',
+                                    fontWeight: '600',
+                                    textShadow: '2px 2px 8px #000',
+                                }}
+                            >
                                 {isLanguageEnglish
-                                    ? 'Question list:'
-                                    : 'Danh sách câu hỏi:'}
+                                    ? 'QUESTION LIST '
+                                    : 'Danh sách câu hỏi '}
+                                <span style={{ fontSize: '14px' }}>
+                                    (click in quiz card to preview)
+                                </span>
                             </Typography>
                             {/* <Divider /> */}
                             {quiz.questionList.map((question, index) => (
@@ -262,7 +293,9 @@ const Post = () => {
                                     }}
                                 />
                             ))}
-                            <Divider />
+                            <Divider
+                                style={{ width: '96%', marginBottom: '20px' }}
+                            />
                         </div>
                     )}
                 </div>

@@ -5,21 +5,23 @@
     justify-content: center;
     align-items: center;
     min-height: 70vh;
-    background: linear-gradient(135deg, #1C315E, #E6E2C3);
+    background: linear-gradient(135deg, #1c315e, #e6e2c3);
 }
 
 .quiz-settings {
     width: 75%;
     padding: 24px;
-    box-shadow: 0px 0px 5px #80838b;
-    background: white;
+    box-shadow: 0px 0px 5px #302f2f;
+    border-radius: 8px;
+    /* background: linear-gradient(rgb(87, 15, 255, 0.1), rgba(255, 40, 40, 0.1)); */
+    background-color: #f9f9f9;
 }
 
 .quiz-settings h2 {
     line-height: 100%;
     font-size: 42px;
     font-weight: 700;
-    background-image: linear-gradient(to right, #e37a47, #f4b183);
+    background-image: linear-gradient(to right, #e4692b, #ec985f);
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
@@ -34,6 +36,7 @@
     display: flex;
     align-items: center;
     margin-top: 8px;
+    color: #180a0a;
 }
 
 .quiz-input {
@@ -44,10 +47,20 @@
     resize: none;
     border-radius: 4px;
     font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+    background-color: #cccccc;
 }
 
 .quiz-input:hover {
     border: 1px solid #000;
+}
+.quiz-input:empty {
+    background-color: #cccccc;
+}
+.quiz-input:not(:placeholder-shown) {
+    background-color: #fefcf3;
+}
+.quiz-input:focus-within {
+    background-color: #fefcf3;
 }
 
 .quiz-input-desc {
@@ -59,6 +72,7 @@
     margin-top: 8px;
     align-items: center;
     justify-content: center;
+    border-radius: 4px;
 }
 
 .option-button,
@@ -74,16 +88,18 @@
 .option-button {
     width: 120px;
     height: 40px;
-    /* margin-right: 8px;
-  border-radius: 4px; */
+    /* margin-right: 8px; */
+
     cursor: pointer;
 }
 
 .option-button-public {
     border-right: none;
+    border-radius: 4px 0px 0px 4px;
 }
 
 .option-button-private {
+    border-radius: 0px 4px 4px 0px;
     border-left: none;
 }
 
@@ -121,8 +137,8 @@
 }
 
 .disabled:hover {
-    background-color: rgb(185, 217, 255);
     color: #000;
+    background-color: rgb(185, 217, 255);
 }
 
 .submit {

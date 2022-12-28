@@ -185,7 +185,7 @@ function HostScreen() {
       )}
 
       {isPreviewScreen && (
-        <div className={styles["question-preview"]}>
+        <div className={styles["lobby"]}>
           <h1>{timer}</h1>
         </div>
       )}
@@ -200,7 +200,7 @@ function HostScreen() {
         </div>
       )}
       {isQuestionResultScreen && (
-        <div className={styles["question-preview"]}>
+        <div className={styles["lobby"]}>
           <div className={styles["leaderboard"]}>
             <h1 className={styles["leaderboard-title"]}>
               {isLanguageEnglish ? "Question result" : "Kết quả của câu hỏi"}
@@ -221,7 +221,7 @@ function HostScreen() {
         </div>
       )}
       {isLeaderboardScreen && (
-        <div className={styles["question-preview"]}>
+        <div className={styles["lobby"]}>
           <div className={styles["leaderboard"]}>
             <h1 className={styles["leaderboard-title"]}>
               {isLanguageEnglish ? "Leaderboard" : "Bảng điểm"}

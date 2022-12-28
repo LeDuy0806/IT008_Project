@@ -87,6 +87,7 @@ function MyQuizes() {
                         value={quizData.name}
                         type="text"
                         name="name"
+                        placeholder='Type title...'
                         onChange={handleQuizChange}
                         className={`${styles['quiz-input']}`}
                         rows="1"
@@ -102,6 +103,7 @@ function MyQuizes() {
                         value={quizData.description}
                         type="text"
                         name="description"
+                        placeholder='Type description...'
                         onChange={handleQuizChange}
                         className={`${styles['quiz-input']} ${styles['quiz-input-desc']}`}
                         rows="4"
@@ -112,13 +114,11 @@ function MyQuizes() {
                                 setIsQuizPublic(true);
                                 setQuizData({ ...quizData, isPublic: true });
                             }}
-                            className={`${styles['option-button']} ${
-                                styles['option-button-public']
-                            } ${
-                                isQuizPublic
+                            className={`${styles['option-button']} ${styles['option-button-public']
+                                } ${isQuizPublic
                                     ? styles['active']
                                     : styles['disabled']
-                            }`}
+                                }`}
                         >
                             {isLanguageEnglish ? 'Public' : 'Công khai'}
                         </button>
@@ -127,13 +127,11 @@ function MyQuizes() {
                                 setIsQuizPublic(false);
                                 setQuizData({ ...quizData, isPublic: false });
                             }}
-                            className={`${styles['option-button']} ${
-                                styles['option-button-private']
-                            } ${
-                                isQuizPublic
+                            className={`${styles['option-button']} ${styles['option-button-private']
+                                } ${isQuizPublic
                                     ? styles['disabled']
                                     : styles['active']
-                            }`}
+                                }`}
                         >
                             {isLanguageEnglish ? 'Private' : 'Riêng tư'}
                         </button>

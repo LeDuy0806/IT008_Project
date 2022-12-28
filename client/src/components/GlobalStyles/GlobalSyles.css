@@ -4,6 +4,10 @@
     --text-color: '#333';
     /* 094074-3c6997-5adbff-ffdd4a-fe9000 */
     /* 44af69-f8333c-fcab10-2b9eb3-dbd5b5 */
+    --red-answer-color: rgb(208, 25, 55);
+    --blue-answer-color: rgb(18, 96, 190);
+    --green-answer-color: rgb(35, 126, 11);
+    --yellow-answer-color: rgb(199, 146, 0);
 }
 * {
     margin: 0;
