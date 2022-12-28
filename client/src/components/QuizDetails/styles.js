@@ -6,8 +6,6 @@ export default makeStyles((theme) => ({
         objectFit: 'cover',
         width: '80%',
         maxHeight: '400px',
-        // marginTop: '10px',
-        // marginRight: '20px',
     },
     card: {
         display: 'flex',
@@ -18,7 +16,6 @@ export default makeStyles((theme) => ({
         },
     },
     imageSection: {
-        // display: 'flex',
         flex: 1,
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
@@ -34,13 +31,6 @@ export default makeStyles((theme) => ({
         background: '#f2f2f2',
         paddingLeft: '24px',
         paddingTop: '34px',
-    },
-    recommendedQuizes: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        [theme.breakpoints.down('sm')]: {
-            flexDirection: 'column',
-        },
     },
     loadingPaper: {
         display: 'flex',

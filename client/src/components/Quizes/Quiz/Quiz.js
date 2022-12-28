@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
+import defaultQuizBackground from '../../../assets/defaultQuizBackground.jpg';
+
 
 function Quiz({ quiz }) {
     const dispatch = useDispatch();
@@ -28,10 +30,9 @@ function Quiz({ quiz }) {
                             ? `You and ${quiz.likesCount.length - 1} others`
                             : `Bạn và ${quiz.likesCount.length - 1} người khác`
                         : isLanguageEnglish
-                        ? `${quiz.likesCount.length} like${
-                              quiz.likesCount.length > 1 ? 's' : ''
-                          }`
-                        : `${quiz.likesCount.length} người thích`}
+                            ? `${quiz.likesCount.length} like${quiz.likesCount.length > 1 ? 's' : ''
+                            }`
+                            : `${quiz.likesCount.length} người thích`}
                 </>
             ) : (
                 <>
@@ -42,8 +43,8 @@ function Quiz({ quiz }) {
                             ? 'Like'
                             : 'người thích'
                         : isLanguageEnglish
-                        ? 'Likes'
-                        : 'người thích'}
+                            ? 'Likes'
+                            : 'người thích'}
                 </>
             );
         }
@@ -56,10 +57,9 @@ function Quiz({ quiz }) {
     };
 
     return (
-        <div className={styles['quiz-card']}>
+        <div className={styles['quiz-card']} onClick={openQuizDetailsPage}>
             <div
                 className={styles['image-container']}
-                onClick={openQuizDetailsPage}
             >
                 <h3 className={styles['quiz-creator']}>{quiz.creatorName}</h3>
                 <h3 className={styles['quiz-date']}>
@@ -68,7 +68,7 @@ function Quiz({ quiz }) {
                 <div
                     className={styles['quiz-image']}
                     style={{
-                        backgroundImage: "url('" + quiz.backgroundImage + "')",
+                        backgroundImage: `url("${quiz.backgroundImage || defaultQuizBackground}")`,
                     }}
                 ></div>
                 <h3 className={styles['quiz-question-number']}>
@@ -84,7 +84,10 @@ function Quiz({ quiz }) {
                 <p className={styles['quiz-description']}>{quiz.description}</p>
                 <button
                     className={styles['like-button']}
-                    onClick={() => dispatch(likeQuiz(quiz._id))}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        dispatch(likeQuiz(quiz._id))
+                    }}
                 >
                     <Likes />
                 </button>

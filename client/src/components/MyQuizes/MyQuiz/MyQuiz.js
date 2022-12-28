@@ -12,6 +12,7 @@ import { useHistory } from 'react-router-dom';
 import { createLeaderboard } from '../../../actions/leaderboard';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import defaultQuizBackground from '../../../assets/defaultQuizBackground.jpg';
 import {
     Button,
     Dialog,
@@ -66,7 +67,7 @@ function MyQuiz({ quiz }) {
                             className={styles['quiz-image']}
                             style={{
                                 backgroundImage:
-                                    "url('" + quiz.backgroundImage + "')",
+                                    `url("${quiz.backgroundImage || defaultQuizBackground}")`,
                             }}
                         ></div>
                         <h3 className={styles['quiz-question-number']}>

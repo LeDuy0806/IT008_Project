@@ -4,18 +4,23 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import decode from 'jwt-decode';
 import * as actionType from '../../constants/actionTypes';
-import globe from '../../assets/globe.svg';
-import contact from '../../assets/contact.svg';
-import login from '../../assets/login.svg';
-import lgout from '../../assets/lgout.svg';
+// import contact from '../../assets/contact.svg';
+// import login from '../../assets/login.svg';
+// import lgout from '../../assets/lgout.svg';
 // import home from "../../assets/home.svg"
-import education from '../../assets/education.svg';
+// import education from '../../assets/education.svg';
 // import logo from "../../assets/logo.png"
-import telehome from '../../assets/telehome.png';
 // import telelogo from "../../assets/telelogo.png"
+import telehome from '../../assets/telehome.png';
 import { changeLanguage } from '../../actions/language';
 import noava from '../../assets/noava.jpg';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import ExploreOutlinedIcon from '@mui/icons-material/ExploreOutlined';
+import ContactPageOutlinedIcon from '@mui/icons-material/ContactPageOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
+import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
+
 
 function Navbar() {
     const [user, setUser] = useState(
@@ -94,10 +99,10 @@ function Navbar() {
                             </div>
                         </Link>
 
-                        <li className={styles['nav__list-item']}>
+                        <div className={styles['nav__list-item']}>
                             <HomeOutlinedIcon
                                 fontSize="large"
-                                style={{ marginRight: '15px' }}
+                                style={{ marginRight: '8px' }}
                             />
                             {/* <img style={{height:"25px",paddingRight:"15px"}}src={home} alt="" /> */}
                             {isLanguageEnglish ? 'About' : 'About'}
@@ -113,33 +118,16 @@ function Navbar() {
                                         : 'Cách chơi'}
                                 </li>
                             </ul>
-                        </li>
-                        <li className={styles['nav__list-item']}>
-                            <img
-                                style={{
-                                    height: '30px',
-                                    width: '30px',
-                                    marginRight: '10px',
-                                }}
-                                src={education}
-                                alt=""
+                        </div>
+                        <Link to="/quizes" className={styles['nav__list-item']}>
+                            <ExploreOutlinedIcon
+                                fontSize="large"
+                                style={{ marginRight: '8px' }}
                             />
-                            {isLanguageEnglish ? 'Study' : 'Học tập'}
-                            <ul className={styles['nav__list-item-drop']}>
-                                <li>
-                                    <Link to="/quizes">
-                                        {isLanguageEnglish
-                                            ? 'Public quizes'
-                                            : 'Câu đố công khai'}
-                                    </Link>
-                                </li>
-                                <li>
-                                    {isLanguageEnglish
-                                        ? 'Test game'
-                                        : 'Kiểm tra trò chơi'}
-                                </li>
-                            </ul>
-                        </li>
+                            {isLanguageEnglish
+                                ? 'Discover'
+                                : 'Câu hỏi'}
+                        </Link>
                     </div>
                 </div>
 
@@ -149,14 +137,13 @@ function Navbar() {
                         className={styles.nav__list}
                     >
                         <div className={styles['nav__list-item']}>
-                            <img
+
+                            <ContactPageOutlinedIcon
                                 style={{
                                     height: '30px',
                                     width: '30px',
                                     marginRight: '10px',
                                 }}
-                                src={contact}
-                                alt=""
                             />
                             {isLanguageEnglish ? 'Contact' : 'Liên Hệ'}
                         </div>
@@ -253,13 +240,11 @@ function Navbar() {
                                     onClick={logout}
                                     className={styles['nav__logout']}
                                 >
-                                    <img
+                                    <LogoutOutlinedIcon
                                         style={{
                                             height: '30px',
                                             width: '30px',
                                         }}
-                                        src={lgout}
-                                        alt=""
                                     />
                                     <span>
                                         {isLanguageEnglish
@@ -280,13 +265,11 @@ function Navbar() {
                             >
                                 <Link to="/auth">
                                     <div className={styles['nav__login']}>
-                                        <img
+                                        <LoginOutlinedIcon
                                             style={{
                                                 height: '30px',
                                                 width: '30px',
                                             }}
-                                            src={login}
-                                            alt=""
                                         />
                                         {isLanguageEnglish ? (
                                             <span
@@ -308,11 +291,7 @@ function Navbar() {
                         )}
                         <div className={styles['nav__list-item']}>
                             <div className={styles['nav__list-item_border']}>
-                                <img
-                                    style={{ height: '30px', width: '40px' }}
-                                    src={globe}
-                                    alt=""
-                                />
+                                <LanguageOutlinedIcon style={{ height: '30px', width: '40px' }} />
                                 {isLanguageEnglish ? 'EN' : 'VI'}
                                 <ul className={styles['nav__list-item-drop']}>
                                     <li
