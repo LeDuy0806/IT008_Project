@@ -36,23 +36,25 @@ function Question({ question, onClick }) {
     }
 
     return (
-          <div className={styles['quiz-card']}>
-              <div>
-                  <QuestionListItem
-                      key={question.questionIndex}
-                      number={question.questionIndex}
-                      type={question.questionType}
-                      time={question.answerTime}
-                      image={question.backgroundImage}
-                      onClick={onClick}
-                  />
-              </div>
-              <div className={styles['card-body']}>
-                  <p className={styles['quiz-description']}>
-                      {question.question}
-                  </p>
-              </div>
-          </div>
+        <div className={styles['quiz-card']} onClick={onClick}>
+            <div>
+                <QuestionListItem
+                    key={question.questionIndex}
+                    number={question.questionIndex}
+                    type={question.questionType}
+                    time={question.answerTime}
+                    image={question.backgroundImage}
+                    style={{
+                        background: '#EEEEEE',
+                    }}
+                />
+            </div>
+            <div className={styles['card-body']}>
+                <p className={styles['quiz-description']}>
+                    {question.question}
+                </p>
+            </div>
+        </div>
     );
 }
 

@@ -1,7 +1,7 @@
 .quiz-card {
   overflow: hidden;
   background-color: white;
-  box-shadow: 0px 2px 20px #cfd8dc;
+  box-shadow: 0px 2px 20px #263159;
   border-radius: 10px;
   display: flex;
   /* height: 9rem; */
@@ -9,6 +9,12 @@
   /* margin: 20px; */
   margin-bottom: 20px;
   transition: transform 200ms ease-in;
+  /* background: ; */
+}
+
+.quiz-card:hover {
+  transform: scale(1.05);
+  cursor: pointer;
 }
 
 .quiz-card>div {
@@ -25,6 +31,6 @@
 
 .quiz-description {
   width: 485px;
-  color: black;
+  color: #000;
   font-size: 20px;
 }
