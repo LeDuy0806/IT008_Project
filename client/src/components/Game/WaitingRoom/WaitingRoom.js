@@ -14,15 +14,17 @@ function WaitingRoom({ pin, socket }) {
 
   return (
     <div className={styles["waiting-room"]}>
-      <h1 className={styles["title"]}>
-        {isLanguageEnglish ? "Waiting room" : "Phòng chờ"}
-      </h1>
-      <h2 className={styles["header"]}>
-        {isLanguageEnglish
-          ? "Show PIN to your students"
-          : "Hiển thị PIN cho người khác"}
-        : {pin}
-      </h2>
+      <div className={styles["header"]}>
+        <h1 className={styles["title"]}>
+          {isLanguageEnglish ? "Waiting room" : "Phòng chờ"}
+        </h1>
+        <h2 className={styles["heading"]}>
+          {isLanguageEnglish
+            ? "Show PIN to your students"
+            : "Hiển thị PIN cho người khác"}
+          : {pin}
+        </h2>
+      </div>
       <div className={styles["players-list"]}>
         <div className={styles["leaderboard"]}>
           <h1 className={styles["leaderboard-title"]}>
@@ -30,10 +32,10 @@ function WaitingRoom({ pin, socket }) {
           </h1>
           {playerList.length > 0 ? (
             <ol>
-              {playerList.map((player) => (
-                <li>
-                  <mark>{player.userName}</mark>
-                  <small>{isLanguageEnglish ? "Student" : "Người chơi"}</small>
+              {playerList.map((player, index) => (
+                <li key={index}>
+                  <mark>{player.userName.toUpperCase()}</mark>
+                  <small>{isLanguageEnglish ? "Player " : "Người chơi"}</small>
                 </li>
               ))}
             </ol>

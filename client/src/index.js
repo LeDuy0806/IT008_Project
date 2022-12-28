@@ -11,11 +11,11 @@ const store = createStore(reducers, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(
     <Provider store={store}>
-        <React.StrictMode>
-            <GlobalSyles>
-                <App className="app" />
-            </GlobalSyles>
-        </React.StrictMode>
+        {/* <React.StrictMode> */}
+        <GlobalSyles>
+            <App className="app" />
+        </GlobalSyles>
+        {/* </React.StrictMode> */}
     </Provider>,
     document.getElementById('root'),
 );

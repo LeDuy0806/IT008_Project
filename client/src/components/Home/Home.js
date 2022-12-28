@@ -28,7 +28,7 @@ function Home() {
                 radius={[5, 20]}
                 style={{
                     position: 'fixed',
-                    zIndex: '1000',
+                    zIndex: '1',
                     height: '100vh',
                     width: '100vw',
                 }}
