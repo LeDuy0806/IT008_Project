@@ -51,6 +51,7 @@ function App() {
                 pauseOnHover={true}
                 pauseOnFocusLoss={false}
                 draggable={true}
+                limit={3}
                 theme="light"
             />
             {/* {(isNav===true)&&(<Navbar/>)} */}

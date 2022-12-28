@@ -4,14 +4,14 @@ export default makeStyles((theme) => ({
     media: {
         borderRadius: '20px',
         objectFit: 'cover',
-        width: '40%',
+        width: '80%',
         maxHeight: '400px',
-        marginRight: '20px',
+        // marginTop: '10px',
+        // marginRight: '20px',
     },
     card: {
         display: 'flex',
         flex: '1',
-        padding: '40px 20px',
         [theme.breakpoints.down('sm')]: {
             flexWrap: 'wrap',
             flexDirection: 'column',
@@ -20,13 +20,20 @@ export default makeStyles((theme) => ({
     imageSection: {
         // display: 'flex',
         flex: 1,
-        marginLeft: '20px',
         [theme.breakpoints.down('sm')]: {
             marginLeft: 0,
         },
+        paddingLeft: '30px',
+        paddingTop: '34px',
+    },
+    info: {
+        marginTop: '12px',
     },
     questions: {
         flex: 2,
+        background: '#f2f2f2',
+        paddingLeft: '24px',
+        paddingTop: '34px',
     },
     recommendedQuizes: {
         display: 'flex',

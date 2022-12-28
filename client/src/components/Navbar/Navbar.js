@@ -21,6 +21,7 @@ function Navbar() {
     const [user, setUser] = useState(
         JSON.parse(localStorage.getItem('profile')),
     );
+    // const profile = JSON.parse(localStorage.getItem('profile'))
     const dispatch = useDispatch();
     const location = useLocation();
     const history = useHistory();
@@ -30,7 +31,9 @@ function Navbar() {
     if (user !== null) username = user.result.userName;
 
     // console.log(user);
-
+    // useEffect(() => {
+    //     setUser(profile)
+    // }, [profile])
     const logout = () => {
         dispatch({ type: actionType.LOGOUT });
         history.push('/auth');
@@ -50,12 +53,14 @@ function Navbar() {
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [location]);
+
     if (location.pathname === '/dashboard') {
         document.body.classList.add('hide_navbar');
         return null;
     } else {
         document.body.classList.remove('hide_navbar');
     }
+
     return (
         <header>
             <nav className={styles.nav}>
@@ -206,7 +211,7 @@ function Navbar() {
                                         </div>
                                     )}
                                 </div>
-                                <Link to={`/profile/:${username}`}>
+                                <Link to={`/profile/${username}`}>
                                     <div
                                         className={
                                             styles['nav__list-item_user']
@@ -228,7 +233,7 @@ function Navbar() {
                                                     borderRadius: '50%',
                                                     objectFit: 'cover',
                                                 }}
-                                                src={noava}
+                                                src={user.result.avatar || noava}
                                                 alt=""
                                             />
                                             <span
