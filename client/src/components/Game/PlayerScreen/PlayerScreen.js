@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from "react-redux"
 import { addAnswer, getPlayerResult } from "../../../actions/playerResult"
 import { useEffect } from "react"
 import styles from "./playerScreen.module.css"
-import Answer from "../Answer/Answer"
-import diamond from "../../../assets/diamond.svg"
-import triangle from "../../../assets/triangle.svg"
-import circle from "../../../assets/circle.svg"
-import square from "../../../assets/square.svg"
+// import Answer from "../Answer/Answer"
+// import diamond from "../../../assets/diamond.svg"
+// import triangle from "../../../assets/triangle.svg"
+// import circle from "../../../assets/circle.svg"
+// import square from "../../../assets/square.svg"
 import { CircularProgress } from "@material-ui/core"
 import { toast } from "react-toastify"
+import Question from "../Question/Question"
 
 function PlayerScreen() {
   const socket = useSelector((state) => state.socket.socket)
@@ -167,13 +168,20 @@ function PlayerScreen() {
   return (
     <div className={styles.page}>
       {isPreviewScreen && (
-        <div className={styles["question-preview"]}>
+        <div className={styles["lobby"]}>
           <h1>{timer}</h1>
         </div>
       )}
       {isQuestionScreen && (
         <div className={styles["question-preview"]}>
-          <div className={styles["question"]}>
+          {questionData && <Question
+            question={questionData}
+            timer={timer}
+            host={false}
+            isAnswerClicked={(key) => answer.answers.includes(key)}
+            onClick={(key) => checkAnswer(key)}
+          />}
+          {/* <div className={styles["question"]}>
             {questionData && (
               <>
                 <h2 className={styles["question-name"]}>{questionData.question}</h2>
@@ -220,18 +228,18 @@ function PlayerScreen() {
                 </>
               )}
             </div>
-          </div>
+          </div> */}
         </div>
       )}
       {isQuestionAnswered && (
-        <div className={styles["question-preview"]}>
+        <div className={styles["lobby"]}>
           <h1>{isLanguageEnglish ? "Wait for a result" : "Chờ kết quả"}</h1>
           <CircularProgress />
         </div>
       )}
       {isResultScreen && (
         <div
-          className={styles["question-preview"]}
+          className={styles["lobby"]}
           style={{ backgroundColor: result.points > 0 ? "green" : "red" }}
         >
           <h1>{isLanguageEnglish ? "Result" : "Kết quả"}</h1>

@@ -77,11 +77,17 @@
 }
 
 .h5_text {
-    font-size: 0.77rem;
+    font-size: 0.99rem;
 }
 
 .small_text {
     font-size: 0.75rem;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .profile-photo {
@@ -93,7 +99,6 @@
 
 .text-muted {
     color: var(--color-info-dark);
-    padding-right: 60px;
 }
 
 .p_text {
@@ -159,6 +164,17 @@ aside .sidebar {
 aside h3 {
     font-weight: 700;
     font-size: 16px;
+}
+
+aside .sidebar button {
+    display: flex;
+    color: var(--color-info-dark);
+    margin-left: 1rem;
+    gap: 1rem;
+    align-items: center;
+    position: relative;
+    height: 4rem;
+    transition: all 300ms ease;
 }
 
 aside .sidebar a {
@@ -288,31 +304,55 @@ main .insights .progress {
 main .insights svg {
     width: 7rem;
     height: 7rem;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 main .insights svg circle {
     fill: none;
-    stroke: var(--color-primary);
+    stroke: url(#GradientColor);
     stroke-width: 14;
     stroke-linecap: round;
     transform: translate(5px, 5px);
-    stroke-dasharray: 110;
     stroke-dashoffset: 92;
+    stroke-dasharray: 110;
 }
 
 main .insights .sales svg circle {
-    stroke-dashoffset: -30;
-    stroke-dasharray: 200;
+    stroke-dashoffset: 220;
+    stroke-dasharray: 220;
+    animation: anim 2.2s linear forwards;
 }
 
 main .insights .expenses svg circle {
-    stroke-dashoffset: 20;
-    stroke-dasharray: 80;
+    stroke-dashoffset: 220;
+    stroke-dasharray: 220;
+    animation: anim2 2s linear forwards;
 }
 
 main .insights .income svg circle {
-    stroke-dashoffset: 35;
-    stroke-dasharray: 110;
+    stroke-dashoffset: 220;
+    stroke-dasharray: 220;
+    animation: anim3 2s linear forwards;
+}
+
+@keyframes anim {
+    100% {
+        stroke-dashoffset: 13;
+    }
+}
+
+@keyframes anim2 {
+    100% {
+        stroke-dashoffset: 207;
+    }
+}
+
+@keyframes anim3 {
+    100% {
+        stroke-dashoffset: 37;
+    }
 }
 
 main .insights .progress .number {
@@ -467,7 +507,7 @@ main .recent-orders a {
     background: var(--color-white);
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1rem;
     margin-bottom: 0.7rem;
     padding: 1.4rem var(--car-padding);
     border-radius: var(--border-radius-3);
@@ -482,7 +522,7 @@ main .recent-orders a {
 .right .sales-analytics .item .right {
     display: flex;
     justify-content: space-between;
-    align-items: start;
+    align-items: center;
     margin: 0;
     width: 100%;
 }
