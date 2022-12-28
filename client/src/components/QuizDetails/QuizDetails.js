@@ -145,6 +145,28 @@ const Post = () => {
     };
     const showModal = () => {
         setModalIsOpen(true);
+        console.log(questionData.answerList)
+        let wrongAnswer = questionData.answerList.filter((answer) =>
+            answer.isCorrect === false
+        ).map((answer) => answer.name)
+        let trueAnswer = questionData.answerList.filter((answer) =>
+            answer.isCorrect === true
+        ).map((answer) => answer.name)
+
+        if (trueAnswer.length <= 2) {
+            for (let i = 0; i <= trueAnswer.length - 1; i++) {
+                console.log(wrongAnswer[i])
+            }
+        }
+        else {
+            if (wrongAnswer.length > 0)
+                for (let i = 0; i <= wrongAnswer.length - 1; i++) {
+                    console.log(wrongAnswer[i])
+                }
+            for (let i = 0; i <= trueAnswer.length - 1 - wrongAnswer.length; i++) {
+                console.log(trueAnswer[i])
+            }
+        }
     };
 
     const closeModal = () => {

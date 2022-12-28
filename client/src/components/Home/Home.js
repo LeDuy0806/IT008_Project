@@ -28,7 +28,7 @@ function Home() {
                 radius={[5, 20]}
                 style={{
                     position: 'fixed',
-                    zIndex: '1000',
+                    zIndex: '1',
                     height: '100vh',
                     width: '100vw',
                 }}
@@ -49,19 +49,27 @@ function Home() {
                                     : 'Telexercise cung cấp việc học hấp dẫn cho hàng triệu người có liên quan'}
                             </p>
                             <button className={styles['banner-button']}>
-                                {user ?
-                                    <a href="/myquizes">
-                                        {isLanguageEnglish
-                                            ? 'My Quizes'
-                                            : 'Câu hỏi của tôi'}
-                                    </a>
-                                    :
+                                {user ? (
+                                    user.result.userName === 'admin' ? (
+                                        <a href="/dashboard">
+                                            {isLanguageEnglish
+                                                ? 'Dashboard'
+                                                : 'Câu hỏi của tôi'}
+                                        </a>
+                                    ) : (
+                                        <a href="/myquizes">
+                                            {isLanguageEnglish
+                                                ? 'My Quizes'
+                                                : 'Câu hỏi của tôi'}
+                                        </a>
+                                    )
+                                ) : (
                                     <a href="/auth">
                                         {isLanguageEnglish
                                             ? 'Sign up for free'
                                             : 'Đăng kí miễn phí'}
                                     </a>
-                                }
+                                )}
                             </button>
                         </div>
                         <img
