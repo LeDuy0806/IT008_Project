@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './questionListItem.module.css';
 import defaultQuestionImage from '../../../assets/defaultQuestionImage.svg';
 
-function QuestionListItem({ number, type, name, time, image, onClick }) {
+function QuestionListItem({ number, type, name, time, image, onClick, style }) {
     return (
         <div className={styles['question-list-item']}>
             <h3 className={styles['question-list-item-title']}>
@@ -11,7 +11,11 @@ function QuestionListItem({ number, type, name, time, image, onClick }) {
                 </span>
                 {type}
             </h3>
-            <div className={styles['question-preview']} onClick={onClick}>
+            <div
+                className={styles['question-preview']}
+                onClick={onClick}
+                style={style}
+            >
                 <h4 className={styles['question-preview-title']}>{name}</h4>
                 <div className={styles['question-preview-time']}>{time}</div>
                 <div className={styles['question-preview-background-image']}>
