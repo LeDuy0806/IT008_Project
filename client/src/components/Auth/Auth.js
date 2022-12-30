@@ -63,6 +63,7 @@ function Auth() {
     } = authError;
 
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+    const [clear, SetClear] = useState(true);
 
     const TextSignUp = {
         isSuccess: {
@@ -267,6 +268,11 @@ function Auth() {
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
         setShowPassword(false);
+        setFormData(prev => ({
+            ...prev,
+            ...initialState
+        }));
+        SetClear(true);
     };
 
     return (
@@ -401,6 +407,8 @@ function Auth() {
                                 name="userName"
                                 label="User Name"
                                 handleChange={handleChange}
+                                value={clear && ''}
+
                             />
                             {requestQuantity ? (
                                 <span
