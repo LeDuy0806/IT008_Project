@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Quiz from './Quiz/Quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -15,12 +15,14 @@ import useStyles from './styles';
 import { getQuizesBySearch } from '../../actions/quiz';
 import Pagination from '../Pagination/Pagination';
 import Noresult from '../Noresults/noresults';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 function Quizes() {
+    const user = JSON.parse(localStorage.getItem('profile'));
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -55,13 +57,17 @@ function Quizes() {
         }
     }, [isLoading]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (quizes.length === 0) {
             setNoresult(true);
         } else {
             setNoresult(false);
         }
-    }, [quizes.length]);
+    }, [quizes.length, isLoading]);
+
+    if (!user) {
+        return <ErrorPage />;
+    }
 
     const handleKeyPress = (e) => {
         if (e.keyCode === 13) {

@@ -88,7 +88,7 @@ function QuizCreator() {
         }
     }, [quiz]);
 
-    const [isQuizPublic, setIsQuizPublic] = useState(true);
+    // const [isQuizPublic, setIsQuizPublic] = useState(quizData.isPublic);
     const [isQuestionDataSave, setIsQuestionDataSave] = useState(false);
     const [questionImage, setQuestionImage] = useState('');
     const [quizImage, setQuizImage] = useState('');
@@ -214,7 +214,7 @@ function QuizCreator() {
             text.warning = isLanguageEnglish
                 ? NotifyEnterQues.Eng
                 : NotifyEnterQues.Vie;
-        } else if (!validateCorrectAnswer()) {
+        } else if (!validateAnswerFields()) {
             text.warning = isLanguageEnglish
                 ? NotifyEnterAnswer.Eng
                 : NotifyEnterAnswer.Vie;
@@ -231,21 +231,21 @@ function QuizCreator() {
 
         isSuccess
             ? toast.success(text.success, {
-                  style: {
-                      color: '#fff',
-                  },
-                  position: 'top-center',
-                  autoClose: 3000,
-                  theme: 'dark',
-              })
+                style: {
+                    color: '#fff',
+                },
+                position: 'top-center',
+                autoClose: 3000,
+                theme: 'dark',
+            })
             : toast.warning(text.warning, {
-                  style: {
-                      color: '#fff',
-                  },
-                  position: 'top-center',
-                  autoClose: 3000,
-                  theme: 'dark',
-              });
+                style: {
+                    color: '#fff',
+                },
+                position: 'top-center',
+                autoClose: 3000,
+                theme: 'dark',
+            });
     };
 
     const handleNotifyAlreadyAnswer = () => {
@@ -519,8 +519,8 @@ function QuizCreator() {
                                 ? quizData.name.substring(0, 20) + '...'
                                 : quizData.name
                             : isLanguageEnglish
-                            ? 'Set quiz name'
-                            : 'Nhập tên bài kiểm tra'}
+                                ? 'Set quiz name'
+                                : 'Nhập tên bài kiểm tra'}
                     </h1>
                 </div>
 
@@ -616,14 +616,14 @@ function QuizCreator() {
                                 isQuestionTrueFalse
                                     ? updateAnswer(e.target.name, 'True', 0)
                                     : updateAnswer(
-                                          e.target.name,
-                                          e.target.value,
-                                          0,
-                                      );
+                                        e.target.name,
+                                        e.target.value,
+                                        0,
+                                    );
                             }}
                             onClick={() => {
                                 correctAnswerCount < maxCorrectAnswerCount ||
-                                questionData.answerList[0].isCorrect
+                                    questionData.answerList[0].isCorrect
                                     ? setCorrectAnswer(0)
                                     : handleNotifyAlreadyAnswer();
                             }}
@@ -641,14 +641,14 @@ function QuizCreator() {
                                 isQuestionTrueFalse
                                     ? updateAnswer(e.target.name, 'False', 1)
                                     : updateAnswer(
-                                          e.target.name,
-                                          e.target.value,
-                                          1,
-                                      );
+                                        e.target.name,
+                                        e.target.value,
+                                        1,
+                                    );
                             }}
                             onClick={() => {
                                 correctAnswerCount < maxCorrectAnswerCount ||
-                                questionData.answerList[1].isCorrect
+                                    questionData.answerList[1].isCorrect
                                     ? setCorrectAnswer(1)
                                     : handleNotifyAlreadyAnswer();
                             }}
@@ -674,7 +674,7 @@ function QuizCreator() {
                                     onClick={() => {
                                         correctAnswerCount <
                                             maxCorrectAnswerCount ||
-                                        questionData.answerList[2].isCorrect
+                                            questionData.answerList[2].isCorrect
                                             ? setCorrectAnswer(2)
                                             : handleNotifyAlreadyAnswer();
                                     }}
@@ -698,7 +698,7 @@ function QuizCreator() {
                                     onClick={() => {
                                         correctAnswerCount <
                                             maxCorrectAnswerCount ||
-                                        questionData.answerList[3].isCorrect
+                                            questionData.answerList[3].isCorrect
                                             ? setCorrectAnswer(3)
                                             : handleNotifyAlreadyAnswer();
                                     }}
@@ -958,7 +958,7 @@ function QuizCreator() {
                                 onChange={(e) =>
                                     setQuizData({
                                         ...quizData,
-                                        tags: e.target.value.split(','),
+                                        tags: e.target.value.split(',').map((tag) => tag.trim()),
                                     })
                                 }
                                 className={styles['option-input']}
@@ -976,7 +976,7 @@ function QuizCreator() {
                             <div className={styles['access-container']}>
                                 <button
                                     onClick={() => {
-                                        setIsQuizPublic(true);
+                                        // setIsQuizPublic(true);
                                         setQuizData({
                                             ...quizData,
                                             isPublic: true,
@@ -984,10 +984,10 @@ function QuizCreator() {
                                     }}
                                     className={styles['option-button']}
                                     style={{
-                                        backgroundColor: isQuizPublic
+                                        backgroundColor: quizData.isPublic
                                             ? 'rgb(19, 104, 206)'
                                             : 'inherit',
-                                        color: isQuizPublic
+                                        color: quizData.isPublic
                                             ? 'white'
                                             : 'rgb(110, 110, 110)',
                                     }}
@@ -996,7 +996,7 @@ function QuizCreator() {
                                 </button>
                                 <button
                                     onClick={() => {
-                                        setIsQuizPublic(false);
+                                        // setIsQuizPublic(false);
                                         setQuizData({
                                             ...quizData,
                                             isPublic: false,
@@ -1004,10 +1004,10 @@ function QuizCreator() {
                                     }}
                                     className={styles['option-button']}
                                     style={{
-                                        backgroundColor: isQuizPublic
+                                        backgroundColor: quizData.isPublic
                                             ? 'inherit'
                                             : 'rgb(19, 104, 206)',
-                                        color: isQuizPublic
+                                        color: quizData.isPublic
                                             ? 'rgb(110, 110, 110)'
                                             : 'white',
                                     }}

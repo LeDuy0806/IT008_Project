@@ -27,6 +27,7 @@ function PlayerScreen() {
   const [isQuestionScreen, setIsQuestionScreen] = useState(false)
   const [isResultScreen, setIsResultScreen] = useState(false)
   const [timer, setTimer] = useState(0)
+  const [timerQuestion, setTimerQuestion] = useState(0)
   const [answerTime, setAnswerTime] = useState(0)
   const [questionData, setQuestionData] = useState()
   const [correctAnswerCount, setCorrectAnswerCount] = useState(1)
@@ -58,6 +59,7 @@ function PlayerScreen() {
       }))
       setCorrectAnswerCount(question.correctAnswersCount)
     })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket])
 
   const startPreviewCountdown = (seconds) => {
@@ -89,11 +91,40 @@ function PlayerScreen() {
       })
     }
   }, [isGameEnded, playerResult?.score, totalResult])
+
+  useEffect(() => {
+    if (timerQuestion === 0) {
+      if (isQuestionAnswered === false && questionData) {
+
+        let wrongAnswer = questionData.answerList.filter((answer) =>
+          answer.isCorrect === false
+        ).map((answer) => answer.name)
+        let trueAnswer = questionData.answerList.filter((answer) =>
+          answer.isCorrect === true
+        ).map((answer) => answer.name)
+
+        if (correctAnswerCount < 3) {
+          for (let i = 0; i <= correctAnswerCount - 1; i++) {
+            checkAnswer(wrongAnswer[i])
+          }
+        }
+        else {
+          for (let i = 0; i <= wrongAnswer.length - 1; i++) {
+            checkAnswer(wrongAnswer[i])
+          }
+          for (let i = 0; i <= correctAnswerCount - 1 - wrongAnswer.length; i++) {
+            checkAnswer(trueAnswer[i])
+          }
+        }
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timerQuestion])
   const startQuestionCountdown = (seconds) => {
     let time = seconds
     let answerSeconds = 0
     let interval = setInterval(() => {
-      setTimer(time)
+      setTimerQuestion(time)
       setAnswerTime(answerSeconds)
       if (time === 0) {
         clearInterval(interval)
@@ -103,6 +134,7 @@ function PlayerScreen() {
       }
       time--
       answerSeconds++
+
     }, 1000)
   }
 
@@ -176,7 +208,7 @@ function PlayerScreen() {
         <div className={styles["question-preview"]}>
           {questionData && <Question
             question={questionData}
-            timer={timer}
+            timer={timerQuestion}
             host={false}
             isAnswerClicked={(key) => answer.answers.includes(key)}
             onClick={(key) => checkAnswer(key)}
@@ -240,7 +272,7 @@ function PlayerScreen() {
       {isResultScreen && (
         <div
           className={styles["lobby"]}
-          style={{ backgroundColor: result.points > 0 ? "green" : "red" }}
+          style={{ backgroundColor: result.points > 0 ? "green" : "red", backgroundImage: "none" }}
         >
           <h1>{isLanguageEnglish ? "Result" : "Kết quả"}</h1>
           <h3>

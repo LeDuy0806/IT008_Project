@@ -63,6 +63,7 @@ function Auth() {
     } = authError;
 
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+    const [clear, SetClear] = useState(true);
 
     const TextSignUp = {
         isSuccess: {
@@ -264,9 +265,16 @@ function Auth() {
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
+    console.log(initialState);
     const switchMode = () => {
+        setFormData({ ...formData, userName: '', password: '' });
         setIsSignup((prevIsSignup) => !prevIsSignup);
         setShowPassword(false);
+        setFormData(prev => ({
+            ...prev,
+            ...initialState
+        }));
+        SetClear(true);
     };
 
     return (
@@ -274,26 +282,23 @@ function Auth() {
             style={{
                 width: '100vw',
                 background: 'linear-gradient(120deg, #3ca7ee, #9b408f)',
-                height: 'calc(100vh - 48px)',
+                height: '94vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                padding: '16px',
             }}
         >
             <Snowfall
                 speed={[0, 2]}
                 style={{
                     position: 'fixed',
-                    zIndex: '1000',
+                    zIndex: '1',
                     height: '100vh',
                     width: '100vw',
                 }}
             />
-            <Container
-                component="main"
-                maxWidth="xs"
-                style={{ zIndex: '1001' }}
-            >
+            <Container component="main" maxWidth="xs" style={{ zIndex: '2' }}>
                 <Paper
                     className={classes.paper}
                     elevation={3}
@@ -400,6 +405,8 @@ function Auth() {
                                 name="userName"
                                 label="User Name"
                                 handleChange={handleChange}
+                                value={clear && ''}
+
                             />
                             {requestQuantity ? (
                                 <span

@@ -140,6 +140,7 @@ function HostScreen() {
       toast.info('Game ended!', {
         position: "top-right",
         autoClose: 2000,
+        pauseOnFocusLoss: false,
       })
     }
     else {
@@ -206,8 +207,8 @@ function HostScreen() {
               {isLanguageEnglish ? "Question result" : "Kết quả của câu hỏi"}
             </h1>
             <ol>
-              {questionResult.questionResultList.map((player) => (
-                <li>
+              {questionResult.questionResultList.map((player, index) => (
+                <li key={index}>
                   {playerList
                     .filter((x) => x.id === player.playerId)
                     .map((x) => (
