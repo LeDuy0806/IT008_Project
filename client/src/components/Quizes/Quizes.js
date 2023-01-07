@@ -37,13 +37,13 @@ function Quizes() {
     const [tags, setTags] = useState([]);
     const [noresults, setNoresult] = useState(false);
 
-
     const searchPost = () => {
         if (search.trim() !== '' || tags.length !== 0) {
             console.log(search.trim());
             dispatch(getQuizesBySearch({ search, tags: tags.join(',') }));
             history.push(
-                `/quizes/search?searchQuery=${search || 'none'
+                `/quizes/search?searchQuery=${
+                    search || 'none'
                 }&tags=${tags.join(',')}`,
             );
         } else {
@@ -64,13 +64,10 @@ function Quizes() {
             setNoresult(false);
         }
     }, [quizes.length, isLoading]);
-<<<<<<< HEAD
-=======
 
     if (!user) {
-        return <ErrorPage />
+        return <ErrorPage />;
     }
->>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
 
     const handleKeyPress = (e) => {
         if (e.keyCode === 13) {
