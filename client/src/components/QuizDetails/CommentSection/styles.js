@@ -10,6 +10,7 @@ export default makeStyles(() => ({
         height: '200px',
         overflowY: 'auto',
         marginRight: '30px',
+        marginBottom: '30px',
         border: '1px solid #ccc',
     },
     commentWrapper: {

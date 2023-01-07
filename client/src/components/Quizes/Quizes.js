@@ -15,12 +15,14 @@ import useStyles from './styles';
 import { getQuizesBySearch } from '../../actions/quiz';
 import Pagination from '../Pagination/Pagination';
 import Noresult from '../Noresults/noresults';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
 
 function Quizes() {
+    const user = JSON.parse(localStorage.getItem('profile'));
     const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -35,13 +37,13 @@ function Quizes() {
     const [tags, setTags] = useState([]);
     const [noresults, setNoresult] = useState(false);
 
+
     const searchPost = () => {
         if (search.trim() !== '' || tags.length !== 0) {
             console.log(search.trim());
             dispatch(getQuizesBySearch({ search, tags: tags.join(',') }));
             history.push(
-                `/quizes/search?searchQuery=${
-                    search || 'none'
+                `/quizes/search?searchQuery=${search || 'none'
                 }&tags=${tags.join(',')}`,
             );
         } else {
@@ -62,6 +64,13 @@ function Quizes() {
             setNoresult(false);
         }
     }, [quizes.length, isLoading]);
+<<<<<<< HEAD
+=======
+
+    if (!user) {
+        return <ErrorPage />
+    }
+>>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
 
     const handleKeyPress = (e) => {
         if (e.keyCode === 13) {

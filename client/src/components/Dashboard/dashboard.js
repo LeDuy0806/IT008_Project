@@ -21,12 +21,18 @@ import { getUsers } from '../../actions/users';
 import noava from '../../assets/noava.jpg';
 
 function Dashboard() {
+<<<<<<< HEAD
     const datee = useMemo(() => {
         const current = new Date();
         return `${current.getDate()}/${
             current.getMonth() + 1
         }/${current.getFullYear()}`;
     }, []);
+=======
+    const current = new Date();
+    const date = `${current.getDate()}/${current.getMonth() + 1
+        }/${current.getFullYear()}`;
+>>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
 
     const [checkTG, SetCheckTG] = useState(false);
     const HandleThemeToggle = () => {
@@ -332,7 +338,7 @@ function Dashboard() {
                                 Analytics
                             </h3>
                         </a>
-                        <a
+                        {/* <a
                             className={styles['link_a']}
                             href="#"
                             name="Messages"
@@ -408,7 +414,7 @@ function Dashboard() {
                             >
                                 Settings
                             </h3>
-                        </a>
+                        </a> */}
                         <a
                             className={styles['link_a']}
                             href="#"
@@ -628,6 +634,7 @@ function Dashboard() {
                                 {tableQuizes &&
                                     (showAll
                                         ? quizes.map((quize) => (
+<<<<<<< HEAD
                                               <tr>
                                                   <td>{quize.name}</td>
                                                   <td>{quize.creatorName}</td>
@@ -687,22 +694,88 @@ function Dashboard() {
                                                       </td>
                                                   </tr>
                                               )))}
+=======
+                                            <tr>
+                                                <td>{quize.name}</td>
+                                                <td>{quize.creatorName}</td>
+                                                <td
+                                                    style={{
+                                                        color:
+                                                            quize.isPublic ===
+                                                                true
+                                                                ? '#41F1B6'
+                                                                : 'red',
+                                                        fontWeight: '700',
+                                                    }}
+                                                >
+                                                    {quize.isPublic.toString()}
+                                                </td>
+                                                <td>
+                                                    {
+                                                        quize.questionList
+                                                            .length
+                                                    }
+                                                </td>
+                                                <td>
+                                                    {quize.dateCreated.slice(
+                                                        0,
+                                                        10,
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        ))
+                                        : quizes
+                                            .slice(0, 7)
+                                            .map((quize, index) => (
+                                                <tr key={index}>
+                                                    <td>{quize.name}</td>
+                                                    <td>
+                                                        {quize.creatorName}
+                                                    </td>
+                                                    <td
+                                                        style={{
+                                                            color:
+                                                                quize.isPublic ===
+                                                                    true
+                                                                    ? '#41F1B6'
+                                                                    : 'red',
+                                                            fontWeight: '700',
+                                                        }}
+                                                    >
+                                                        {quize.isPublic.toString()}
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            quize.questionList
+                                                                .length
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {quize.dateCreated.slice(
+                                                            0,
+                                                            10,
+                                                        )}
+                                                    </td>
+                                                </tr>
+                                            )))}
+>>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
 
                                 {tableUsers &&
                                     (showAll
                                         ? users.map((user, index) => (
-                                              <tr key={index}>
-                                                  <td>{user._id}</td>
-                                                  <td>{user.userName}</td>
-                                                  <td>
-                                                      {user.firstName +
-                                                          user.lastName}
-                                                  </td>
-                                                  <td>{user.mail}</td>
-                                                  <td>{user.userType}</td>
-                                              </tr>
-                                          ))
+                                            <tr key={index}>
+                                                <td>{user._id}</td>
+                                                <td>{user.userName}</td>
+                                                <td>
+                                                    {user.firstName +
+                                                        user.lastName}
+                                                </td>
+                                                <td>{user.mail}</td>
+                                                <td>{user.userType}</td>
+                                            </tr>
+                                        ))
                                         : users
+<<<<<<< HEAD
                                               .slice(0, 7)
                                               .map((user, index) => (
                                                   <tr key={index}>
@@ -718,6 +791,29 @@ function Dashboard() {
                                                       </td>
                                                   </tr>
                                               )))}
+=======
+                                            .slice(0, 7)
+                                            .map((user, index) => (
+                                                <tr key={index}>
+                                                    <td>{user._id}</td>
+                                                    <td>{user.userName}</td>
+                                                    <td>
+                                                        {user.firstName +
+                                                            user.lastName}
+                                                    </td>
+                                                    <td>{user.mail}</td>
+                                                    <td
+                                                        style={{
+                                                            color:
+                                                                user.userType ===
+                                                                    'Teacher'
+                                                                    ? '#41F1B6'
+                                                                    : '#FFB100',
+                                                        }}
+                                                    >{user.userType}</td>
+                                                </tr>
+                                            )))}
+>>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
                             </tbody>
                         </table>
                         <a
@@ -829,6 +925,7 @@ function Dashboard() {
                                                             (parseInt(
                                                                 teacher.Count,
                                                             ) /
+<<<<<<< HEAD
                                                                 SumQuizesOfTeacher) *
                                                                 100,
                                                         ) >= 30
@@ -842,12 +939,32 @@ function Dashboard() {
                                                               ) >= 20
                                                             ? '#FFB100'
                                                             : 'red',
+=======
+                                                                Sum) *
+                                                            100,
+                                                        ) >= 30
+                                                            ? '#41F1B6'
+                                                            : parseInt(
+                                                                (parseInt(
+                                                                    teacher.Count,
+                                                                ) /
+                                                                    Sum) *
+                                                                100,
+                                                            ) >= 20
+                                                                ? '#FFB100'
+                                                                : 'red',
+>>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
                                                 }}
                                             >
                                                 {Math.round(
                                                     (parseInt(teacher.Count) /
+<<<<<<< HEAD
                                                         SumQuizesOfTeacher) *
                                                         100,
+=======
+                                                        Sum) *
+                                                    100,
+>>>>>>> 8593fa0d4b01676907148de48b37acb493618d3c
                                                 ) + '%'}
                                             </h5>
                                             <h3 className={styles['h3_text']}>
