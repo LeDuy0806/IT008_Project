@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Quiz from './Quiz/Quiz';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -55,13 +55,13 @@ function Quizes() {
         }
     }, [isLoading]);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         if (quizes.length === 0) {
             setNoresult(true);
         } else {
             setNoresult(false);
         }
-    }, [quizes.length]);
+    }, [quizes.length, isLoading]);
 
     const handleKeyPress = (e) => {
         if (e.keyCode === 13) {

@@ -264,7 +264,9 @@ function Auth() {
     const handleShowPassword = () => {
         setShowPassword((prevShowPassword) => !prevShowPassword);
     };
+    console.log(initialState);
     const switchMode = () => {
+        setFormData({ ...formData, userName: '', password: '' });
         setIsSignup((prevIsSignup) => !prevIsSignup);
         setShowPassword(false);
     };
@@ -290,11 +292,7 @@ function Auth() {
                     width: '100vw',
                 }}
             />
-            <Container
-                component="main"
-                maxWidth="xs"
-                style={{ zIndex: '2' }}
-            >
+            <Container component="main" maxWidth="xs" style={{ zIndex: '2' }}>
                 <Paper
                     className={classes.paper}
                     elevation={3}
@@ -312,8 +310,8 @@ function Auth() {
                                 ? 'Sign up'
                                 : 'Đăng kí'
                             : isLanguageEnglish
-                                ? 'Sign in'
-                                : 'Đăng nhập'}
+                            ? 'Sign in'
+                            : 'Đăng nhập'}
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -352,7 +350,7 @@ function Auth() {
                                                 : 'Trường này phải là Teacher hoặc Student'}
                                         </span>
                                     ) : (
-                                        <span>{ }</span>
+                                        <span>{}</span>
                                     )}
 
                                     <Input
@@ -415,7 +413,7 @@ function Auth() {
                                         : VietextRequestQuantity}
                                 </span>
                             ) : (
-                                <span>{ }</span>
+                                <span>{}</span>
                             )}
                             <span
                                 style={{
@@ -494,8 +492,8 @@ function Auth() {
                                     ? 'Sign up'
                                     : 'Đăng kí'
                                 : isLanguageEnglish
-                                    ? 'Sign in'
-                                    : 'Đăng nhập'}
+                                ? 'Sign in'
+                                : 'Đăng nhập'}
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
@@ -505,8 +503,8 @@ function Auth() {
                                             ? 'Already have an account? Sign in'
                                             : 'Bạn đã có tài khoản? Đăng nhập'
                                         : isLanguageEnglish
-                                            ? "Don't have an account? Sign Up"
-                                            : 'Bạn chưa có tài khoản? Đăng kí'}
+                                        ? "Don't have an account? Sign Up"
+                                        : 'Bạn chưa có tài khoản? Đăng kí'}
                                 </Button>
                             </Grid>
                         </Grid>
