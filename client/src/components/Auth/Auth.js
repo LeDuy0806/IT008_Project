@@ -63,6 +63,7 @@ function Auth() {
     } = authError;
 
     const isLanguageEnglish = useSelector((state) => state.language.isEnglish);
+    const [clear, SetClear] = useState(true);
 
     const TextSignUp = {
         isSuccess: {
@@ -267,6 +268,11 @@ function Auth() {
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
         setShowPassword(false);
+        setFormData(prev => ({
+            ...prev,
+            ...initialState
+        }));
+        SetClear(true);
     };
 
     return (
@@ -274,17 +280,18 @@ function Auth() {
             style={{
                 width: '100vw',
                 background: 'linear-gradient(120deg, #3ca7ee, #9b408f)',
-                height: 'calc(100vh - 48px)',
+                height: '94vh',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                padding: '16px',
             }}
         >
             <Snowfall
                 speed={[0, 2]}
                 style={{
                     position: 'fixed',
-                    zIndex: '1000',
+                    zIndex: '1',
                     height: '100vh',
                     width: '100vw',
                 }}
@@ -292,7 +299,7 @@ function Auth() {
             <Container
                 component="main"
                 maxWidth="xs"
-                style={{ zIndex: '1001' }}
+                style={{ zIndex: '2' }}
             >
                 <Paper
                     className={classes.paper}
@@ -311,8 +318,8 @@ function Auth() {
                                 ? 'Sign up'
                                 : 'Đăng kí'
                             : isLanguageEnglish
-                            ? 'Sign in'
-                            : 'Đăng nhập'}
+                                ? 'Sign in'
+                                : 'Đăng nhập'}
                     </Typography>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
@@ -351,7 +358,7 @@ function Auth() {
                                                 : 'Trường này phải là Teacher hoặc Student'}
                                         </span>
                                     ) : (
-                                        <span>{}</span>
+                                        <span>{ }</span>
                                     )}
 
                                     <Input
@@ -400,6 +407,8 @@ function Auth() {
                                 name="userName"
                                 label="User Name"
                                 handleChange={handleChange}
+                                value={clear && ''}
+
                             />
                             {requestQuantity ? (
                                 <span
@@ -414,7 +423,7 @@ function Auth() {
                                         : VietextRequestQuantity}
                                 </span>
                             ) : (
-                                <span>{}</span>
+                                <span>{ }</span>
                             )}
                             <span
                                 style={{
@@ -493,8 +502,8 @@ function Auth() {
                                     ? 'Sign up'
                                     : 'Đăng kí'
                                 : isLanguageEnglish
-                                ? 'Sign in'
-                                : 'Đăng nhập'}
+                                    ? 'Sign in'
+                                    : 'Đăng nhập'}
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
@@ -504,8 +513,8 @@ function Auth() {
                                             ? 'Already have an account? Sign in'
                                             : 'Bạn đã có tài khoản? Đăng nhập'
                                         : isLanguageEnglish
-                                        ? "Don't have an account? Sign Up"
-                                        : 'Bạn chưa có tài khoản? Đăng kí'}
+                                            ? "Don't have an account? Sign Up"
+                                            : 'Bạn chưa có tài khoản? Đăng kí'}
                                 </Button>
                             </Grid>
                         </Grid>

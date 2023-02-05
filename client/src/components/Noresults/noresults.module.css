@@ -7,11 +7,11 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin: 6.25rem 0 7.5rem;
+    padding: 3.75rem 0 7.5rem;
 }
 
-.textnoresults{
+.textnoresults {
     margin: 0.9375rem 0 0.625rem;
-    color: rgba(0,0,0,.87);
+    color: rgba(0, 0, 0, 0.87);
     font-size: 1.125rem;
 }

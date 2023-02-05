@@ -3,10 +3,11 @@
     justify-content: center;
     flex-direction: column;
     width: 40%;
-    background-color: white;
+    /* background-color: white; */
     margin: 2rem 30%;
     border-radius: 2%;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+    background: #ece8dd;
 }
 
 .profile_item-header {

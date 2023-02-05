@@ -14,13 +14,19 @@ import { IoIosAdd } from 'react-icons/io';
 import { CgLogOut } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
 // import { VscPreview } from "react-icons/vsc";
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuizes } from '../../actions/quiz';
 import { getUsers } from '../../actions/users';
 import noava from '../../assets/noava.jpg';
 
 function Dashboard() {
+    const datee = useMemo(() => {
+        const current = new Date();
+        return `${current.getDate()}/${
+            current.getMonth() + 1
+        }/${current.getFullYear()}`;
+    }, []);
     const current = new Date();
     const date = `${current.getDate()}/${
         current.getMonth() + 1
@@ -34,7 +40,6 @@ function Dashboard() {
 
     const dispatch = useDispatch();
     const user = JSON.parse(localStorage.getItem('profile'));
-    console.log(user.result);
 
     useEffect(() => {
         dispatch(getQuizes(quizes));
@@ -45,94 +50,119 @@ function Dashboard() {
     const { quizes } = useSelector((state) => state.quiz);
     const users = useSelector((state) => state.users);
 
-    //Xử lí số liệu
-    var CountTeacher = 0;
-    var CountStudent = 0;
-    users.map((user) => {
-        if (user.userType === 'Teacher') {
-            CountTeacher++;
-        } else {
-            CountStudent++;
-        }
-    });
-
-    var CountPublic = 0;
-    var CountAll = 0;
-    // eslint-disable-next-line array-callback-return
-    quizes.map((quize) => {
-        if (quize.isPublic === true) {
-            CountPublic++;
-        }
-        CountAll++;
-    });
-
-    let a = 0;
-    let Sum = 0;
-    const UserTeacher = users.filter((user) => {
-        return user.userType === 'Teacher';
-    });
-
-    const SetQuizesUserTeacher = UserTeacher.map((user) => {
-        a = 0;
-        quizes.map((quize) => {
-            if (user.firstName + ' ' + user.lastName === quize.creatorName) {
-                a++;
+    const CountTeacher = useMemo(() => {
+        let result = 0;
+        users.map((user) => {
+            if (user.userType === 'Teacher') {
+                result++;
             }
         });
-        user.Count = a;
-        Sum += a;
-        return user;
-    });
+        return result;
+    }, [users]);
 
-    const leaderboardTeacher = SetQuizesUserTeacher.sort(
-        (teacher1, teacher2) => {
-            if (teacher1.Count < teacher2.Count) return 1;
-            if (teacher1.Count > teacher2.Count) return -1;
-            return 0;
-        },
-    );
+    const CountStudent = useMemo(() => {
+        let result = 0;
+        users.map((user) => {
+            if (user.userType === 'Student') {
+                result++;
+            }
+        });
+        return result;
+    }, [users]);
 
-    ///
+    const [CountPublic, CountAll] = useMemo(() => {
+        let Public = 0;
+        let All = 0;
+        quizes.map((quize) => {
+            if (quize.isPublic === true) {
+                Public++;
+            }
+            All++;
+        });
+        return [Public, All];
+    }, [quizes]);
+
+    const [leaderboardTeacher, SumQuizesOfTeacher] = useMemo(() => {
+        let a = 0;
+        let Sum = 0;
+        const UserTeacher = users.filter((user) => {
+            return user.userType === 'Teacher';
+        });
+
+        const SetQuizesUserTeacher = UserTeacher.map((user) => {
+            a = 0;
+            quizes.map((quize) => {
+                if (
+                    user.firstName + ' ' + user.lastName ===
+                    quize.creatorName
+                ) {
+                    a++;
+                }
+            });
+            user.Count = a;
+            Sum += a;
+            return user;
+        });
+
+        return [
+            SetQuizesUserTeacher.sort((teacher1, teacher2) => {
+                if (teacher1.Count < teacher2.Count) return 1;
+                if (teacher1.Count > teacher2.Count) return -1;
+                return 0;
+            }),
+            Sum,
+        ];
+    }, [users, quizes]);
+
+    const [percentTeacher, percentStudent, percentPublic] = useMemo(() => {
+        const Teacher = Math.round(
+            (CountTeacher * 100) / (CountStudent + CountTeacher),
+        );
+        const Studen = Math.round(
+            (CountStudent * 100) / (CountStudent + CountTeacher),
+        );
+        const Public = Math.round((CountPublic * 100) / CountAll);
+        return [Teacher, Studen, Public];
+    }, [CountTeacher, CountStudent, CountPublic, CountAll]);
 
     const [RCpercentTC, setRCpercentTC] = useState(0);
-    const percentTeacher = Math.round(
-        (CountTeacher * 100) / (CountStudent + CountTeacher),
-    );
     let timeTC = useRef();
     useEffect(() => {
         timeTC.current = setInterval(() => {
             setRCpercentTC((preState) => preState + 1);
         }, 20);
     }, []);
-    if (RCpercentTC === percentTeacher) {
-        clearInterval(timeTC.current);
-    }
+    useEffect(() => {
+        if (RCpercentTC === percentTeacher) {
+            clearInterval(timeTC.current);
+        }
+    });
 
     const [RCpercentST, setRCpercentST] = useState(0);
-    const percentStudent = Math.round(
-        (CountStudent * 100) / (CountStudent + CountTeacher),
-    );
     let timeST = useRef();
     useEffect(() => {
         timeST.current = setInterval(() => {
             setRCpercentST((preState) => preState + 1);
         }, 20);
     }, []);
-    if (RCpercentST === percentStudent) {
-        clearInterval(timeST.current);
-    }
+    useEffect(() => {
+        if (RCpercentST === percentStudent) {
+            clearInterval(timeST.current);
+        }
+    });
 
     const [RCpercentPL, setRCpercentPL] = useState(0);
-    const percentPublic = Math.round((CountPublic * 100) / CountAll);
     let timePL = useRef();
     useEffect(() => {
         timePL.current = setInterval(() => {
             setRCpercentPL((preState) => preState + 1);
         }, 20);
     }, []);
-    if (RCpercentPL === percentPublic) {
-        clearInterval(timePL.current);
-    }
+    useEffect(() => {
+        if (RCpercentPL === percentPublic) {
+            clearInterval(timePL.current);
+        }
+    });
 
     const [tableUsers, setTableUser] = useState(true);
     const [tableQuizes, setTableQuizes] = useState(false);
@@ -148,8 +178,6 @@ function Dashboard() {
         AddProduct: false,
         Logout: false,
     });
-
-    const [showAll, SetShowAll] = useState(false);
 
     const handleClick = (e) => {
         switch (e.target.name) {
@@ -184,6 +212,7 @@ function Dashboard() {
         console.log(e.target.name);
     };
 
+    const [showAll, SetShowAll] = useState(false);
     const handleShow = () => {
         SetShowAll(!showAll);
     };
@@ -307,7 +336,7 @@ function Dashboard() {
                                 Analytics
                             </h3>
                         </a>
-                        <a
+                        {/* <a
                             className={styles['link_a']}
                             href="#"
                             name="Messages"
@@ -383,7 +412,7 @@ function Dashboard() {
                             >
                                 Settings
                             </h3>
-                        </a>
+                        </a> */}
                         <a
                             className={styles['link_a']}
                             href="#"
@@ -427,7 +456,7 @@ function Dashboard() {
                 <main>
                     <h1 className={styles['h1_text']}>Dashboard</h1>
                     <div className={styles['date']}>
-                        <h1 className={styles['h1_text']}>{date}</h1>
+                        <h1 className={styles['h1_text']}>{datee}</h1>
                     </div>
 
                     <div className={styles['insights']}>
@@ -692,7 +721,17 @@ function Dashboard() {
                                                               user.lastName}
                                                       </td>
                                                       <td>{user.mail}</td>
-                                                      <td>{user.userType}</td>
+                                                      <td
+                                                          style={{
+                                                              color:
+                                                                  user.userType ===
+                                                                  'Teacher'
+                                                                      ? '#41F1B6'
+                                                                      : '#FFB100',
+                                                          }}
+                                                      >
+                                                          {user.userType}
+                                                      </td>
                                                   </tr>
                                               )))}
                             </tbody>
@@ -719,11 +758,7 @@ function Dashboard() {
                             onClick={HandleThemeToggle}
                         >
                             <span
-                                id={
-                                    checkTG === true
-                                        ? styles['aaa']
-                                        : styles['bbb']
-                                }
+                                id={checkTG ? styles['aaa'] : styles['bbb']}
                                 className="material-symbols-outlined"
                             >
                                 light_mode
@@ -810,7 +845,7 @@ function Dashboard() {
                                                             (parseInt(
                                                                 teacher.Count,
                                                             ) /
-                                                                Sum) *
+                                                                SumQuizesOfTeacher) *
                                                                 100,
                                                         ) >= 30
                                                             ? '#41F1B6'
@@ -818,7 +853,7 @@ function Dashboard() {
                                                                   (parseInt(
                                                                       teacher.Count,
                                                                   ) /
-                                                                      Sum) *
+                                                                      SumQuizesOfTeacher) *
                                                                       100,
                                                               ) >= 20
                                                             ? '#FFB100'
@@ -827,7 +862,7 @@ function Dashboard() {
                                             >
                                                 {Math.round(
                                                     (parseInt(teacher.Count) /
-                                                        Sum) *
+                                                        SumQuizesOfTeacher) *
                                                         100,
                                                 ) + '%'}
                                             </h5>
