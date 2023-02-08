@@ -6,10 +6,10 @@ import { CgMicrosoft } from 'react-icons/cg';
 import { FiUser } from 'react-icons/fi';
 import { AiOutlineFileProtect } from 'react-icons/ai';
 import { IoAnalytics } from 'react-icons/io5';
-import { BiMessageSquareDetail } from 'react-icons/bi';
-import { MdFactCheck } from 'react-icons/md';
-import { MdErrorOutline } from 'react-icons/md';
-import { FiSettings } from 'react-icons/fi';
+// import { BiMessageSquareDetail } from 'react-icons/bi';
+// import { MdFactCheck } from 'react-icons/md';
+// import { MdErrorOutline } from 'react-icons/md';
+// import { FiSettings } from 'react-icons/fi';
 import { IoIosAdd } from 'react-icons/io';
 import { CgLogOut } from 'react-icons/cg';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getQuizes } from '../../actions/quiz';
 import { getUsers } from '../../actions/users';
+import { deleteUser } from '../../actions/users';
 import noava from '../../assets/noava.jpg';
 
 function Dashboard() {
@@ -27,10 +28,6 @@ function Dashboard() {
             current.getMonth() + 1
         }/${current.getFullYear()}`;
     }, []);
-    const current = new Date();
-    const date = `${current.getDate()}/${
-        current.getMonth() + 1
-    }/${current.getFullYear()}`;
 
     const [checkTG, SetCheckTG] = useState(false);
     const HandleThemeToggle = () => {
@@ -46,6 +43,10 @@ function Dashboard() {
         dispatch(getUsers(user));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
+
+    const DeleteUser = (id) => {
+        dispatch(deleteUser(id));
+    };
 
     const { quizes } = useSelector((state) => state.quiz);
     const users = useSelector((state) => state.users);
@@ -303,6 +304,7 @@ function Dashboard() {
                             href="#"
                             onClick={handleClick}
                             name="Quizes"
+                            Nhoc
                         >
                             <span
                                 className={styles['material-symbols-outlined']}
@@ -659,6 +661,17 @@ function Dashboard() {
                                                           10,
                                                       )}
                                                   </td>
+                                                  <td
+                                                      style={{
+                                                          color: 'red',
+                                                          fontWeight: 700,
+                                                      }}
+                                                      onClick={() =>
+                                                          DeleteUser(quize._id)
+                                                      }
+                                                  >
+                                                      Delete
+                                                  </td>
                                               </tr>
                                           ))
                                         : quizes
@@ -693,6 +706,19 @@ function Dashboard() {
                                                               10,
                                                           )}
                                                       </td>
+                                                      <td
+                                                          style={{
+                                                              color: 'red',
+                                                              fontWeight: 700,
+                                                          }}
+                                                          onClick={() =>
+                                                              DeleteUser(
+                                                                  quize._id,
+                                                              )
+                                                          }
+                                                      >
+                                                          Delete
+                                                      </td>
                                                   </tr>
                                               )))}
 
@@ -708,6 +734,17 @@ function Dashboard() {
                                                   </td>
                                                   <td>{user.mail}</td>
                                                   <td>{user.userType}</td>
+                                                  <td
+                                                      style={{
+                                                          color: 'red',
+                                                          fontWeight: 700,
+                                                      }}
+                                                      onClick={() =>
+                                                          DeleteUser(user._id)
+                                                      }
+                                                  >
+                                                      Delete
+                                                  </td>
                                               </tr>
                                           ))
                                         : users
@@ -731,6 +768,19 @@ function Dashboard() {
                                                           }}
                                                       >
                                                           {user.userType}
+                                                      </td>
+                                                      <td
+                                                          style={{
+                                                              color: 'red',
+                                                              fontWeight: 700,
+                                                          }}
+                                                          onClick={() =>
+                                                              DeleteUser(
+                                                                  user._id,
+                                                              )
+                                                          }
+                                                      >
+                                                          Delete
                                                       </td>
                                                   </tr>
                                               )))}
