@@ -37,13 +37,13 @@ function Quizes() {
     const [tags, setTags] = useState([]);
     const [noresults, setNoresult] = useState(false);
 
-
     const searchPost = () => {
         if (search.trim() !== '' || tags.length !== 0) {
             console.log(search.trim());
             dispatch(getQuizesBySearch({ search, tags: tags.join(',') }));
             history.push(
-                `/quizes/search?searchQuery=${search || 'none'
+                `/quizes/search?searchQuery=${
+                    search || 'none'
                 }&tags=${tags.join(',')}`,
             );
         } else {
@@ -66,7 +66,7 @@ function Quizes() {
     }, [quizes.length, isLoading]);
 
     if (!user) {
-        return <ErrorPage />
+        return <ErrorPage />;
     }
 
     const handleKeyPress = (e) => {
